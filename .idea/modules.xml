@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DeviceHiveDevice.iml" filepath="$PROJECT_DIR$/DeviceHiveDevice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deviceHiveAndroid/deviceHiveAndroid.iml" filepath="$PROJECT_DIR$/deviceHiveAndroid/deviceHiveAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deviceHiveAndroidDevice/deviceHiveAndroidDevice.iml" filepath="$PROJECT_DIR$/deviceHiveAndroidDevice/deviceHiveAndroidDevice.iml" />
+    </modules>
+  </component>
+</project>
