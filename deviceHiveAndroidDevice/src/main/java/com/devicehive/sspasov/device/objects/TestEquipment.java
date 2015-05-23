@@ -2,6 +2,8 @@ package com.devicehive.sspasov.device.objects;
 
 import android.content.Context;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -10,6 +12,7 @@ import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.EquipmentData;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Equipment;
+import com.dataart.android.devicehive.device.EquipmentNotification;
 
 import java.util.HashMap;
 
@@ -18,18 +21,30 @@ public class TestEquipment extends Equipment {
 	private static final String TAG = TestEquipment.class.getSimpleName();
 
 	private Context mContext;
-	private Sensor mSensor;
-	private SensorManager mSensorManager;
+	private static Sensor mSensor;
+	private static SensorManager mSensorManager;
+    private static SensorEventListener sensorListener;
+
+    private String equipmentName;
+    private String equipmentCode;
+    private int equipmentType;
 
 
 	public TestEquipment(Context context, Sensor sensor, SensorManager sensorManager) {
         super(equipmentData(
                 sensor.getName(),
                 Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)+"_"+ sensor.getType(),
-                sensor.getType()+""));
+                sensor.getType()+"")
+               );
         this.mContext = context;
-		this.mSensor = sensor;
-		this.mSensorManager = sensorManager;
+		mSensor = sensor;
+		mSensorManager = sensorManager;
+
+        equipmentName = mSensor.getName();
+        equipmentCode = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)+"_"+ mSensor.getType();
+        equipmentType = mSensor.getType();
+
+
 	}
 
 	public TestEquipment(String name, String code, String type) {
@@ -41,9 +56,45 @@ public class TestEquipment extends Equipment {
      * @code - unique ID for the equipment. It's used to point and use this equipment.
      * @type - equipment type **/
 	private static EquipmentData equipmentData(String name, String code, String type) {
-		return new EquipmentData(name, code, type);
+        EquipmentData equipmentData = new EquipmentData(name, code, type);
+       // equipmentData.setData(data);
+        return equipmentData;
 	}
-	
+
+	private HashMap getSensorData() {
+        final HashMap data = new HashMap(); //TODO: NEED FIX
+        sensorListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                data.clear();
+                Parameter x = new Parameter("x", sensorEvent.values[0]+"");
+                Log.d(TAG, mSensor.getName()+" value x: "+x.value);
+                data.put(x.name, x.value);
+
+                Parameter y = new Parameter("y", sensorEvent.values[1]+"");
+                Log.d(TAG, mSensor.getName()+" value y: "+y.value);
+                data.put(x.name, y.value);
+
+                Parameter z = new Parameter("z", sensorEvent.values[2]+"");
+                Log.d(TAG, mSensor.getName()+" value z: "+z.value);
+                data.put(x.name, z.value);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
+        if(mSensor != null) {
+            if(!mSensorManager.registerListener(sensorListener, mSensor, SensorManager.SENSOR_DELAY_NORMAL)){
+                Log.d(TAG, "sensorListener not registered.");
+            }
+        }
+
+        return data;
+	}
+
 	@Override
 	public void onBeforeRunCommand(Command command) {
 		Log.d(TAG, "onBeforeRunCommand: " + command.getCommand());
@@ -58,13 +109,15 @@ public class TestEquipment extends Equipment {
 	public CommandResult runCommand(final Command command) {
 		Log.d(TAG, "runCommand: " + command.getCommand());
 		
-		// run command
+		HashMap sensorParam = getSensorData();
 
-		HashMap param = (HashMap) command.getParameters();
-		Log.d(TAG, "Executing Command on Equipment: " + param.get("equipment"));
+		HashMap commandParam = (HashMap) command.getParameters();
+		Log.d(TAG, "Executing Command on Equipment: " + commandParam.get("equipment"));
+
+        sendNotification(new EquipmentNotification(equipmentCode, sensorParam));
 
 		return new CommandResult(CommandResult.STATUS_COMLETED,
-				"Executed on Android test equipment!");
+				"Executed on "+equipmentName+"!");
 	}
 
 
