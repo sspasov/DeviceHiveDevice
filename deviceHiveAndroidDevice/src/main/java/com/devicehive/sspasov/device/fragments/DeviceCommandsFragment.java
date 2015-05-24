@@ -39,7 +39,7 @@ public class DeviceCommandsFragment extends SherlockFragment {
 		if (commands != null) {
 			logTextView.setText("");
 			for (Command command : commands) {
-				logTextView.append(command.toString() + "\n");
+				logTextView.append(command.toString() + "\n\n");
 			}
 		}
 	}

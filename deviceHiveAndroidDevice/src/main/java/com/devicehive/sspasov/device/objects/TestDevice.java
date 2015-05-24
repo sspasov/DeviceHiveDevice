@@ -59,16 +59,36 @@ public class TestDevice extends Device {
         this.mContext = context;
 
         /** Searching for equipment and adds it **/
-        SensorManager mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        List<Sensor> deviceSensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
-        TestEquipment testEquipment;
+        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        List<Sensor> deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
         for(int i=0; i<deviceSensors.size(); i++) {
-            testEquipment = new TestEquipment(context, deviceSensors.get(i), mSensorManager);
+			TestEquipment testEquipment = new TestEquipment(context, deviceSensors.get(i));
+            if(sensorManager.registerListener(
+                    testEquipment.getSensorListener(),
+                    testEquipment.getSensor(),
+                    SensorManager.SENSOR_DELAY_NORMAL) ) {
+                Log.d(TAG, "successful registered sensor listener");
+            } else {
+                Log.e(TAG, "sensor listener not registered");
+            }
             attachEquipment(testEquipment);
-            Log.d(TAG, "Attaching equipment: "+deviceSensors.get(i).getName());
+            //Log.d(TAG, "Attaching equipment: "+testEquipment.getEquipmentName());
         }
+
+       /* Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        TestEquipment te = new TestEquipment(context, sensor);
+        sensorManager.registerListener(te.getSensorListener(), sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        attachEquipment(te);
+        Log.d(TAG, "Attaching equipment: "+sensor.getName());
+
+        Sensor sensor2 = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        TestEquipment te2 = new TestEquipment(context, sensor2);
+        sensorManager.registerListener(te2.getSensorListener(), sensor2, SensorManager.SENSOR_DELAY_NORMAL);
+        attachEquipment(te2);
+        Log.d(TAG, "Attaching equipment: "+sensor2.getName());*/
 	}
+
 
 	private static DeviceData getTestDeviceData(Context context) {
 		
