@@ -21,17 +21,13 @@ public class TestEquipment extends Equipment {
 
 	private Context mContext;
     private Sensor mSensor;
-	//private SensorManager mSensorManager;
-
-
 
     private SensorEventListener sensorListener;
-
-
 
     private String equipmentName;
     private String equipmentCode;
     private int equipmentType;
+    private boolean multipleValueEquipment;
 	private float x, y, z;
 
 
@@ -49,27 +45,40 @@ public class TestEquipment extends Equipment {
         equipmentCode = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)+"_"+ mSensor.getType();
         equipmentType = mSensor.getType();
 
+        multipleValueEquipment = isMultipleValueEquipment();
+
+        createSensorListener();
+    }
+
+    private boolean isMultipleValueEquipment() {
+        return equipmentType != 2 && equipmentType != 14 && equipmentType != 5
+                && equipmentType != 6 && equipmentType != 8 && equipmentType != 18
+                && equipmentType != 19;
+    }
+
+    private void createSensorListener() {
         sensorListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 x = event.values[0];
                 //Log.d(TAG, mSensor.getName()+" value x: "+x);
 
-                y = event.values[1];
-                //Log.d(TAG, mSensor.getName()+" value y: "+y);
+                if(multipleValueEquipment) {
+                    Log.d(TAG, equipmentName);
+                    y = event.values[1];
+                    //Log.d(TAG, mSensor.getName()+" value y: "+y);
 
-                z = event.values[2];
-                //Log.d(TAG, mSensor.getName() + " value z: " + z);
+                    z = event.values[2];
+                    //Log.d(TAG, mSensor.getName() + " value z: " + z);
+                }
             }
 
             @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
         };
-	}
+    }
 
-	public TestEquipment(String name, String code, String type) {
+    public TestEquipment(String name, String code, String type) {
 		super(equipmentData(name, code, type));
 	}
 
@@ -109,19 +118,19 @@ public class TestEquipment extends Equipment {
 
         HashMap<String, Object> sensorParam = new HashMap<>();
 
-        Parameter p = new Parameter("z", z+"");
+        Parameter p = new Parameter("x", x+"");
         sensorParam.put(p.name, p.value);
-        Log.d(TAG, mSensor.getName() + " value z: " + z);
-
-        p = new Parameter("y", y+"");
-        sensorParam.put(p.name, p.value);
-        Log.d(TAG, mSensor.getName() + " value y: " + y);
-
-
-		p = new Parameter("x", x+"");
-		sensorParam.put(p.name, p.value);
         Log.d(TAG, mSensor.getName() + " value x: " + x);
 
+        if(multipleValueEquipment) {
+            p = new Parameter("y", y+"");
+            sensorParam.put(p.name, p.value);
+            Log.d(TAG, mSensor.getName() + " value y: " + y);
+
+            p = new Parameter("z", z+"");
+            sensorParam.put(p.name, p.value);
+            Log.d(TAG, mSensor.getName() + " value z: " + z);
+        }
 
 		HashMap commandParam = (HashMap) command.getParameters();
 		Log.d(TAG, "Executing Command on Equipment (code): " + commandParam.get("equipment"));

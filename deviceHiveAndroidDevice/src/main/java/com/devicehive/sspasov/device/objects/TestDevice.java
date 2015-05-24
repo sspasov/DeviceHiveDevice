@@ -63,16 +63,20 @@ public class TestDevice extends Device {
         List<Sensor> deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
         for(int i=0; i<deviceSensors.size(); i++) {
-			TestEquipment testEquipment = new TestEquipment(context, deviceSensors.get(i));
-            if(sensorManager.registerListener(
-                    testEquipment.getSensorListener(),
-                    testEquipment.getSensor(),
-                    SensorManager.SENSOR_DELAY_NORMAL) ) {
-                Log.d(TAG, "successful registered sensor listener");
+            if(deviceSensors.get(i).getType() <= 21) {
+                TestEquipment testEquipment = new TestEquipment(context, deviceSensors.get(i));
+                if(sensorManager.registerListener(
+                        testEquipment.getSensorListener(),
+                        testEquipment.getSensor(),
+                        SensorManager.SENSOR_DELAY_NORMAL) ) {
+                    Log.d(TAG, "successful registered sensor listener");
+                    attachEquipment(testEquipment);
+                } else {
+                    Log.e(TAG, "sensor listener not registered");
+                }
             } else {
-                Log.e(TAG, "sensor listener not registered");
+                Log.w(TAG, "sensor not usable");
             }
-            attachEquipment(testEquipment);
             //Log.d(TAG, "Attaching equipment: "+testEquipment.getEquipmentName());
         }
 
