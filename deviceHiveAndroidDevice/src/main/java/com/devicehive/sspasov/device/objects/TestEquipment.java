@@ -64,7 +64,7 @@ public class TestEquipment extends Equipment {
                 //Log.d(TAG, mSensor.getName()+" value x: "+x);
 
                 if(multipleValueEquipment) {
-                    Log.d(TAG, equipmentName);
+                    //Log.d(TAG, equipmentName);
                     y = event.values[1];
                     //Log.d(TAG, mSensor.getName()+" value y: "+y);
 

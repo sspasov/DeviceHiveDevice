@@ -50,6 +50,7 @@ public class TestDevice extends Device {
 	}
 
 	public interface NotificationListener {
+		void onDeviceStartSendingNotification(Notification notification);
 		void onDeviceSentNotification(Notification notification);
 		void onDeviceFailedToSendNotification(Notification notification);
 	}
@@ -169,27 +170,41 @@ public class TestDevice extends Device {
 
 	@Override
 	public CommandResult runCommand(final Command command) {
-        String commandName = command.getCommand();
+		String commandName = command.getCommand();
+		HashMap commandParameters = (HashMap) command.getParameters();
+        String commandType;
         String commandStatus = CommandResult.STATUS_COMLETED;
-        String commandResult = null;
-        HashMap param = new HashMap();
+        String commandResult;
+        HashMap resultParameters = new HashMap();
 
-        Log.d(TAG, "Executing command on "+TAG+": " + commandName);
+		if(!commandParameters.containsKey("device")) {
+			commandStatus = CommandResult.STATUS_FAILED;
+			commandResult = "Failed to execute command " + commandName + " on (" + deviceID + ")" + deviceName;
+			return new CommandResult(commandStatus, commandResult);
+		} else {
+			commandType = commandParameters.get("device").toString();
+		}
 
-        switch (commandName) {
+        Log.d(TAG, "Executing command \"" +commandName+"\" on "+TAG);
+
+
+        //TODO: parameters in the command should set the command
+        switch (commandType) {
             case DeviceCommand.GET_BATTERY_LEVEL: {
-                param = getBatteryLevel();
-                commandResult = "Battery is: "+param.get(DeviceCommand.GET_BATTERY_LEVEL);
+                resultParameters = getBatteryLevel();
+                commandResult = "Battery is: "+resultParameters.get(DeviceCommand.GET_BATTERY_LEVEL);
+				Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
                 break;
             }
 
             default: {
                 commandStatus = CommandResult.STATUS_FAILED;
                 commandResult = "Failed to execute command " + commandName + " on (" + deviceID + ")" + deviceName;
+				Log.d(TAG, "Failed to execute command \"" +commandName+"\" on "+TAG);
             }
         }
 
-        sendNotification(new Notification("Executed command "+commandName, param));
+        sendNotification(new Notification("Executed command \"" + commandName+"\"", resultParameters));
         return new CommandResult(commandStatus, commandResult);
         //HashMap param = (HashMap) command.getParameters();
 	}
@@ -197,6 +212,7 @@ public class TestDevice extends Device {
     private HashMap getBatteryLevel() {
         Battery battery = new Battery(mContext);
         HashMap param = new HashMap();
+		param.put("device", DeviceCommand.GET_BATTERY_LEVEL);
         param.put(battery.getName(), battery.getValue());
         return param;
     }
@@ -266,11 +282,12 @@ public class TestDevice extends Device {
 	@Override
 	protected void onStartSendingNotification(Notification notification) {
 		Log.d(TAG, "onStartSendingNotification : " + notification.getName());
+		notifyListenersDeviceStartSendingNotification(notification);
 	}
 
 	@Override
 	protected void onFinishSendingNotification(Notification notification) {
-		Log.d(TAG, "onFinishSendingNotification: " + notification.getName());
+		Log.d(TAG, "onFinishSendingNotification: " + notification.getId());
 		notifyListenersDeviceSentNotification(notification);
 	}
 
@@ -281,7 +298,7 @@ public class TestDevice extends Device {
 	}
 
 	private void notifyListenersCommandReceived(Command command) {
-        Log.d(TAG, "notifyListenersCommandReceived: "+command.toString());
+        Log.d(TAG, "notifyListenersCommandReceived: " + command.toString());
 		for (CommandListener listener : commandListeners) {
 			listener.onDeviceReceivedCommand(command);
 		}
@@ -298,6 +315,13 @@ public class TestDevice extends Device {
         Log.d(TAG, "notifyListenersDeviceFailedToRegister");
 		for (RegistrationListener listener : registrationListeners) {
 			listener.onDeviceFailedToRegister();
+		}
+	}
+
+	private void notifyListenersDeviceStartSendingNotification(Notification notification) {
+		Log.d(TAG, "notifyListenersDeviceStartSendingNotification: "+notification.getName());
+		for (NotificationListener listener : notificationListeners) {
+			listener.onDeviceStartSendingNotification(notification);
 		}
 	}
 

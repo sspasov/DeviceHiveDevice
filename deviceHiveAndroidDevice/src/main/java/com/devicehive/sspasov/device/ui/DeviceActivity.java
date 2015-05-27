@@ -1,7 +1,6 @@
 package com.devicehive.sspasov.device.ui;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dataart.android.devicehive.Command;
-import com.dataart.android.devicehive.DeviceData;
 import com.dataart.android.devicehive.Notification;
+import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.SampleDeviceApplication;
 import com.devicehive.sspasov.device.adapters.TabsAdapter;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog;
@@ -31,7 +31,6 @@ import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
 import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
 import com.devicehive.sspasov.device.utils.SampleDevicePreferences;
-import com.devicehive.sspasov.device.R;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,16 +39,10 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		RegistrationListener, ParameterProvider, CommandListener,
 		NotificationListener, NotificationSender, ParameterDialogListener {
 
+	private static final String TAG = DeviceActivity.class.getSimpleName();
+
 	private static final String EXTRA_DEVICE = DeviceActivity.class.getName()
 			+ ".EXTRA_DEVICE";
-
-	public static void start(Context context, DeviceData deviceData) {
-		Intent intent = new Intent(context, DeviceActivity.class);
-		intent.putExtra(EXTRA_DEVICE, deviceData);
-		context.startActivity(intent);
-	}
-
-	private static final String TAG = "DeviceActivity";
 
 	private TestDevice device;
 
@@ -65,6 +58,12 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
 	private SampleDevicePreferences prefs;
 
+    /*public static void start(Context context, DeviceData deviceData) {
+        Intent intent = new Intent(context, DeviceActivity.class);
+        intent.putExtra(EXTRA_DEVICE, deviceData);
+        context.startActivity(intent);
+    }*/
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,7 +76,7 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
 		ActionBar ab = getSupportActionBar();
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		ab.setTitle("Device Sample");
+		ab.setTitle(getString(R.string.test_device));
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
 
@@ -95,10 +94,10 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		deviceSendNotificationFragment.setParameterProvider(this);
 		deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
 
-		tabsAdapter.addTab(ab.newTab().setText("Summary"), deviceInfoFragment);
-		tabsAdapter.addTab(ab.newTab().setText("Equipment"), equipmentListFragment);
-		tabsAdapter.addTab(ab.newTab().setText("Commands"), deviceCommandsFragment);
-		tabsAdapter.addTab(ab.newTab().setText("Send Notification"), deviceSendNotificationFragment);
+		tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_info)), deviceInfoFragment);
+		tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_equipment)), equipmentListFragment);
+		tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_commands)), deviceCommandsFragment);
+		tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_send_notification)), deviceSendNotificationFragment);
 	}
 
 	@Override
@@ -164,17 +163,28 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		deviceCommandsFragment.setCommands(receivedCommands);
 	}
 
+    @Override
+    public void onDeviceStartSendingNotification(Notification notification) {
+        Log.d(TAG, "Start sending notification: " + notification.getName());
+        if(notification.getName().contains("DeviceStatus")) {
+            showDialog("Success!", notification.getName() + " has been sent.");
+        } else {
+            showDialog("Success!", notification.getName());
+        }
+
+    }
+
 	@Override
 	public void onDeviceSentNotification(Notification notification) {
-        Log.d(TAG, "NOTIFICATION NAME:"+notification.getName());
-		Log.d(TAG, "Finish sending notification: " + notification.getName());
-		showDialog("Success!", "Notification has been sent.");
+		Log.d(TAG, "Finish sending notification: " + notification.getId());
+		//showDialog("Success!", "Notification sent with ID " + notification.getId());
+        Toast.makeText(this, "Notification registered with ID " + notification.getId(), Toast.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void onDeviceFailedToSendNotification(Notification notification) {
-		Log.d(TAG, "Fail sending notification: " + notification.getName());
-		showErrorDialog("Failed to send notification: " + notification.getName());
+        Log.d(TAG, "Fail sending notification: " + notification.getName());
+        showErrorDialog("Failed to send notification: " + notification.getName());
 	}
 
 	@Override
