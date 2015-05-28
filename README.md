@@ -19,4 +19,4 @@ executed on device itself.
 When the application is started for the first time it may show dialog with "Device not registered". You must go to Settings and manualy enter the API Endpoint. Restart the app and everything will go smooth.
 
 
-Original sample project and DeviceHive Framework can be found on: http://devicehive.com
+Original sample project and DeviceHive Framework can be found on: [DeviceHive](http://devicehive.com)
