@@ -5,7 +5,7 @@ package com.devicehive.sspasov.device.commands;
  */
 public class DeviceCommand {
     public static final String GET_BATTERY_LEVEL = "battery";
-    public static final String GET_SCREEN_SIZE = "screen";
+    public static final String GET_SCREEN_SIZE = "screenSize";
     public static final String GET_GPS_COORDINATES = "gps";
 
     //TODO: add more commands ?

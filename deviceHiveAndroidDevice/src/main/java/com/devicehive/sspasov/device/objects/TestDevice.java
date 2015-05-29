@@ -1,6 +1,5 @@
 package com.devicehive.sspasov.device.objects;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,6 +9,7 @@ import android.hardware.SensorManager;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.DeviceClass;
@@ -19,7 +19,9 @@ import com.dataart.android.devicehive.Notification;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Device;
 import com.devicehive.sspasov.device.BuildConfig;
+import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.commands.DeviceCommand;
+import com.devicehive.sspasov.device.utils.DeviceConfig;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -103,14 +105,16 @@ public class TestDevice extends Device {
 
 		final DeviceClass deviceClass = new DeviceClass(
 				getDeviceClass(context),
-				getDeviceClassVersion(context));
+				getDeviceClassVersion(context),
+				DeviceConfig.DEVICE_IS_PERMANENT,
+                DeviceConfig.DEVICE_TIMEOUT);
 
         deviceID = getDeviceUniqueID(context);
         deviceName = android.os.Build.MODEL;
 
 		final DeviceData deviceData = new DeviceData(
                 deviceID, 					                    //DEVICE UNIQUE ID
-				"H9ZveEeu2nx19Vqe2Auszgixj/b2Z8t21MjtktWMivw=",	//DEVICE REGISTER KEY //TODO: get key programmatically ?
+				context.getString(R.string.key_device_registration),	//DEVICE REGISTER KEY //TODO: get key programmatically ?
                 deviceName, 						            //DEVICE NAME
 				DeviceData.DEVICE_STATUS_OK,					//DEVICE STATUS
 				network,
@@ -135,10 +139,12 @@ public class TestDevice extends Device {
 				Configuration.SCREENLAYOUT_SIZE_MASK) ==
 				Configuration.SCREENLAYOUT_SIZE_LARGE);
 
+
 		if (device_large) {
 			DisplayMetrics metrics = new DisplayMetrics();
-			Activity activity = (Activity) activityContext;
-			activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+			//activity = (Activity) activityContext.getApplicationContext();;
+            WindowManager wm = (WindowManager) activityContext.getSystemService(Context.WINDOW_SERVICE);
+            wm.getDefaultDisplay().getMetrics(metrics);
 
 			if (metrics.densityDpi == DisplayMetrics.DENSITY_DEFAULT
 					|| metrics.densityDpi == DisplayMetrics.DENSITY_HIGH
@@ -187,13 +193,26 @@ public class TestDevice extends Device {
 
         Log.d(TAG, "Executing command \"" +commandName+"\" on "+TAG);
 
-
-        //TODO: parameters in the command should set the command
+        //TODO: parameters in the command should set witch case to execute
         switch (commandType) {
             case DeviceCommand.GET_BATTERY_LEVEL: {
                 resultParameters = getBatteryLevel();
                 commandResult = "Battery is: "+resultParameters.get(DeviceCommand.GET_BATTERY_LEVEL);
 				Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
+                break;
+            }
+
+            case DeviceCommand.GET_GPS_COORDINATES: {
+                //resultParameters = getGPSCoordinates();
+                commandResult = "GPS coordinates are: "+resultParameters.get(DeviceCommand.GET_BATTERY_LEVEL);
+                Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
+                break;
+            }
+
+            case DeviceCommand.GET_SCREEN_SIZE: {
+                resultParameters = getScreenSize();
+                commandResult = "Screen size is: "+resultParameters.get(DeviceCommand.GET_SCREEN_SIZE);
+                Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
                 break;
             }
 
@@ -204,22 +223,29 @@ public class TestDevice extends Device {
             }
         }
 
-        sendNotification(new Notification("Executed command \"" + commandName+"\"", resultParameters));
+        sendNotification(new Notification("Executed command \"" + commandName + "\"", resultParameters));
         return new CommandResult(commandStatus, commandResult);
-        //HashMap param = (HashMap) command.getParameters();
 	}
 
     private HashMap getBatteryLevel() {
-        Battery battery = new Battery(mContext);
+        Battery battery = Battery.getInstance(mContext);
         HashMap param = new HashMap();
 		param.put("device", DeviceCommand.GET_BATTERY_LEVEL);
         param.put(battery.getName(), battery.getValue());
         return param;
     }
 
+    private HashMap getScreenSize() {
+        ScreenSize screenSize = ScreenSize.getInstance(mContext);
+        HashMap param = new HashMap();
+        param.put("device", DeviceCommand.GET_SCREEN_SIZE);
+        param.put(screenSize.getName(), screenSize.getValue());
+        return param;
+    }
+
 	@Override
 	public boolean shouldRunCommandAsynchronously(final Command command) {
-		return true;
+		return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
 	}
 
 	public void addDeviceListener(RegistrationListener listener) {

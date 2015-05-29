@@ -7,13 +7,13 @@ import android.widget.EditText;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.utils.SampleDevicePreferences;
+import com.devicehive.sspasov.device.utils.DevicePreferences;
 
 public class SettingsActivity extends SherlockActivity {
 
 	private EditText serverUrlEdit;
 
-	private SampleDevicePreferences prefs;
+	private DevicePreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class SettingsActivity extends SherlockActivity {
 
 		serverUrlEdit = (EditText) findViewById(R.id.server_url_edit);
 
-		prefs = new SampleDevicePreferences(SettingsActivity.this);
+		prefs = new DevicePreferences(SettingsActivity.this);
 
 		findViewById(R.id.undo_button).setOnClickListener(
 				new View.OnClickListener() {

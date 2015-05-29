@@ -15,6 +15,22 @@ public class Battery {
     private String value;
     private Context mContext;
 
+    private static Battery instance;
+
+    public static Battery getInstance() {
+        if(instance == null) {
+            instance = new Battery();
+        }
+        return instance;
+    }
+
+    public static Battery getInstance(Context context) {
+        if(instance == null) {
+            instance = new Battery(context);
+        }
+        return instance;
+    }
+
     public Battery() {}
 
 

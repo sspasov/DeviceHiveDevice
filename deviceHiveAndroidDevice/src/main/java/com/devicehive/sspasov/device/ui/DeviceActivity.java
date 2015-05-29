@@ -16,7 +16,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.Notification;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.SampleDeviceApplication;
+import com.devicehive.sspasov.device.DeviceApplication;
 import com.devicehive.sspasov.device.adapters.TabsAdapter;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog.ParameterDialogListener;
@@ -30,7 +30,7 @@ import com.devicehive.sspasov.device.objects.TestDevice;
 import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
 import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
-import com.devicehive.sspasov.device.utils.SampleDevicePreferences;
+import com.devicehive.sspasov.device.utils.DevicePreferences;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
 	private List<Command> receivedCommands = new LinkedList<Command>();
 
-	private SampleDevicePreferences prefs;
+	private DevicePreferences prefs;
 
     /*public static void start(Context context, DeviceData deviceData) {
         Intent intent = new Intent(context, DeviceActivity.class);
@@ -69,10 +69,10 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_device);
 
-		SampleDeviceApplication app = (SampleDeviceApplication) getApplication();
+		DeviceApplication app = (DeviceApplication) getApplication();
 		device = app.getDevice();
 
-		prefs = new SampleDevicePreferences(this);
+		prefs = new DevicePreferences(this);
 
 		ActionBar ab = getSupportActionBar();
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
