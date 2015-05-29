@@ -46,7 +46,7 @@ public class Battery {
 
     public String getValue() {
         if(mContext == null) {
-            Log.e(TAG, "mContext is null, please set mContext with setmContext() method");
+            Log.e(TAG, "You must setContext() before getValue");
             return "null";
         }
         return batteryLevel(mContext);

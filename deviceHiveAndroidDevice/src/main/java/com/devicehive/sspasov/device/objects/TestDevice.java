@@ -243,10 +243,10 @@ public class TestDevice extends Device {
     }
 
     private HashMap getTimeOn() {
-        //TODO: implementation
-        //
+        DeviceTimeOn timeOn = DeviceTimeOn.getInstance(mContext);
         HashMap param = new HashMap();
-        //
+        param.put("device", DeviceCommand.GET_TIME_ON);
+        param.put(timeOn.getName(), timeOn.getValue());
         return param;
     }
 
