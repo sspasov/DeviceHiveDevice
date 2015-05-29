@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.utils.DevicePreferences;
 
@@ -19,6 +20,9 @@ public class SettingsActivity extends SherlockActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+
+        //ab.setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		serverUrlEdit = (EditText) findViewById(R.id.server_url_edit);
 
@@ -58,4 +62,12 @@ public class SettingsActivity extends SherlockActivity {
 			finish();
 		}
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+           finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

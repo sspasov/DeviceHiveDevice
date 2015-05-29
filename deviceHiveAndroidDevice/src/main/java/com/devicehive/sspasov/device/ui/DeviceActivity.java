@@ -103,8 +103,9 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		device.addDeviceListener(this);
-		device.addCommandListener(this);
+        //device.reloadDeviceData();
+        device.addDeviceListener(this);
+        device.addCommandListener(this);
 		device.addNotificationListener(this);
 		deviceInfoFragment.setDeviceData(device.getDeviceData());
 		if (!device.isRegistered()) {
@@ -114,17 +115,17 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		}
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		device.removeDeviceListener(this);
-		device.removeCommandListener(this);
-		device.removeNotificationListener(this);
-		device.stopProcessingCommands();
-		if (isFinishing()) {
-			device.unregisterDevice();
-		}
-	}
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        device.removeDeviceListener(this);
+        device.removeCommandListener(this);
+        device.removeNotificationListener(this);
+        device.stopProcessingCommands();
+        if (isFinishing()) {
+            device.unregisterDevice();
+        }
+    }
 
 	@Override
 	public void onDeviceRegistered() {

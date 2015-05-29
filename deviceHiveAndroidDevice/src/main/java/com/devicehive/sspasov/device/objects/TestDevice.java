@@ -107,7 +107,7 @@ public class TestDevice extends Device {
 				getDeviceClass(context),
 				getDeviceClassVersion(context),
 				DeviceConfig.DEVICE_IS_PERMANENT,
-                DeviceConfig.DEVICE_TIMEOUT);
+                null); //DeviceConfig.DEVICE_TIMEOUT
 
         deviceID = getDeviceUniqueID(context);
         deviceName = android.os.Build.MODEL;
@@ -171,61 +171,85 @@ public class TestDevice extends Device {
 	@Override
 	public void onBeforeRunCommand(Command command) {
 		Log.d(TAG, "onBeforeRunCommand: " + command.getCommand());
+        //reloadDeviceData();
 		notifyListenersCommandReceived(command);
 	}
 
 	@Override
 	public CommandResult runCommand(final Command command) {
-		String commandName = command.getCommand();
-		HashMap commandParameters = (HashMap) command.getParameters();
-        String commandType;
-        String commandStatus = CommandResult.STATUS_COMLETED;
-        String commandResult;
-        HashMap resultParameters = new HashMap();
 
-		if(!commandParameters.containsKey("device")) {
-			commandStatus = CommandResult.STATUS_FAILED;
-			commandResult = "Failed to execute command " + commandName + " on (" + deviceID + ")" + deviceName;
-			return new CommandResult(commandStatus, commandResult);
-		} else {
-			commandType = commandParameters.get("device").toString();
-		}
+        CommandInfo commandInfo = new CommandInfo(command);
 
-        Log.d(TAG, "Executing command \"" +commandName+"\" on "+TAG);
+        return execute(commandInfo);
+	}
+
+    private CommandResult execute(CommandInfo commandInfo) {
+        if(!commandInfo.getInputParams().containsKey("device")) {
+            commandInfo.setStatus(CommandResult.STATUS_FAILED);
+            commandInfo.setResult("Failed to execute command " + commandInfo.getName() + " on (" + deviceID + ")" + deviceName);
+            return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+        } else {
+            commandInfo.setType(commandInfo.getInputParams().get("device").toString());
+        }
+
+        Log.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
 
         //TODO: parameters in the command should set witch case to execute
-        switch (commandType) {
+        switch (commandInfo.getType()) {
             case DeviceCommand.GET_BATTERY_LEVEL: {
-                resultParameters = getBatteryLevel();
-                commandResult = "Battery is: "+resultParameters.get(DeviceCommand.GET_BATTERY_LEVEL);
-				Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
+                commandInfo.setOutputParams(getBatteryLevel());
+                commandInfo.setResult("Battery is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_BATTERY_LEVEL));
+				Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_GPS_COORDINATES: {
-                //resultParameters = getGPSCoordinates();
-                commandResult = "GPS coordinates are: "+resultParameters.get(DeviceCommand.GET_BATTERY_LEVEL);
-                Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
+                commandInfo.setOutputParams(getGPSCoordinates());
+                commandInfo.setResult("GPS coordinates are: " + commandInfo.getOutputParams().get(DeviceCommand.GET_BATTERY_LEVEL));
+                Log.d(TAG, "Successfully executed command \""  + commandInfo.getName() + "\" on " + TAG);
+                break;
+            }
+
+            case DeviceCommand.GET_TIME_ON: {
+                commandInfo.setOutputParams(getTimeOn());
+                commandInfo.setResult("System Time On is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_TIME_ON));
+                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_SCREEN_SIZE: {
-                resultParameters = getScreenSize();
-                commandResult = "Screen size is: "+resultParameters.get(DeviceCommand.GET_SCREEN_SIZE);
-                Log.d(TAG, "Successfully executed command \"" +commandName+"\" on "+TAG);
+                commandInfo.setOutputParams(getScreenSize());
+                commandInfo.setResult("Screen size is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_SCREEN_SIZE));
+                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             default: {
-                commandStatus = CommandResult.STATUS_FAILED;
-                commandResult = "Failed to execute command " + commandName + " on (" + deviceID + ")" + deviceName;
-				Log.d(TAG, "Failed to execute command \"" +commandName+"\" on "+TAG);
+                commandInfo.setStatus(CommandResult.STATUS_FAILED);
+                commandInfo.setResult("Failed to execute command " + commandInfo.getName() + " on (" + deviceID + ")" + deviceName);
+				Log.d(TAG, "Failed to execute command \""  + commandInfo.getName() + "\" on "+TAG);
             }
         }
 
-        sendNotification(new Notification("Executed command \"" + commandName + "\"", resultParameters));
-        return new CommandResult(commandStatus, commandResult);
-	}
+        sendNotification(new Notification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
+        return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
+
+    private HashMap getGPSCoordinates() {
+        //TODO: implementation
+        //
+        HashMap param = new HashMap();
+        //
+        return param;
+    }
+
+    private HashMap getTimeOn() {
+        //TODO: implementation
+        //
+        HashMap param = new HashMap();
+        //
+        return param;
+    }
 
     private HashMap getBatteryLevel() {
         Battery battery = Battery.getInstance(mContext);

@@ -30,6 +30,9 @@
             android:label="@string/title_activity_settings"
             android:configChanges="orientation"
             android:screenOrientation="sensorPortrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.devicehive.sspasov.device.ui.DeviceActivity" />
         </activity>
 
         <service
