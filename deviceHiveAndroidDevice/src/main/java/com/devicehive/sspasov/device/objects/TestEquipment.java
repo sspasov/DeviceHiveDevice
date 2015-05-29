@@ -114,9 +114,17 @@ public class TestEquipment extends Equipment {
 
 	@Override
 	public CommandResult runCommand(final Command command) {
-		Log.d(TAG, "runCommand: " + command.getCommand());
+
+        CommandInfo commandInfo = new CommandInfo(command);
+
+        return execute(commandInfo);
+	}
+
+    private CommandResult execute(CommandInfo commandInfo) {
+        Log.d(TAG, "runCommand: " + commandInfo.getName());
 
         HashMap<String, Object> sensorParam = new HashMap<>();
+        sensorParam.put("equipment", commandInfo.getInputParams().get("equipment"));
 
         Parameter p = new Parameter("x", x+"");
         sensorParam.put(p.name, p.value);
@@ -132,18 +140,19 @@ public class TestEquipment extends Equipment {
             Log.d(TAG, mSensor.getName() + " value z: " + z);
         }
 
-		HashMap commandParam = (HashMap) command.getParameters();
-		Log.d(TAG, "Executing Command on Equipment (code): " + commandParam.get("equipment"));
+        commandInfo.setResult("Executed on "+equipmentName+"!");
+        commandInfo.setStatus(CommandResult.STATUS_COMLETED);
+        commandInfo.setOutputParams(sensorParam);
 
-        sendNotification(new EquipmentNotification(equipmentCode, sensorParam));
+        Log.d(TAG, "Executing Command on Equipment (code): " + commandInfo.getInputParams().get("equipment"));
 
-		return new CommandResult(
-                CommandResult.STATUS_COMLETED,
-				"Executed on "+equipmentName+"!");
-	}
+        sendNotification(new EquipmentNotification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
+
+        return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
 
 
-	@Override
+    @Override
 	protected boolean onRegisterEquipment() {
 		Log.d(TAG, "onRegisterEquipment");
 		return true;

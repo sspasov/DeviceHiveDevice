@@ -171,7 +171,6 @@ public class TestDevice extends Device {
 	@Override
 	public void onBeforeRunCommand(Command command) {
 		Log.d(TAG, "onBeforeRunCommand: " + command.getCommand());
-        //reloadDeviceData();
 		notifyListenersCommandReceived(command);
 	}
 
@@ -198,28 +197,28 @@ public class TestDevice extends Device {
         switch (commandInfo.getType()) {
             case DeviceCommand.GET_BATTERY_LEVEL: {
                 commandInfo.setOutputParams(getBatteryLevel());
-                commandInfo.setResult("Battery is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_BATTERY_LEVEL));
+                commandInfo.setResult("Battery is: " + commandInfo.getOutputParams().get("value"));
 				Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_GPS_COORDINATES: {
                 commandInfo.setOutputParams(getGPSCoordinates());
-                commandInfo.setResult("GPS coordinates are: " + commandInfo.getOutputParams().get(DeviceCommand.GET_BATTERY_LEVEL));
+                commandInfo.setResult("GPS coordinates are: " + commandInfo.getOutputParams().get("value"));
                 Log.d(TAG, "Successfully executed command \""  + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_TIME_ON: {
                 commandInfo.setOutputParams(getTimeOn());
-                commandInfo.setResult("System Time On is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_TIME_ON));
+                commandInfo.setResult("System Time On is: " + commandInfo.getOutputParams().get("value"));
                 Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_SCREEN_SIZE: {
                 commandInfo.setOutputParams(getScreenSize());
-                commandInfo.setResult("Screen size is: " + commandInfo.getOutputParams().get(DeviceCommand.GET_SCREEN_SIZE));
+                commandInfo.setResult("Screen size is: " + commandInfo.getOutputParams().get("value"));
                 Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }

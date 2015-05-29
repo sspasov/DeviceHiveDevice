@@ -11,7 +11,7 @@ import android.util.Log;
  */
 public class Battery {
     private static final String TAG = Battery.class.getSimpleName();
-    private final String NAME = "battery";
+    private final String NAME = "value";
     private String value;
     private Context mContext;
 

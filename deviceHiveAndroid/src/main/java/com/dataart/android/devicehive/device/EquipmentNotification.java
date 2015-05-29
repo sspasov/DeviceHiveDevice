@@ -21,7 +21,7 @@ public class EquipmentNotification extends Notification {
 	 */
 	public EquipmentNotification(String equipmentCode,
 			HashMap<String, Object> parameters) {
-		super("equipment: "+equipmentCode, equipmentParameters(equipmentCode, parameters));
+		super(equipmentCode, equipmentParameters(equipmentCode, parameters));
 	}
 
 	private static HashMap<String, Object> equipmentParameters(
