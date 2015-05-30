@@ -10,6 +10,6 @@ public final class DeviceHiveConfig {
 
     public static final boolean DEFAULT_FIRST_STARTUP = true;
     public static final String DEFAULT_NETWORK_NAME = "Simple Device Network";
-    public static final String DEFAULT_NETWORK_DESCRIPTION = "Simple Device Network Description";
+    public static final String DEFAULT_NETWORK_DESCRIPTION = "no network description";
 
 }

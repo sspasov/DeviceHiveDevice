@@ -58,11 +58,6 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
 	private DevicePreferences prefs;
 
-    /*public static void start(Context context, DeviceData deviceData) {
-        Intent intent = new Intent(context, DeviceActivity.class);
-        intent.putExtra(EXTRA_DEVICE, deviceData);
-        context.startActivity(intent);
-    }*/
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -111,10 +106,6 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-        //device.reloadDeviceData();
-
-
-
         device.addDeviceListener(this);
         device.addCommandListener(this);
 		device.addNotificationListener(this);

@@ -1,11 +1,10 @@
 package com.devicehive.sspasov.device.objects;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.dataart.android.devicehive.Network;
 import com.dataart.android.devicehive.Notification;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Device;
-import com.devicehive.sspasov.device.BuildConfig;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.commands.DeviceCommand;
 import com.devicehive.sspasov.device.utils.DeviceConfig;
@@ -111,7 +109,7 @@ public class TestDevice extends Device {
                 null); //DeviceConfig.DEVICE_TIMEOUT
 
         deviceID = getDeviceUniqueID(context);
-        deviceName = android.os.Build.MODEL;
+        deviceName = Build.MANUFACTURER + " " + Build.MODEL;
 
 		final DeviceData deviceData = new DeviceData(
                 deviceID, 					                    //DEVICE UNIQUE ID
@@ -140,7 +138,6 @@ public class TestDevice extends Device {
 				Configuration.SCREENLAYOUT_SIZE_MASK) ==
 				Configuration.SCREENLAYOUT_SIZE_LARGE);
 
-
 		if (device_large) {
 			DisplayMetrics metrics = new DisplayMetrics();
 			//activity = (Activity) activityContext.getApplicationContext();;
@@ -159,14 +156,15 @@ public class TestDevice extends Device {
 	}
 
 	private static String getDeviceClassVersion(Context context) {
-		PackageManager manager = context.getPackageManager();
+        return Build.VERSION.RELEASE;
+		/*PackageManager manager = context.getPackageManager();
 		PackageInfo info = null;
 		try {
 			info = manager.getPackageInfo(context.getPackageName(), 0);
 		} catch (PackageManager.NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		return info != null ? info.versionName : BuildConfig.VERSION_NAME;
+		return info != null ? info.versionName : BuildConfig.VERSION_NAME;*/
 	}
 	
 	@Override
