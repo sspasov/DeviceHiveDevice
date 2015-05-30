@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.EquipmentData;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.objects.EquipmentTypeConverter;
 
 import java.util.List;
 
@@ -102,7 +101,7 @@ public class EquipmentListFragment extends ListFragment {
 			final EquipmentData equipmentData = equipment.get(position);
 			holder.name.setText(equipmentData.getName());
 			holder.code.setText(equipmentData.getCode());
-			holder.type.setText(EquipmentTypeConverter.toString(equipmentData.getType()));
+			holder.type.setText(equipmentData.getType());
 
 			//holder.data.setText(equipmentData.getData() != null ? equipmentData.getData().toString() : "--");
 			return convertView;

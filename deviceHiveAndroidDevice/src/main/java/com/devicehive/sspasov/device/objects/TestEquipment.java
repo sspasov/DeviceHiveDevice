@@ -35,7 +35,7 @@ public class TestEquipment extends Equipment {
         super(equipmentData(
                         sensor.getName(),
                         Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_" + sensor.getType(),
-                        sensor.getType() + "")
+                        EquipmentTypeConverter.toString(sensor.getType()))
         );
         Log.d(TAG, "Attaching equipment: " + sensor.getName());
         this.mContext = context;
