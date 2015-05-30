@@ -87,7 +87,10 @@ public class DeviceInformationFragment extends SherlockFragment {
             tvDeviceClassIsPermanent.setText("" + deviceData.getDeviceClass().isPermanent());
 
             tvDeviceNetworkName.setText(deviceData.getNetwork().getName());
-            tvDeviceNetworkDescription.setText(deviceData.getNetwork().getDescription());
+            tvDeviceNetworkDescription.setText(deviceData.getNetwork().getDescription().isEmpty() ? "--" : deviceData.getNetwork().getDescription());
+            //"Hi my name is . Hi my name is .
+            // Hi my name is . Hi my name is .
+            // Hi my name is ."
         }
     }
 
