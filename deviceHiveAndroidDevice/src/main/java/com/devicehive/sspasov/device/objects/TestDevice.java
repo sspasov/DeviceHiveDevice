@@ -57,6 +57,7 @@ public class TestDevice extends Device {
 		void onDeviceFailedToSendNotification(Notification notification);
 	}
 
+
 	public TestDevice(Context context) {
 		super(context, getTestDeviceData(context));
         this.mContext = context;
@@ -100,8 +101,8 @@ public class TestDevice extends Device {
 	private static DeviceData getTestDeviceData(Context context) {
 		
 		final Network network = new Network( //TODO: need to rethink this
-				"SAMPLE_Test Android Network(Device Framework)",
-				"SAMPLE_DESCRIPTION Test Android Device Network(Device Framework)");
+				DeviceConfig.NETWORK_NAME,
+				DeviceConfig.NETWORK_DESCRIPTION);
 
 		final DeviceClass deviceClass = new DeviceClass(
 				getDeviceClass(context),

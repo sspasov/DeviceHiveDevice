@@ -15,8 +15,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.Notification;
+import com.devicehive.sspasov.device.BuildConfig;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.DeviceApplication;
 import com.devicehive.sspasov.device.adapters.TabsAdapter;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog.ParameterDialogListener;
@@ -69,10 +69,18 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_device);
 
-		DeviceApplication app = (DeviceApplication) getApplication();
-		device = app.getDevice();
+        prefs = new DevicePreferences(this);
 
-		prefs = new DevicePreferences(this);
+        if(prefs.isFirstStartup()) {
+            Intent startupActivity = new Intent(this, StartupConfigurationActivity.class);
+            startActivity(startupActivity);
+            finish();
+        }
+
+        device = new TestDevice(getApplicationContext());
+        device.setDebugLoggingEnabled(BuildConfig.DEBUG);
+        device.setApiEnpointUrl(prefs.getServerUrl());
+
 
 		ActionBar ab = getSupportActionBar();
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -104,6 +112,9 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 	protected void onResume() {
 		super.onResume();
         //device.reloadDeviceData();
+
+
+
         device.addDeviceListener(this);
         device.addCommandListener(this);
 		device.addNotificationListener(this);

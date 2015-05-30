@@ -1,67 +1,27 @@
 package com.devicehive.sspasov.device.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.EditText;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.utils.DevicePreferences;
 
-public class SettingsActivity extends SherlockActivity {
+public class SettingsActivity extends SherlockPreferenceActivity {
 
-	private EditText serverUrlEdit;
+    private static final String TAG = SettingsActivity.class.getSimpleName();
 
 	private DevicePreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.pref_general);
 
-        //ab.setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		serverUrlEdit = (EditText) findViewById(R.id.server_url_edit);
-
-		prefs = new DevicePreferences(SettingsActivity.this);
-
-		findViewById(R.id.undo_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						resetValues();
-					}
-				});
-		findViewById(R.id.save_button).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						saveValues();
-					}
-				});
-
-		resetValues();
-	}
-
-	private void resetValues() {
-		serverUrlEdit.setText(prefs.getServerUrl());
-	}
-
-	private void saveValues() {
-		final String serverUrl = serverUrlEdit.getText().toString();
-		if (TextUtils.isEmpty(serverUrl)) {
-			serverUrlEdit.setError("Server URL is required");
-		} else {
-			if (!serverUrl.equals(prefs.getServerUrl())) {
-				prefs.setServerUrlSync(serverUrl);
-				setResult(RESULT_OK);
-			}
-			finish();
-		}
-	}
+        prefs = new DevicePreferences(SettingsActivity.this);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

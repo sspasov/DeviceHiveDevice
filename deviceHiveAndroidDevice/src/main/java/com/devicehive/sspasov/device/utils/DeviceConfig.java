@@ -7,4 +7,8 @@ public class DeviceConfig {
     public static int DEVICE_TIMEOUT;
     public static boolean DEVICE_ASYNC_COMMAND_EXECUTION;
     public static boolean DEVICE_IS_PERMANENT;
+
+    public static boolean FIRST_STARTUP;
+    public static String NETWORK_NAME;
+    public static String NETWORK_DESCRIPTION;
 }

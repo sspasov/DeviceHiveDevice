@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="General">
+
+        <Preference
+            android:key="pref_key_api_endpoint"
+            android:summary="URL which will be used to communicate with the DeviceHive"
+            android:title="API Endpoint"/>
+        <Preference
+            android:key="pref_key_network"
+            android:summary="This network is used from the hive to manage devices. You can have multiple devices in the same network and this way they can communicate"
+            android:title="Network"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Optional">
+
+        <CheckBoxPreference
+            android:key="pref_key_async_commands"
+            android:summary="Check for asynchronously commands execution."
+            android:title="Async Commands"
+            android:defaultValue="false"/>
+        <Preference
+            android:key="pref_key_device_timeout"
+            android:summary="Device timeout. Set after how many seconds the device goes in offline mode. Default value is 0 - never goes offline."
+            android:title="Device Timeout"
+            android:defaultValue="0"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
