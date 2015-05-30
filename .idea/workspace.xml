@@ -33,9 +33,8 @@
         <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestDevice.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="163" column="65" selection-start-line="163" selection-start-column="65" selection-end-line="163" selection-end-column="65" />
+              <caret line="74" column="57" selection-start-line="74" selection-start-column="57" selection-end-line="74" selection-end-column="57" />
               <folding>
-                <element signature="imports" expanded="false" />
                 <element signature="class#CommandListener#0;class#TestDevice#0" expanded="false" />
                 <element signature="class#NotificationListener#0;class#TestDevice#0" expanded="false" />
                 <element signature="method#isDeviceTablet#0;class#TestDevice#0" expanded="false" />
@@ -47,14 +46,19 @@
                 <element signature="method#getTimeOn#0;class#TestDevice#0" expanded="false" />
                 <element signature="method#getBatteryLevel#0;class#TestDevice#0" expanded="false" />
                 <element signature="method#getScreenSize#0;class#TestDevice#0" expanded="false" />
-                <element signature="e#11830#11831#0" expanded="false" />
-                <element signature="e#11876#11877#0" expanded="false" />
-                <element signature="e#12502#12503#0" expanded="false" />
-                <element signature="e#12551#12552#0" expanded="false" />
-                <element signature="e#12921#12922#0" expanded="false" />
-                <element signature="e#12976#12977#0" expanded="false" />
-                <element signature="e#13039#13040#0" expanded="false" />
-                <element signature="e#13093#13094#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEquipment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="90" column="10" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
+              <folding>
+                <element signature="method#isMultipleValueEquipment#0;class#TestEquipment#0" expanded="false" />
+                <element signature="method#execute#0;class#TestEquipment#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -65,29 +69,55 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="242" column="58" selection-start-line="242" selection-start-column="58" selection-end-line="242" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#7127#7128#0" expanded="false" />
-                <element signature="e#7171#7172#0" expanded="false" />
-                <element signature="e#7513#7514#0" expanded="false" />
-                <element signature="e#7544#7545#0" expanded="false" />
-                <element signature="e#7632#7633#0" expanded="false" />
-                <element signature="e#7668#7669#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeviceInformationFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceInformationFragment.java">
+      <file leaf-file-name="EquipmentListFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/EquipmentListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5682657">
-              <caret line="90" column="45" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="104" column="87" selection-start-line="104" selection-start-column="87" selection-end-line="104" selection-end-column="87" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EquipmentTypeConverter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/EquipmentTypeConverter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8302583">
+              <caret line="160" column="80" selection-start-line="160" selection-start-column="80" selection-end-line="160" selection-end-column="80" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="equipment_list_item.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/equipment_list_item.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="14.870968">
+              <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
               <folding>
-                <element signature="method#timeThread#0;class#DeviceInformationFragment#0" expanded="false" />
-                <element signature="method#batteryThread#0;class#DeviceInformationFragment#0" expanded="false" />
+                <element signature="e#405#430#0" expanded="true" />
+                <element signature="e#486#513#0" expanded="true" />
+                <element signature="e#539#561#0" expanded="true" />
+                <element signature="e#793#825#0" expanded="true" />
+                <element signature="e#1081#1108#0" expanded="true" />
+                <element signature="e#1319#1343#0" expanded="true" />
+                <element signature="e#1383#1407#0" expanded="true" />
+                <element signature="e#1505#1538#0" expanded="true" />
+                <element signature="e#1685#1717#0" expanded="true" />
+                <element signature="e#1973#2000#0" expanded="true" />
+                <element signature="e#2204#2228#0" expanded="true" />
+                <element signature="e#2268#2292#0" expanded="true" />
+                <element signature="e#2390#2423#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -96,8 +126,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -1932,7 +1962,6 @@
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/adapters/TabsAdapter.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/dialogs/ParameterDialog.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceSendNotificationFragment.java" />
-        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/EquipmentListFragment.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/Parameter.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/utils/SampleDevicePreferences.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/build/generated/source/buildConfig/debug/com/dataart/devicehive/device/sample/BuildConfig.java" />
@@ -1943,7 +1972,6 @@
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/CommandInfo.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/device/EquipmentNotification.java" />
-        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipment.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/DeviceTimeOn.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/Battery.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/ScreenSize.java" />
@@ -1964,6 +1992,12 @@
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestDevice.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/fragment_device_info.xml" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceInformationFragment.java" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/equipment_list_item.xml" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/EquipmentData.java" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipmentData.java" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipment.java" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/EquipmentListFragment.java" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/EquipmentTypeConverter.java" />
       </list>
     </option>
   </component>
@@ -2658,7 +2692,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3869239" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3869239" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23770039" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -2739,27 +2773,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/network/DeviceHiveApiService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47482014">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/device/commands/DeviceCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.024489796">
-          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/device/commands/RegisterDeviceCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26938775">
-          <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/network/ServiceConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7811321">
@@ -2785,6 +2798,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44827586">
           <caret line="20" column="36" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2803,6 +2817,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.86206895">
           <caret line="33" column="22" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2865,6 +2880,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1627907">
           <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2872,6 +2888,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="35" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="35" />
+          <folding>
+            <element signature="e#962#963#0" expanded="false" />
+            <element signature="e#1001#1002#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2879,6 +2899,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35955057">
           <caret line="21" column="53" selection-start-line="21" selection-start-column="40" selection-end-line="21" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2910,17 +2931,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
-          <folding>
-            <element signature="method#isMultipleValueEquipment#0;class#TestEquipment#0" expanded="false" />
-            <element signature="method#execute#0;class#TestEquipment#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/DeviceTimeOn.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2934,28 +2944,6 @@
         <state vertical-scroll-proportion="0.33204633">
           <caret line="4422" column="22" selection-start-line="4422" selection-start-column="22" selection-end-line="4422" selection-end-column="22" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/dialog_pref_network.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4804928">
-          <caret line="13" column="52" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/dialog_pref_api_endpoint.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36960986">
-          <caret line="10" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Sdk/sources/android-22/android/preference/DialogPreference.java">
@@ -3010,6 +2998,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33204633">
           <caret line="124" column="0" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3100,67 +3089,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/Battery.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73412114">
-          <caret line="60" column="5" selection-start-line="54" selection-start-column="4" selection-end-line="60" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="242" column="58" selection-start-line="242" selection-start-column="58" selection-end-line="242" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#7127#7128#0" expanded="false" />
-            <element signature="e#7171#7172#0" expanded="false" />
-            <element signature="e#7513#7514#0" expanded="false" />
-            <element signature="e#7544#7545#0" expanded="false" />
-            <element signature="e#7632#7633#0" expanded="false" />
-            <element signature="e#7668#7669#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestDevice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="163" column="65" selection-start-line="163" selection-start-column="65" selection-end-line="163" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="class#CommandListener#0;class#TestDevice#0" expanded="false" />
-            <element signature="class#NotificationListener#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#isDeviceTablet#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#getDeviceClassVersion#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#onBeforeRunCommand#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#runCommand#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#execute#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#getGPSCoordinates#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#getTimeOn#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#getBatteryLevel#0;class#TestDevice#0" expanded="false" />
-            <element signature="method#getScreenSize#0;class#TestDevice#0" expanded="false" />
-            <element signature="e#11830#11831#0" expanded="false" />
-            <element signature="e#11876#11877#0" expanded="false" />
-            <element signature="e#12502#12503#0" expanded="false" />
-            <element signature="e#12551#12552#0" expanded="false" />
-            <element signature="e#12921#12922#0" expanded="false" />
-            <element signature="e#12976#12977#0" expanded="false" />
-            <element signature="e#13039#13040#0" expanded="false" />
-            <element signature="e#13093#13094#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41779497">
@@ -3177,97 +3105,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceInformationFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9932886">
+          <caret line="82" column="28" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
+          <folding>
+            <element signature="method#timeThread#0;class#DeviceInformationFragment#0" expanded="false" />
+            <element signature="method#batteryThread#0;class#DeviceInformationFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29889297">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/fragment_device_info.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5440313">
-          <caret line="401" column="36" selection-start-line="401" selection-start-column="36" selection-end-line="401" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.33268103">
+          <caret line="170" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="20" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/layout/equipment_list_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="14.870968">
+          <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
           <folding>
-            <element signature="e#749#774#0" expanded="true" />
-            <element signature="e#800#825#0" expanded="true" />
-            <element signature="e#855#877#0" expanded="true" />
-            <element signature="e#1115#1147#0" expanded="true" />
-            <element signature="e#1181#1213#0" expanded="true" />
-            <element signature="e#1489#1521#0" expanded="true" />
-            <element signature="e#1928#1943#0" expanded="true" />
-            <element signature="e#2144#2167#0" expanded="true" />
-            <element signature="e#2277#2301#0" expanded="true" />
-            <element signature="e#2335#2359#0" expanded="true" />
-            <element signature="e#2559#2591#0" expanded="true" />
-            <element signature="e#2625#2657#0" expanded="true" />
-            <element signature="e#2933#2966#0" expanded="true" />
-            <element signature="e#3374#3389#0" expanded="true" />
-            <element signature="e#3590#3613#0" expanded="true" />
-            <element signature="e#3723#3747#0" expanded="true" />
-            <element signature="e#3781#3805#0" expanded="true" />
-            <element signature="e#4005#4037#0" expanded="true" />
-            <element signature="e#4071#4103#0" expanded="true" />
-            <element signature="e#4379#4409#0" expanded="true" />
-            <element signature="e#4814#4829#0" expanded="true" />
-            <element signature="e#5030#5053#0" expanded="true" />
-            <element signature="e#5163#5187#0" expanded="true" />
-            <element signature="e#5221#5245#0" expanded="true" />
-            <element signature="e#5445#5477#0" expanded="true" />
-            <element signature="e#5511#5543#0" expanded="true" />
-            <element signature="e#5819#5853#0" expanded="true" />
-            <element signature="e#6262#6277#0" expanded="true" />
-            <element signature="e#6478#6501#0" expanded="true" />
-            <element signature="e#6611#6635#0" expanded="true" />
-            <element signature="e#6669#6693#0" expanded="true" />
-            <element signature="e#6893#6925#0" expanded="true" />
-            <element signature="e#6959#6991#0" expanded="true" />
-            <element signature="e#7267#7302#0" expanded="true" />
-            <element signature="e#7712#7727#0" expanded="true" />
-            <element signature="e#7928#7951#0" expanded="true" />
-            <element signature="e#8061#8085#0" expanded="true" />
-            <element signature="e#8119#8143#0" expanded="true" />
-            <element signature="e#8343#8375#0" expanded="true" />
-            <element signature="e#8409#8441#0" expanded="true" />
-            <element signature="e#8717#8752#0" expanded="true" />
-            <element signature="e#9162#9185#0" expanded="true" />
-            <element signature="e#9386#9416#0" expanded="true" />
-            <element signature="e#9526#9550#0" expanded="true" />
-            <element signature="e#9584#9608#0" expanded="true" />
-            <element signature="e#10001#10026#0" expanded="true" />
-            <element signature="e#10052#10083#0" expanded="true" />
-            <element signature="e#10113#10135#0" expanded="true" />
-            <element signature="e#10372#10404#0" expanded="true" />
-            <element signature="e#10438#10470#0" expanded="true" />
-            <element signature="e#10746#10784#0" expanded="true" />
-            <element signature="e#11197#11212#0" expanded="true" />
-            <element signature="e#11413#11436#0" expanded="true" />
-            <element signature="e#11546#11570#0" expanded="true" />
-            <element signature="e#11604#11628#0" expanded="true" />
-            <element signature="e#11828#11860#0" expanded="true" />
-            <element signature="e#11894#11926#0" expanded="true" />
-            <element signature="e#12202#12243#0" expanded="true" />
-            <element signature="e#12659#12674#0" expanded="true" />
-            <element signature="e#12875#12898#0" expanded="true" />
-            <element signature="e#13008#13032#0" expanded="true" />
-            <element signature="e#13066#13090#0" expanded="true" />
-            <element signature="e#13290#13322#0" expanded="true" />
-            <element signature="e#13356#13388#0" expanded="true" />
-            <element signature="e#13664#13710#0" expanded="true" />
-            <element signature="e#14131#14146#0" expanded="true" />
-            <element signature="e#14347#14377#0" expanded="true" />
-            <element signature="e#14487#14511#0" expanded="true" />
-            <element signature="e#14545#14569#0" expanded="true" />
-            <element signature="e#14942#14967#0" expanded="true" />
-            <element signature="e#14989#15022#0" expanded="true" />
-            <element signature="e#15048#15070#0" expanded="true" />
-            <element signature="e#15283#15315#0" expanded="true" />
-            <element signature="e#15345#15377#0" expanded="true" />
-            <element signature="e#15629#15669#0" expanded="true" />
-            <element signature="e#16052#16067#0" expanded="true" />
-            <element signature="e#16248#16271#0" expanded="true" />
-            <element signature="e#16373#16397#0" expanded="true" />
-            <element signature="e#16427#16451#0" expanded="true" />
-            <element signature="e#16631#16663#0" expanded="true" />
-            <element signature="e#16693#16725#0" expanded="true" />
-            <element signature="e#16953#17000#0" expanded="true" />
-            <element signature="e#17359#17374#0" expanded="true" />
-            <element signature="e#17532#17562#0" expanded="true" />
-            <element signature="e#17648#17672#0" expanded="true" />
-            <element signature="e#17694#17718#0" expanded="true" />
+            <element signature="e#405#430#0" expanded="true" />
+            <element signature="e#486#513#0" expanded="true" />
+            <element signature="e#539#561#0" expanded="true" />
+            <element signature="e#793#825#0" expanded="true" />
+            <element signature="e#1081#1108#0" expanded="true" />
+            <element signature="e#1319#1343#0" expanded="true" />
+            <element signature="e#1383#1407#0" expanded="true" />
+            <element signature="e#1505#1538#0" expanded="true" />
+            <element signature="e#1685#1717#0" expanded="true" />
+            <element signature="e#1973#2000#0" expanded="true" />
+            <element signature="e#2204#2228#0" expanded="true" />
+            <element signature="e#2268#2292#0" expanded="true" />
+            <element signature="e#2390#2423#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3275,14 +3160,96 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceInformationFragment.java">
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5682657">
-          <caret line="90" column="45" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="242" column="58" selection-start-line="242" selection-start-column="58" selection-end-line="242" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="57" selection-start-line="74" selection-start-column="57" selection-end-line="74" selection-end-column="57" />
           <folding>
-            <element signature="method#timeThread#0;class#DeviceInformationFragment#0" expanded="false" />
-            <element signature="method#batteryThread#0;class#DeviceInformationFragment#0" expanded="false" />
+            <element signature="class#CommandListener#0;class#TestDevice#0" expanded="false" />
+            <element signature="class#NotificationListener#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#isDeviceTablet#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#getDeviceClassVersion#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#onBeforeRunCommand#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#runCommand#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#execute#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#getGPSCoordinates#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#getTimeOn#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#getBatteryLevel#0;class#TestDevice#0" expanded="false" />
+            <element signature="method#getScreenSize#0;class#TestDevice#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipmentData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46494466">
+          <caret line="27" column="53" selection-start-line="27" selection-start-column="53" selection-end-line="27" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#266#267#0" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#337#338#0" expanded="true" />
+            <element signature="e#361#362#0" expanded="true" />
+            <element signature="e#417#418#0" expanded="true" />
+            <element signature="e#452#453#0" expanded="true" />
+            <element signature="e#646#647#0" expanded="true" />
+            <element signature="e#702#703#0" expanded="true" />
+            <element signature="e#759#760#0" expanded="true" />
+            <element signature="e#817#818#0" expanded="true" />
+            <element signature="e#868#869#0" expanded="true" />
+            <element signature="e#904#905#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/TestEquipment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="10" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
+          <folding>
+            <element signature="method#isMultipleValueEquipment#0;class#TestEquipment#0" expanded="false" />
+            <element signature="method#execute#0;class#TestEquipment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/Battery.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="5" selection-start-line="17" selection-start-column="3" selection-end-line="44" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Sdk/sources/android-22/android/hardware/Sensor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59778595">
+          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="511" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/EquipmentListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="87" selection-start-line="104" selection-start-column="87" selection-end-line="104" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/objects/EquipmentTypeConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8302583">
+          <caret line="160" column="80" selection-start-line="160" selection-start-column="80" selection-end-line="160" selection-end-column="80" />
+          <folding />
         </state>
       </provider>
     </entry>

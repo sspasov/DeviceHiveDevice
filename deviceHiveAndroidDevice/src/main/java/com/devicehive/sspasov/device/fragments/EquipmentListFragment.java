@@ -2,6 +2,8 @@ package com.devicehive.sspasov.device.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.EquipmentData;
 import com.devicehive.sspasov.device.R;
+import com.devicehive.sspasov.device.objects.EquipmentTypeConverter;
 
 import java.util.List;
 
@@ -20,9 +23,14 @@ public class EquipmentListFragment extends ListFragment {
 	private List<EquipmentData> equipment;
 	private EquipmentAdapter equipmentAdapter;
 
+    List<Sensor> deviceSensors;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+        SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 	}
 
 	public static EquipmentListFragment newInstance() {
@@ -32,7 +40,7 @@ public class EquipmentListFragment extends ListFragment {
 	public void setEquipment(List<EquipmentData> equipment) {
 		this.equipment = equipment;
 		if (getActivity() != null) {
-			equipmentAdapter = new EquipmentAdapter(getActivity(), equipment);
+			equipmentAdapter = new EquipmentAdapter(getActivity(), this.equipment);
 			setListAdapter(equipmentAdapter);
 		}
 	}
@@ -84,8 +92,8 @@ public class EquipmentListFragment extends ListFragment {
 				holder = new ViewHolder();
 				holder.name = (TextView) convertView.findViewById(R.id.equipment_name_text_view);
 				holder.code = (TextView) convertView.findViewById(R.id.equipment_code_text_view);
-				holder.type = (TextView) convertView.findViewById(R.id.equipment_type_text_view);
-				holder.data = (TextView) convertView.findViewById(R.id.equipment_data_text_view);
+				holder.type = (TextView) convertView.findViewById(R.id.tv_equipment_type);
+				//holder.data = (TextView) convertView.findViewById(R.id.equipment_data_text_view);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -94,8 +102,9 @@ public class EquipmentListFragment extends ListFragment {
 			final EquipmentData equipmentData = equipment.get(position);
 			holder.name.setText(equipmentData.getName());
 			holder.code.setText(equipmentData.getCode());
-			holder.type.setText(equipmentData.getType());
-			holder.data.setText(equipmentData.getData() != null ? equipmentData.getData().toString() : "--");
+			holder.type.setText(EquipmentTypeConverter.toString(equipmentData.getType()));
+
+			//holder.data.setText(equipmentData.getData() != null ? equipmentData.getData().toString() : "--");
 			return convertView;
 		}
 
@@ -103,7 +112,7 @@ public class EquipmentListFragment extends ListFragment {
 			TextView name;
 			TextView code;
 			TextView type;
-			TextView data;
+			//TextView data;
 		}
 
 	}

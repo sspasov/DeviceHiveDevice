@@ -29,5 +29,10 @@
     <string name="tv_title_device_class">Device Class</string>
     <string name="tv_calculatin">calculating</string>
     <string name="empty">--</string>
+    <string name="tv_equipment_code">Code</string>
+    <string name="tv_equipment_code_empty">Equipment code</string>
+    <string name="et_equipment_name">Equipment name</string>
+    <string name="tv_equipment_type">Type</string>
+    <string name="tv_equipment_type_empty">Equipment type</string>
 
 </resources>

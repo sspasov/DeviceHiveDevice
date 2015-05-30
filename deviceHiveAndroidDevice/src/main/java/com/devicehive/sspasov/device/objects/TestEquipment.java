@@ -87,7 +87,9 @@ public class TestEquipment extends Equipment {
      * @code - unique ID for the equipment. It's used to point and use this equipment.
      * @type - equipment type **/
 	private static EquipmentData equipmentData(String name, String code, String type) {
-        return new EquipmentData(name, code, type);
+        EquipmentData ed = new EquipmentData(name, code, type);
+        //ed.setData((Serializable) new TestEquipmentData(4236));
+        return ed;
 	}
 
     public SensorEventListener getSensorListener() {
