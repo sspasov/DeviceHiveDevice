@@ -8,4 +8,5 @@
     <dimen name="divider_height">2dp</dimen>
     <dimen name="bottom_divider_height">5dp</dimen>
     <dimen name="divider_padding">6dp</dimen>
+    <dimen name="tv_command_name">18sp</dimen>
 </resources>
