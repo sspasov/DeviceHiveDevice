@@ -1,4 +1,4 @@
-package com.devicehive.sspasov.device.utils;
+package com.devicehive.sspasov.device.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,18 +6,18 @@ import android.content.SharedPreferences;
 public class DevicePreferences {
 	private static final String TAG = DevicePreferences.class.getSimpleName();
 
-	private final static String NAMESPACE = "devicehive.";
+	private final static String NAMESPACE = "";
 
 	private final Context context;
 	private final SharedPreferences preferences;
 
     public DevicePreferences(final Context context) {
         this.context = context;
-        this.preferences = context.getSharedPreferences(context.getPackageName()+"_devicehiveprefs", Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences(context.getPackageName()+"_preferences", Context.MODE_PRIVATE);
     }
 	
 	/**preference for server url*/
-    private final static String KEY_SERVER_URL = NAMESPACE.concat(".KEY_SERVER_URL");
+    private final static String KEY_SERVER_URL = NAMESPACE.concat("KEY_SERVER_URL");
 
 	public String getServerUrl() {
 		return preferences.getString(KEY_SERVER_URL, null);
@@ -30,7 +30,7 @@ public class DevicePreferences {
 	}
 
     /**preference for device timeout*/
-    private final static String KEY_DEVICE_TIMEOUT = NAMESPACE.concat(".KEY_DEVICE_TIMEOUT");
+    private final static String KEY_DEVICE_TIMEOUT = NAMESPACE.concat("KEY_DEVICE_TIMEOUT");
 
     public int getDeviceTimeout() {
         return preferences.getInt(KEY_DEVICE_TIMEOUT, -1);
@@ -43,7 +43,7 @@ public class DevicePreferences {
     }
 
     /**preference for running device commands async*/
-    private final static String KEY_ASYNC_COMMAND_EXECUTION = NAMESPACE.concat(".KEY_ASYNC_COMMAND_EXECUTION");
+    private final static String KEY_ASYNC_COMMAND_EXECUTION = NAMESPACE.concat("KEY_ASYNC_COMMAND_EXECUTION");
 
     public boolean getDeviceAsyncCommandExecution() {
         return preferences.getBoolean(KEY_ASYNC_COMMAND_EXECUTION, DeviceHiveConfig.DEFAULT_DEVICE_ASYNC_COMMAND_EXECUTION);
@@ -56,7 +56,7 @@ public class DevicePreferences {
     }
 
     /**preference for is permanent device*/
-    private final static String KEY_IS_PERMANENT = NAMESPACE.concat(".KEY_IS_PERMANENT");
+    private final static String KEY_IS_PERMANENT = NAMESPACE.concat("KEY_IS_PERMANENT");
 
     public boolean getDeviceIsPermanent() {
         return preferences.getBoolean(KEY_IS_PERMANENT, DeviceHiveConfig.DEFAULT_DEVICE_IS_PERMANENT);
@@ -69,7 +69,7 @@ public class DevicePreferences {
     }
 
     /**preference for first time startup configuration*/
-    private final static String KEY_FIRST_STARTUP = NAMESPACE.concat(".KEY_FIRST_STARTUP");
+    private final static String KEY_FIRST_STARTUP = NAMESPACE.concat("KEY_FIRST_STARTUP");
 
     public boolean isFirstStartup() {
         return preferences.getBoolean(KEY_FIRST_STARTUP, DeviceHiveConfig.DEFAULT_FIRST_STARTUP);
@@ -82,7 +82,7 @@ public class DevicePreferences {
     }
 
     /**preference for is network name and description*/
-    private final static String KEY_NETWORK_NAME = NAMESPACE.concat(".KEY_NETWORK_NAME");
+    private final static String KEY_NETWORK_NAME = NAMESPACE.concat("KEY_NETWORK_NAME");
 
     public String getNetworkName() {
         return preferences.getString(KEY_NETWORK_NAME, null);
@@ -94,7 +94,7 @@ public class DevicePreferences {
         editor.apply();
     }
 
-    private final static String KEY_NETWORK_DESCRIPTION = NAMESPACE.concat(".KEY_NETWORK_DESCRIPTION");
+    private final static String KEY_NETWORK_DESCRIPTION = NAMESPACE.concat("KEY_NETWORK_DESCRIPTION");
 
     public String getNetworkDescription() {
         return preferences.getString(KEY_NETWORK_DESCRIPTION, null);

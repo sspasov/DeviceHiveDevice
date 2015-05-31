@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.utils.DeviceConfig;
-import com.devicehive.sspasov.device.utils.DevicePreferences;
+import com.devicehive.sspasov.device.config.DeviceConfig;
+import com.devicehive.sspasov.device.config.DevicePreferences;
 
 public class StartupConfigurationActivity extends Activity implements View.OnClickListener {
 
@@ -68,9 +68,14 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         if(!isEmpty) {
             prefs.setIsFirstStartup(false);
+            DeviceConfig.FIRST_STARTUP = prefs.isFirstStartup();
+
             prefs.setServerUrlSync(etApiEndpoint.getText().toString());
+            DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
+
             prefs.setNetworkName(etNetworkName.getText().toString());
             DeviceConfig.NETWORK_NAME = prefs.getNetworkName();
+
             prefs.setNetworkDescription(etNetworkDescription.getText().toString());
             DeviceConfig.NETWORK_DESCRIPTION = prefs.getNetworkDescription();
 

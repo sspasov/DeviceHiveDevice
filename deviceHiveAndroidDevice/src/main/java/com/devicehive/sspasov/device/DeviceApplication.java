@@ -3,9 +3,9 @@ package com.devicehive.sspasov.device;
 import android.app.Application;
 import android.util.Log;
 
-import com.devicehive.sspasov.device.utils.DeviceConfig;
-import com.devicehive.sspasov.device.utils.DeviceHiveConfig;
-import com.devicehive.sspasov.device.utils.DevicePreferences;
+import com.devicehive.sspasov.device.config.DeviceConfig;
+import com.devicehive.sspasov.device.config.DeviceHiveConfig;
+import com.devicehive.sspasov.device.config.DevicePreferences;
 
 public class DeviceApplication extends Application {
 
@@ -29,9 +29,10 @@ public class DeviceApplication extends Application {
 
 
         if(prefs.getServerUrl() == null) {
-            prefs.setServerUrlSync(DeviceHiveConfig.API_ENDPOINT);
+            prefs.setServerUrlSync(DeviceHiveConfig.DEFAULT_API_ENDPOINT);
         }
         Log.d(TAG, "DevicePref apiendpoint: "+prefs.getServerUrl());
+        DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
 
 
         if(prefs.getDeviceTimeout() == -1) {

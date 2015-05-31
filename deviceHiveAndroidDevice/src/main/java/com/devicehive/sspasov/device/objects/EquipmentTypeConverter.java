@@ -17,7 +17,6 @@ public class EquipmentTypeConverter {
     private EquipmentTypeConverter() {}
 
     public static String toString(String type){
-
         int mType = Integer.decode(type);
 
         switch (mType) {
@@ -133,11 +132,6 @@ public class EquipmentTypeConverter {
                 return null;
         }
     }
-
-
-
-
-
 
     private static final int TYPE_ACCELEROMETER = 1;
     private static final String STRING_TYPE_ACCELEROMETER = "accelerometer";

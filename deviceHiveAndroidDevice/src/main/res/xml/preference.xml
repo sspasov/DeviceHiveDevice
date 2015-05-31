@@ -1,0 +1,41 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="General">
+
+        <EditTextPreference
+            android:key="KEY_SERVER_URL"
+            android:summary="Restart is required for the changes to take effect."
+            android:title="API Endpoint"/>
+
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory
+        android:title="Network">
+
+        <EditTextPreference
+            android:key="KEY_NETWORK_NAME"
+            android:summary="Restart is required for the changes to take effect."
+            android:title="Network Name"/>
+        <EditTextPreference
+            android:key="KEY_NETWORK_DESCRIPTION"
+            android:summary="(Optional) Simple description for the network."
+            android:title="Network Description"/>
+
+    </PreferenceCategory>-->
+
+    <PreferenceCategory
+        android:title="Optional">
+
+        <CheckBoxPreference
+            android:key="KEY_ASYNC_COMMAND_EXECUTION"
+            android:summary="Check for asynchronously commands execution."
+            android:title="Async Commands"/>
+        <com.devicehive.sspasov.device.dialogs.NumberPickerPreference
+            android:key="KEY_DEVICE_TIMEOUT"
+            android:summary="Device timeout. Set after how many seconds the device goes in offline mode. Default value is 0 - never goes offline."
+            android:title="Device Timeout"
+            android:defaultValue="0"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

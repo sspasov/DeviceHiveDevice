@@ -22,7 +22,7 @@ import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Device;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.commands.DeviceCommand;
-import com.devicehive.sspasov.device.utils.DeviceConfig;
+import com.devicehive.sspasov.device.config.DeviceConfig;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -112,7 +112,7 @@ public class TestDevice extends Device {
                 getDeviceClass(context),
                 getDeviceClassVersion(context),
                 DeviceConfig.DEVICE_IS_PERMANENT,
-                null); //DeviceConfig.DEVICE_TIMEOUT
+                DeviceConfig.DEVICE_TIMEOUT); //DeviceConfig.DEVICE_TIMEOUT
 
         deviceID = getDeviceUniqueID(context);
         deviceName = Build.MANUFACTURER + " " + Build.MODEL;

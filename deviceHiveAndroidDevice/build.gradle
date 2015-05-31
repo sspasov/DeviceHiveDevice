@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.devicehive.sspasov.device"
-        minSdkVersion 9
+        minSdkVersion 10
         targetSdkVersion 22
     }
 
@@ -24,7 +24,9 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':deviceHiveAndroid')
+
     compile 'com.android.support:support-v4:22.0.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
