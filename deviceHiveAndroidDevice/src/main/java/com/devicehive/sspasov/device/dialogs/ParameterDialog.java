@@ -13,43 +13,42 @@ import com.devicehive.sspasov.device.R;
 
 public class ParameterDialog extends DialogFragment {
 
-	public interface ParameterDialogListener {
-		void onFinishEditingParameter(String name, String value);
-	}
+    public interface ParameterDialogListener {
+        void onFinishEditingParameter(String name, String value);
+    }
 
-	public static final String TAG = ParameterDialog.class.getSimpleName();
+    public static final String TAG = ParameterDialog.class.getSimpleName();
 
-	private EditText nameEdit;
-	private EditText valueEdit;
+    private EditText nameEdit;
+    private EditText valueEdit;
 
-	public ParameterDialog() {
+    public ParameterDialog() {
 
-	}
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.parameter_dialog, container);
-		nameEdit = (EditText) view.findViewById(R.id.name_edit);
-		valueEdit = (EditText) view.findViewById(R.id.value_edit);
-		final Button okButton = (Button) view.findViewById(R.id.ok_button);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.parameter_dialog, container);
+        nameEdit = (EditText) view.findViewById(R.id.name_edit);
+        valueEdit = (EditText) view.findViewById(R.id.value_edit);
+        final Button okButton = (Button) view.findViewById(R.id.ok_button);
 
-		okButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ParameterDialogListener activity = (ParameterDialogListener) getActivity();
-				activity.onFinishEditingParameter(
-						nameEdit.getText().toString(), valueEdit.getText()
-								.toString());
-				ParameterDialog.this.dismiss();
-			}
-		});
-		getDialog().setTitle("New Parameter");
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParameterDialogListener activity = (ParameterDialogListener) getActivity();
+                activity.onFinishEditingParameter(
+                        nameEdit.getText().toString(), valueEdit.getText()
+                                .toString());
+                ParameterDialog.this.dismiss();
+            }
+        });
+        getDialog().setTitle("New Parameter");
 
-		nameEdit.requestFocus();
-		getDialog().getWindow().setSoftInputMode(
-				LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        nameEdit.requestFocus();
+        getDialog().getWindow().setSoftInputMode(
+                LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-		return view;
-	}
+        return view;
+    }
 }

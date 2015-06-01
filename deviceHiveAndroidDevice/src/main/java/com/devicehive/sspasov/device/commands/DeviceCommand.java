@@ -9,6 +9,4 @@ public class DeviceCommand {
     public static final String GET_GPS_COORDINATES = "gps";
     public static final String GET_TIME_ON = "timeOn";
 
-
-    //TODO: add more commands ?
 }

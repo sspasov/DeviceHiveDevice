@@ -16,6 +16,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.dataart.android.devicehive.DeviceData;
 import com.devicehive.sspasov.device.R;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class DeviceInformationFragment extends SherlockFragment {
@@ -96,63 +98,41 @@ public class DeviceInformationFragment extends SherlockFragment {
 
     private void timeThread() {
         final Handler handler = new Handler();
-
-        Runnable runnable = new Runnable() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
             public void run() {
                 long millis;
-                while (true) {
-                    millis = SystemClock.elapsedRealtime();
-                    final String hms =
-                            String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-                                    TimeUnit.MILLISECONDS.toMinutes(millis) -
-                                            TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
-                                            TimeUnit.MILLISECONDS.toMinutes(millis)));
-
-                    try {
-                        Thread.sleep(1000); // 1 sec
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                millis = SystemClock.elapsedRealtime();
+                final String hms = String.format("%02d:%02d:%02d",
+                        TimeUnit.MILLISECONDS.toHours(millis),
+                        TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                        TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                handler.post(new Runnable() {
+                    public void run() {
+                        tvDeviceTimeOn.setText(hms);
                     }
-                    handler.post(new Runnable() {
-                        public void run() {
-                            tvDeviceTimeOn.setText(hms);
-                        }
-                    });
-                }
+                });
             }
-        };
-        new Thread(runnable).start();
+        }, 0, 1_000);
     }
 
     private void batteryThread() {
         final Handler handler = new Handler();
-
-        Runnable runnable = new Runnable() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
             public void run() {
-                Intent intent  = getActivity().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-                int level;
-                int scale;
-
-                while (true) {
-                    level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                    scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100);
-                    final int percent = (level*100)/scale;
-
-                    try {
-                        Thread.sleep(60000); //60 sec
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                Intent intent = getActivity().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+                int level = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) : 0;
+                int scale = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100) : 0;
+                final int percent = (level * 100) / scale;
+                handler.post(new Runnable() {
+                    public void run() {
+                        tvDeviceBattery.setText(String.valueOf(percent) + "%");
                     }
-
-                    handler.post(new Runnable() {
-                        public void run() {
-                            tvDeviceBattery.setText(String.valueOf(percent) + "%");
-                        }
-                    });
-                }
+                });
             }
-        };
-        new Thread(runnable).start();
+        }, 0, 60_000);
     }
 }

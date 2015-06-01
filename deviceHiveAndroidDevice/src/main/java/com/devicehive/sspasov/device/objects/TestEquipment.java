@@ -5,21 +5,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.EquipmentData;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Equipment;
 import com.dataart.android.devicehive.device.EquipmentNotification;
+import com.devicehive.sspasov.device.utils.L;
 
 import java.util.HashMap;
 
 public class TestEquipment extends Equipment {
 
-	private static final String TAG = TestEquipment.class.getSimpleName();
+    private static final String TAG = TestEquipment.class.getSimpleName();
 
-	private Context mContext;
+    private Context mContext;
     private Sensor mSensor;
 
     private SensorEventListener sensorListener;
@@ -28,21 +28,21 @@ public class TestEquipment extends Equipment {
     private String equipmentCode;
     private int equipmentType;
     private boolean multipleValueEquipment;
-	private float x, y, z;
+    private float x, y, z;
 
 
-	public TestEquipment(Context context, Sensor sensor) {
+    public TestEquipment(Context context, Sensor sensor) {
         super(equipmentData(
                         sensor.getName(),
                         Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_" + sensor.getType(),
                         EquipmentTypeConverter.toString(sensor.getType()))
         );
-        Log.d(TAG, "Attaching equipment: " + sensor.getName());
+        L.d(TAG, "Attaching equipment: " + sensor.getName());
         this.mContext = context;
-		mSensor = sensor;
+        mSensor = sensor;
 
         equipmentName = mSensor.getName();
-        equipmentCode = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)+"_"+ mSensor.getType();
+        equipmentCode = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_" + mSensor.getType();
         equipmentType = mSensor.getType();
 
         multipleValueEquipment = isMultipleValueEquipment();
@@ -51,102 +51,110 @@ public class TestEquipment extends Equipment {
     }
 
     private boolean isMultipleValueEquipment() {
+        L.d(TAG, "isMultipleValueEquipment()");
         return equipmentType != 2 && equipmentType != 14 && equipmentType != 5
                 && equipmentType != 6 && equipmentType != 8 && equipmentType != 18
                 && equipmentType != 19;
     }
 
     private void createSensorListener() {
+        L.d(TAG, "createSensorListener()");
         sensorListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 x = event.values[0];
-                //Log.d(TAG, mSensor.getName()+" value x: "+x);
+                //L.d(TAG, mSensor.getName()+" value x: "+x);
 
-                if(multipleValueEquipment) {
-                    //Log.d(TAG, equipmentName);
+                if (multipleValueEquipment) {
+                    //L.d(TAG, equipmentName);
                     y = event.values[1];
-                    //Log.d(TAG, mSensor.getName()+" value y: "+y);
+                    //L.d(TAG, mSensor.getName()+" value y: "+y);
 
                     z = event.values[2];
-                    //Log.d(TAG, mSensor.getName() + " value z: " + z);
+                    //L.d(TAG, mSensor.getName() + " value z: " + z);
                 }
             }
 
             @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
         };
     }
 
     public TestEquipment(String name, String code, String type) {
-		super(equipmentData(name, code, type));
-	}
+        super(equipmentData(name, code, type));
+    }
 
     /**
      * @name - simple equipment name
      * @code - unique ID for the equipment. It's used to point and use this equipment.
-     * @type - equipment type **/
-	private static EquipmentData equipmentData(String name, String code, String type) {
-        EquipmentData ed = new EquipmentData(name, code, type);
+     * @type - equipment type *
+     */
+    private static EquipmentData equipmentData(String name, String code, String type) {
+        L.d(TAG, "equipmentData()");
+        EquipmentData equipmentData = new EquipmentData(name, code, type);
         //ed.setData((Serializable) new TestEquipmentData(4236));
-        return ed;
-	}
+        return equipmentData;
+    }
 
     public SensorEventListener getSensorListener() {
+        L.d(TAG, "getSensorListener()");
         return sensorListener;
     }
 
     public Sensor getSensor() {
+        L.d(TAG, "getSensor()");
         return mSensor;
     }
 
     public String getEquipmentName() {
+        L.d(TAG, "getEquipmentName()");
         return equipmentName;
     }
 
-	@Override
-	public void onBeforeRunCommand(Command command) {
-		Log.d(TAG, "onBeforeRunCommand: " + command.getCommand());
-	}
+    @Override
+    public void onBeforeRunCommand(Command command) {
+        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
+    }
 
-	@Override
-	public boolean shouldRunCommandAsynchronously(final Command command) {
-		return false;
-	}
+    @Override
+    public boolean shouldRunCommandAsynchronously(final Command command) {
+        return false;
+    }
 
-	@Override
-	public CommandResult runCommand(final Command command) {
+    @Override
+    public CommandResult runCommand(final Command command) {
 
         CommandInfo commandInfo = new CommandInfo(command);
 
         return execute(commandInfo);
-	}
+    }
 
     private CommandResult execute(CommandInfo commandInfo) {
-        Log.d(TAG, "runCommand: " + commandInfo.getName());
+        L.d(TAG, "runCommand(" + commandInfo.getName() + ")");
 
         HashMap<String, Object> sensorParam = new HashMap<>();
         sensorParam.put("equipment", commandInfo.getInputParams().get("equipment"));
 
-        Parameter p = new Parameter("x", x+"");
+        Parameter p = new Parameter("x", x + "");
         sensorParam.put(p.name, p.value);
-        Log.d(TAG, mSensor.getName() + " value x: " + x);
+        L.d(TAG, mSensor.getName() + " value x: " + x);
 
-        if(multipleValueEquipment) {
-            p = new Parameter("y", y+"");
+        if (multipleValueEquipment) {
+            p = new Parameter("y", y + "");
             sensorParam.put(p.name, p.value);
-            Log.d(TAG, mSensor.getName() + " value y: " + y);
+            L.d(TAG, mSensor.getName() + " value y: " + y);
 
-            p = new Parameter("z", z+"");
+            p = new Parameter("z", z + "");
             sensorParam.put(p.name, p.value);
-            Log.d(TAG, mSensor.getName() + " value z: " + z);
+            L.d(TAG, mSensor.getName() + " value z: " + z);
         }
 
-        commandInfo.setResult("Executed on "+equipmentName+"!");
+        commandInfo.setResult("Executed on " + equipmentName + "!");
         commandInfo.setStatus(CommandResult.STATUS_COMLETED);
         commandInfo.setOutputParams(sensorParam);
 
-        Log.d(TAG, "Executing Command on Equipment (code): " + commandInfo.getInputParams().get("equipment"));
+        L.d(TAG, "Executing Command on Equipment (" + commandInfo.getInputParams().get("equipment") + ")");
 
         sendNotification(new EquipmentNotification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
 
@@ -155,29 +163,24 @@ public class TestEquipment extends Equipment {
 
 
     @Override
-	protected boolean onRegisterEquipment() {
-		Log.d(TAG, "onRegisterEquipment");
-		return true;
-	}
+    protected boolean onRegisterEquipment() {
+        L.d(TAG, "onRegisterEquipment()");
+        return true;
+    }
 
-	@Override
+    @Override
     protected boolean onUnregisterEquipment() {
-		Log.d(TAG, "onUnregisterEquipment");
-		return true;
-	}
+        L.d(TAG, "onUnregisterEquipment()");
+        return true;
+    }
 
-	@Override
-	protected void onStartProcessingCommands() {
-		Log.d(TAG, "onStartProcessingCommands");
-	}
+    @Override
+    protected void onStartProcessingCommands() {
+        L.d(TAG, "onStartProcessingCommands()");
+    }
 
-	@Override
-	protected void onStopProcessingCommands() {
-		/*HashMap<String, Object> parameters = new HashMap<String, Object>();
-		Parameter p = new Parameter("result", "23");
-
-		parameters.put(p.name, p.value);
-		sendNotification(new EquipmentNotification(getEquipmentData().getCode() ,parameters));*/
-		Log.d(TAG, "onStopProcessingCommands");
-	}
+    @Override
+    protected void onStopProcessingCommands() {
+        L.d(TAG, "onStopProcessingCommands()");
+    }
 }

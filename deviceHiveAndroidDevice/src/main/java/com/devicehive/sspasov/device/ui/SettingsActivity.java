@@ -8,6 +8,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
+import com.devicehive.sspasov.device.utils.L;
 
 public class SettingsActivity extends SherlockPreferenceActivity {
 
@@ -17,6 +18,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+        L.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference);
 
@@ -36,6 +38,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
     }
 
     private void updatePreferences() {
+        L.d(TAG, "updatePreferences()");
         DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
         DeviceConfig.NETWORK_NAME = prefs.getNetworkName();
         DeviceConfig.NETWORK_DESCRIPTION = prefs.getNetworkDescription();

@@ -10,31 +10,45 @@ import java.util.HashMap;
  */
 public class CommandInfo {
 
-    /**Whole command package*/
+    /**
+     * Whole command package
+     */
     private Command command;
 
-    /**Command name is the input name witch describes command */
+    /**
+     * Command name is the input name witch describes command
+     */
     private String name;
 
-    /**Parameters in the original command */
+    /**
+     * Parameters in the original command
+     */
     private HashMap inputParams;
 
-    /**Which equipment/device is dedicated to */
+    /**
+     * Which equipment/device is dedicated to
+     */
     private String type;
 
-    /**Status of the command Completed/Failed */
+    /**
+     * Status of the command Completed/Failed
+     */
     private String status;
 
-    /**Result string, human reading output for the user */
+    /**
+     * Result string, human reading output for the user
+     */
     private String result;
 
-    /**Parameters passed in the response */
+    /**
+     * Parameters passed in the response
+     */
     private HashMap outputParams;
 
 
     public CommandInfo(Command command) {
         this.command = command;
-       fillFields();
+        fillFields();
     }
 
     private void fillFields() {

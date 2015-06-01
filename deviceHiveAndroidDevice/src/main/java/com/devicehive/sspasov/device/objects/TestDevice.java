@@ -10,7 +10,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.BuildConfig;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.dataart.android.devicehive.Command;
@@ -23,6 +22,7 @@ import com.dataart.android.devicehive.device.Device;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.commands.DeviceCommand;
 import com.devicehive.sspasov.device.config.DeviceConfig;
+import com.devicehive.sspasov.device.utils.L;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -64,6 +64,7 @@ public class TestDevice extends Device {
 
     public TestDevice(Context context) {
         super(context, getTestDeviceData(context));
+        L.d(TAG, "TestDevice()");
         this.mContext = context;
 
         /** Searching for equipment and adds it **/
@@ -77,32 +78,32 @@ public class TestDevice extends Device {
                         testEquipment.getSensorListener(),
                         testEquipment.getSensor(),
                         SensorManager.SENSOR_DELAY_NORMAL)) {
-                    Log.d(TAG, "successful registered sensor listener");
+                    L.d(TAG, "Successful registered sensor listener");
                     attachEquipment(testEquipment);
                 } else {
-                    Log.e(TAG, "sensor listener not registered");
+                    L.e(TAG, "Failed to register sensor listener");
                 }
             } else {
-                Log.w(TAG, "sensor not usable");
+                L.w(TAG, "Sensor is not usable");
             }
-            //Log.d(TAG, "Attaching equipment: "+testEquipment.getEquipmentName());
         }
 
        /* Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         TestEquipment te = new TestEquipment(context, sensor);
         sensorManager.registerListener(te.getSensorListener(), sensor, SensorManager.SENSOR_DELAY_NORMAL);
         attachEquipment(te);
-        Log.d(TAG, "Attaching equipment: "+sensor.getName());
+        L.d(TAG, "Attaching equipment: "+sensor.getName());
 
         Sensor sensor2 = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         TestEquipment te2 = new TestEquipment(context, sensor2);
         sensorManager.registerListener(te2.getSensorListener(), sensor2, SensorManager.SENSOR_DELAY_NORMAL);
         attachEquipment(te2);
-        Log.d(TAG, "Attaching equipment: "+sensor2.getName());*/
+        L.d(TAG, "Attaching equipment: "+sensor2.getName());*/
     }
 
 
     private static DeviceData getTestDeviceData(Context context) {
+        L.d(TAG, "getTestDeviceData()");
 
         final Network network = new Network( //TODO: need to rethink this
                 DeviceConfig.NETWORK_NAME,
@@ -129,10 +130,12 @@ public class TestDevice extends Device {
     }
 
     public static String getDeviceUniqueID(Context context) {
+        L.d(TAG, "getDeviceUniqueID()");
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     private static String getDeviceClass(Context context) {
+        L.d(TAG, "getDeviceClass()");
         if (isDeviceTablet(context)) {
             return DEVICE_TABLET;
         }
@@ -140,6 +143,7 @@ public class TestDevice extends Device {
     }
 
     private static boolean isDeviceTablet(Context activityContext) {
+        L.d(TAG, "isDeviceTablet()");
         boolean device_large = ((activityContext.getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) ==
                 Configuration.SCREENLAYOUT_SIZE_LARGE);
@@ -162,6 +166,7 @@ public class TestDevice extends Device {
     }
 
     private static String getDeviceClassVersion(Context context) {
+        L.d(TAG, "getDeviceClassVersion()");
         //TODO: android version must be used as class version. HOW ?
         //return Build.VERSION.RELEASE;
         PackageManager manager = context.getPackageManager();
@@ -176,12 +181,13 @@ public class TestDevice extends Device {
 
     @Override
     public void onBeforeRunCommand(Command command) {
-        Log.d(TAG, "onBeforeRunCommand: " + command.getCommand());
+        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
         notifyListenersCommandReceived(command);
     }
 
     @Override
     public CommandResult runCommand(final Command command) {
+        L.d(TAG, "runCommand()");
 
         CommandInfo commandInfo = new CommandInfo(command);
 
@@ -197,42 +203,43 @@ public class TestDevice extends Device {
             commandInfo.setType(commandInfo.getInputParams().get("device").toString());
         }
 
-        Log.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
+        L.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
 
         //TODO: parameters in the command should set witch case to execute
         switch (commandInfo.getType()) {
+
             case DeviceCommand.GET_BATTERY_LEVEL: {
                 commandInfo.setOutputParams(getBatteryLevel());
                 commandInfo.setResult("Battery is: " + commandInfo.getOutputParams().get("value"));
-                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
+                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_GPS_COORDINATES: {
                 commandInfo.setOutputParams(getGPSCoordinates());
                 commandInfo.setResult("GPS coordinates are: " + commandInfo.getOutputParams().get("value"));
-                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
+                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_TIME_ON: {
                 commandInfo.setOutputParams(getTimeOn());
                 commandInfo.setResult("System Time On is: " + commandInfo.getOutputParams().get("value"));
-                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
+                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             case DeviceCommand.GET_SCREEN_SIZE: {
                 commandInfo.setOutputParams(getScreenSize());
                 commandInfo.setResult("Screen size is: " + commandInfo.getOutputParams().get("value"));
-                Log.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
+                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
                 break;
             }
 
             default: {
                 commandInfo.setStatus(CommandResult.STATUS_FAILED);
                 commandInfo.setResult("Failed to execute command " + commandInfo.getName() + " on (" + deviceID + ")" + deviceName);
-                Log.d(TAG, "Failed to execute command \"" + commandInfo.getName() + "\" on " + TAG);
+                L.d(TAG, "Failed to execute command \"" + commandInfo.getName() + "\" on " + TAG);
             }
         }
 
@@ -241,6 +248,7 @@ public class TestDevice extends Device {
     }
 
     private HashMap getGPSCoordinates() {
+        L.d(TAG, "getGPSCoordinates()");
         //TODO: implementation
         //
         HashMap param = new HashMap();
@@ -248,25 +256,28 @@ public class TestDevice extends Device {
         return param;
     }
 
-    private HashMap getTimeOn() {
-        DeviceTimeOn timeOn = DeviceTimeOn.getInstance(mContext);
-        HashMap param = new HashMap();
+    private HashMap<String, String> getTimeOn() {
+        L.d(TAG, "getTimeOn()");
+        DeviceTimeOn timeOn = DeviceTimeOn.getInstance();
+        HashMap<String, String> param = new HashMap<String, String>();
         param.put("device", DeviceCommand.GET_TIME_ON);
         param.put(timeOn.getName(), timeOn.getValue());
         return param;
     }
 
-    private HashMap getBatteryLevel() {
+    private HashMap<String, String> getBatteryLevel() {
+        L.d(TAG, "getBatteryLevel()");
         Battery battery = Battery.getInstance(mContext);
-        HashMap param = new HashMap();
+        HashMap<String, String> param = new HashMap<String, String>();
         param.put("device", DeviceCommand.GET_BATTERY_LEVEL);
         param.put(battery.getName(), battery.getValue());
         return param;
     }
 
-    private HashMap getScreenSize() {
+    private HashMap<String, String> getScreenSize() {
+        L.d(TAG, "getScreenSize()");
         ScreenSize screenSize = ScreenSize.getInstance(mContext);
-        HashMap param = new HashMap();
+        HashMap<String, String> param = new HashMap<String, String>();
         param.put("device", DeviceCommand.GET_SCREEN_SIZE);
         param.put(screenSize.getName(), screenSize.getValue());
         return param;
@@ -274,34 +285,42 @@ public class TestDevice extends Device {
 
     @Override
     public boolean shouldRunCommandAsynchronously(final Command command) {
+        L.d(TAG, "shouldRunCommandAsynchronously()");
         return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
     }
 
     public void addDeviceListener(RegistrationListener listener) {
+        L.d(TAG, "addDeviceListener()");
         registrationListeners.add(listener);
     }
 
     public void removeDeviceListener(RegistrationListener listener) {
+        L.d(TAG, "removeDeviceListener()");
         registrationListeners.remove(listener);
     }
 
     public void addCommandListener(CommandListener listener) {
+        L.d(TAG, "addCommandListener()");
         commandListeners.add(listener);
     }
 
     public void removeCommandListener(CommandListener listener) {
+        L.d(TAG, "removeCommandListener()");
         commandListeners.remove(listener);
     }
 
     public void addNotificationListener(NotificationListener listener) {
+        L.d(TAG, "addNotificationListener()");
         notificationListeners.add(listener);
     }
 
     public void removeNotificationListener(NotificationListener listener) {
+        L.d(TAG, "removeNotificationListener()");
         notificationListeners.remove(listener);
     }
 
     public void removeListener(Object listener) {
+        L.d(TAG, "removeListener()");
         registrationListeners.remove(listener);
         commandListeners.remove(listener);
         notificationListeners.remove(listener);
@@ -309,86 +328,86 @@ public class TestDevice extends Device {
 
     @Override
     protected void onStartRegistration() {
-        Log.d(TAG, "onStartRegistration");
+        L.d(TAG, "onStartRegistration()");
     }
 
     @Override
     protected void onFinishRegistration() {
-        Log.d(TAG, "onFinishRegistration");
+        L.d(TAG, "onFinishRegistration()");
         notifyListenersDeviceRegistered();
     }
 
     @Override
     protected void onFailRegistration() {
-        Log.d(TAG, "onFailRegistration");
+        L.d(TAG, "onFailRegistration()");
         notifyListenersDeviceFailedToRegister();
     }
 
     @Override
     protected void onStartProcessingCommands() {
-        Log.d(TAG, "onStartProcessingCommands");
+        L.d(TAG, "onStartProcessingCommands()");
     }
 
     @Override
     protected void onStopProcessingCommands() {
-        Log.d(TAG, "onStopProcessingCommands");
+        L.d(TAG, "onStopProcessingCommands()");
     }
 
     @Override
     protected void onStartSendingNotification(Notification notification) {
-        Log.d(TAG, "onStartSendingNotification : " + notification.getName());
+        L.d(TAG, "onStartSendingNotification(" + notification.getName() + ")");
         notifyListenersDeviceStartSendingNotification(notification);
     }
 
     @Override
     protected void onFinishSendingNotification(Notification notification) {
-        Log.d(TAG, "onFinishSendingNotification: " + notification.getId());
+        L.d(TAG, "onFinishSendingNotification(" + notification.getId() + ")");
         notifyListenersDeviceSentNotification(notification);
     }
 
     @Override
     protected void onFailSendingNotification(Notification notification) {
-        Log.d(TAG, "onFailSendingNotification: " + notification.getName());
+        L.d(TAG, "onFailSendingNotification(" + notification.getName() + ")");
         notifyListenersDeviceFailedToSendNotification(notification);
     }
 
     private void notifyListenersCommandReceived(Command command) {
-        Log.d(TAG, "notifyListenersCommandReceived: " + command.toString());
+        L.d(TAG, "notifyListenersCommandReceived(" + command.toString() + ")");
         for (CommandListener listener : commandListeners) {
             listener.onDeviceReceivedCommand(command);
         }
     }
 
     private void notifyListenersDeviceRegistered() {
-        Log.d(TAG, "notifyListenersDeviceRegistered");
+        L.d(TAG, "notifyListenersDeviceRegistered()");
         for (RegistrationListener listener : registrationListeners) {
             listener.onDeviceRegistered();
         }
     }
 
     private void notifyListenersDeviceFailedToRegister() {
-        Log.d(TAG, "notifyListenersDeviceFailedToRegister");
+        L.d(TAG, "notifyListenersDeviceFailedToRegister()");
         for (RegistrationListener listener : registrationListeners) {
             listener.onDeviceFailedToRegister();
         }
     }
 
     private void notifyListenersDeviceStartSendingNotification(Notification notification) {
-        Log.d(TAG, "notifyListenersDeviceStartSendingNotification: " + notification.getName());
+        L.d(TAG, "notifyListenersDeviceStartSendingNotification(" + notification.getName() + ")");
         for (NotificationListener listener : notificationListeners) {
             listener.onDeviceStartSendingNotification(notification);
         }
     }
 
     private void notifyListenersDeviceSentNotification(Notification notification) {
-        Log.d(TAG, "notifyListenersDeviceSentNotification: " + notification.getName());
+        L.d(TAG, "notifyListenersDeviceSentNotification(" + notification.getName() + ")");
         for (NotificationListener listener : notificationListeners) {
             listener.onDeviceSentNotification(notification);
         }
     }
 
     private void notifyListenersDeviceFailedToSendNotification(Notification notification) {
-        Log.d(TAG, "notifyListenersDeviceFailedToSendNotification: " + notification.getName());
+        L.d(TAG, "notifyListenersDeviceFailedToSendNotification(" + notification.getName() + ")");
         for (NotificationListener listener : notificationListeners) {
             listener.onDeviceFailedToSendNotification(notification);
         }

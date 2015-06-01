@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
+import com.devicehive.sspasov.device.utils.L;
 
 public class StartupConfigurationActivity extends Activity implements View.OnClickListener {
 
@@ -28,6 +29,7 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        L.d(TAG, "onCreate()");
         setContentView(R.layout.activity_startup_configuration);
 
         etApiEndpoint = (EditText) findViewById(R.id.et_startup_api_endpoint);
@@ -40,10 +42,12 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         prefs = new DevicePreferences(this);
 
-
         //TODO: DEBUG ONLY
-        etApiEndpoint.setText("http://nn8170.pg.devicehive.com/api");
-        etNetworkName.setText("test network");
+        if(L.isUsingDebugData()){
+            etApiEndpoint.setText("http://nn8170.pg.devicehive.com/api");
+            etNetworkName.setText("test network");
+            etNetworkDescription.setText("test network description");
+        }
     }
 
     @Override

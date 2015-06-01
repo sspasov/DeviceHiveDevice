@@ -2,8 +2,9 @@ package com.devicehive.sspasov.device.objects;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
+
+import com.devicehive.sspasov.device.utils.L;
 
 /**
  * Created by toni on 28.05.15.
@@ -46,10 +47,11 @@ public class ScreenSize {
 
     public String getValue() {
         if(mContext == null) {
-            Log.e(TAG, "You must setContext() before getValue");
+            L.e(TAG, "You must setContext() before getValue()");
             return "null";
         }
-        return getScreenSize();
+        value = getScreenSize();
+        return value;
     }
 
     private String getScreenSize() {

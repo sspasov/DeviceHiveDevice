@@ -4,7 +4,6 @@ package com.devicehive.sspasov.device.objects;
  * Created by toni on 30.05.15.
  */
 public class EquipmentTypeConverter {
-
     private static EquipmentTypeConverter instance;
 
     public static EquipmentTypeConverter getInstance() {

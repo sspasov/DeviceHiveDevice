@@ -1,13 +1,18 @@
 package com.devicehive.sspasov.device.ui;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -31,6 +36,7 @@ import com.devicehive.sspasov.device.objects.TestDevice;
 import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
 import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
+import com.devicehive.sspasov.device.utils.L;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +46,10 @@ public class DeviceActivity extends SherlockFragmentActivity implements
         NotificationListener, NotificationSender, ParameterDialogListener {
 
     private static final String TAG = DeviceActivity.class.getSimpleName();
+
+
+    public static boolean registerDevice = true;
+    private NetworkReceiver receiver = new NetworkReceiver();
 
     private TestDevice device;
 
@@ -54,7 +64,7 @@ public class DeviceActivity extends SherlockFragmentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate()");
+        L.d(TAG, "onCreate()");
         setContentView(R.layout.activity_device);
 
         if (DeviceConfig.FIRST_STARTUP) {
@@ -62,6 +72,10 @@ public class DeviceActivity extends SherlockFragmentActivity implements
             startActivity(startupActivity);
             finish();
         }
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
 
         device = new TestDevice(getApplicationContext());
         device.setDebugLoggingEnabled(BuildConfig.DEBUG);
@@ -95,9 +109,50 @@ public class DeviceActivity extends SherlockFragmentActivity implements
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        L.d(TAG, "onStart()");
+    }
+
+    private void createNetErrorDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(
+                "You need a network connection to use this application. Please turn on mobile network or Wi-Fi in Settings.")
+                .setTitle("Unable to connect")
+                .setCancelable(false)
+                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent i = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                        startActivity(i);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume()");
+        L.d(TAG, "onResume()");
+        if (registerDevice) {
+            deviceRegister();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        L.d(TAG, "onStop()");
+        deviceUnregister();
+    }
+
+    public void deviceRegister() {
+        L.d(TAG, "deviceRegister()");
         device.addDeviceListener(this);
         device.addCommandListener(this);
         device.addNotificationListener(this);
@@ -109,42 +164,35 @@ public class DeviceActivity extends SherlockFragmentActivity implements
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop()");
+    public void deviceUnregister() {
+        L.d(TAG, "deviceUnregister()");
         device.removeDeviceListener(this);
         device.removeCommandListener(this);
         device.removeNotificationListener(this);
         device.stopProcessingCommands();
 
-        Log.e(TAG, "device.unregisterDevice()");
         device.unregisterDevice();
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy()");
-        /*device.removeDeviceListener(this);
-        device.removeCommandListener(this);
-        device.removeNotificationListener(this);
-        device.stopProcessingCommands();
-        if (isFinishing()) {
-            Log.e(TAG, "device.unregisterDevice()");
-            device.unregisterDevice();
-        }*/
+        L.d(TAG, "onDestroy()");
+        if (receiver != null) {
+            this.unregisterReceiver(receiver);
+        }
     }
 
     @Override
     public void onDeviceRegistered() {
+        L.d(TAG, "onDeviceRegistered()");
         deviceInfoFragment.setDeviceData(device.getDeviceData());
         device.startProcessingCommands();
     }
 
     @Override
     public void onDeviceFailedToRegister() {
+        L.d(TAG, "onDeviceFailedToRegister()");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog dialog = builder
                 .setTitle("Error")
@@ -170,36 +218,40 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
     @Override
     public void onDeviceReceivedCommand(Command command) {
+        L.d(TAG, "onDeviceReceivedCommand()");
         receivedCommands.add(command);
         deviceCommandsFragment.setCommands(receivedCommands);
     }
 
     @Override
     public void onDeviceStartSendingNotification(Notification notification) {
-        Log.d(TAG, "Start sending notification: " + notification.getName());
+        L.d(TAG, "onDeviceStartSendingNotification("+notification.getName()+")");
+        L.d(TAG, "onDeviceStartSendingNotification("+notification.getId()+")");
         if (notification.getName().contains("DeviceStatus")) {
-            showDialog("Success!", notification.getName() + " has been sent.");
+            Toast.makeText(this, notification.getName() + " has been sent.", Toast.LENGTH_SHORT).show();
+            //showDialog("Success!", notification.getName() + " has been sent.");
         } else {
-            showDialog("Success!", notification.getName());
+            Toast.makeText(this, notification.getName(), Toast.LENGTH_SHORT).show();
+            //showDialog("Success!", notification.getName());
         }
-
     }
 
     @Override
     public void onDeviceSentNotification(Notification notification) {
-        Log.d(TAG, "Finish sending notification: " + notification.getId());
+        L.d(TAG, "onDeviceSentNotification("+notification.getId()+")");
         //showDialog("Success!", "Notification sent with ID " + notification.getId());
         Toast.makeText(this, "Notification registered with ID " + notification.getId(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDeviceFailedToSendNotification(Notification notification) {
-        Log.d(TAG, "Fail sending notification: " + notification.getName());
+        L.d(TAG, "onDeviceFailedToSendNotification("+notification.getName()+")");
         showErrorDialog("Failed to send notification: " + notification.getName());
     }
 
     @Override
     public void sendNotification(Notification notification) {
+        L.d(TAG, "sendNotification()");
         device.sendNotification(notification);
     }
 
@@ -255,20 +307,46 @@ public class DeviceActivity extends SherlockFragmentActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SETTINGS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                Log.d(TAG, "Changed settings!");
+                L.d(TAG, "Changed settings!");
             }
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(
-            com.actionbarsherlock.view.MenuItem item) {
-        if (item.getItemId() == MENU_ID_SETTINGS) {
-            startActivityForResult(new Intent(this, SettingsActivity.class),
-                    SETTINGS_REQUEST_CODE);
-            return true;
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_ID_SETTINGS:
+                startActivityForResult(new Intent(this, SettingsActivity.class), SETTINGS_REQUEST_CODE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    public class NetworkReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                registerDevice = true;
+                Toast.makeText(context, "WIFI connected", Toast.LENGTH_LONG).show();
+                L.d(TAG, "WIFI connected");
+                onResume();
+            } else if (networkInfo != null) {
+                Toast.makeText(context, "Mobile Data connected", Toast.LENGTH_LONG).show();
+                L.d(TAG, "Mobile Data connected");
+                registerDevice = true;
+                onResume();
+            } else {
+                registerDevice = false;
+                Toast.makeText(context, "Connection lost", Toast.LENGTH_LONG).show();
+                L.d(TAG, "Connection lost");
+                deviceUnregister();
+            }
+        }
     }
 
 }

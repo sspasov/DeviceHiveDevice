@@ -4,32 +4,36 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class DevicePreferences {
-	private static final String TAG = DevicePreferences.class.getSimpleName();
+    private static final String TAG = DevicePreferences.class.getSimpleName();
 
-	private final static String NAMESPACE = "";
+    private final static String NAMESPACE = "";
 
-	private final Context context;
-	private final SharedPreferences preferences;
+    private final Context context;
+    private final SharedPreferences preferences;
 
     public DevicePreferences(final Context context) {
         this.context = context;
-        this.preferences = context.getSharedPreferences(context.getPackageName()+"_preferences", Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
     }
-	
-	/**preference for server url*/
+
+    /**
+     * preference for server url
+     */
     private final static String KEY_SERVER_URL = NAMESPACE.concat("KEY_SERVER_URL");
 
-	public String getServerUrl() {
-		return preferences.getString(KEY_SERVER_URL, null);
-	}
-	
-	public void setServerUrlSync(String serverUrl) {
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putString(KEY_SERVER_URL, serverUrl);
-		editor.commit();
-	}
+    public String getServerUrl() {
+        return preferences.getString(KEY_SERVER_URL, null);
+    }
 
-    /**preference for device timeout*/
+    public void setServerUrlSync(String serverUrl) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(KEY_SERVER_URL, serverUrl);
+        editor.commit();
+    }
+
+    /**
+     * preference for device timeout
+     */
     private final static String KEY_DEVICE_TIMEOUT = NAMESPACE.concat("KEY_DEVICE_TIMEOUT");
 
     public int getDeviceTimeout() {
@@ -42,7 +46,9 @@ public class DevicePreferences {
         editor.commit();
     }
 
-    /**preference for running device commands async*/
+    /**
+     * preference for running device commands async
+     */
     private final static String KEY_ASYNC_COMMAND_EXECUTION = NAMESPACE.concat("KEY_ASYNC_COMMAND_EXECUTION");
 
     public boolean getDeviceAsyncCommandExecution() {
@@ -55,7 +61,9 @@ public class DevicePreferences {
         editor.apply();
     }
 
-    /**preference for is permanent device*/
+    /**
+     * preference for is permanent device
+     */
     private final static String KEY_IS_PERMANENT = NAMESPACE.concat("KEY_IS_PERMANENT");
 
     public boolean getDeviceIsPermanent() {
@@ -68,7 +76,9 @@ public class DevicePreferences {
         editor.apply();
     }
 
-    /**preference for first time startup configuration*/
+    /**
+     * preference for first time startup configuration
+     */
     private final static String KEY_FIRST_STARTUP = NAMESPACE.concat("KEY_FIRST_STARTUP");
 
     public boolean isFirstStartup() {
@@ -81,7 +91,9 @@ public class DevicePreferences {
         editor.apply();
     }
 
-    /**preference for is network name and description*/
+    /**
+     * preference for is network name and description
+     */
     private final static String KEY_NETWORK_NAME = NAMESPACE.concat("KEY_NETWORK_NAME");
 
     public String getNetworkName() {
