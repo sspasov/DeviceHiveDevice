@@ -27,27 +27,29 @@ public class L {
     }
 
 
-
     public static void d(String tag, String message) {
-        if(debugMode) {
+        if (debugMode) {
             Log.d(tag, message);
         }
     }
 
     public static void e(String tag, String message) {
-        if(debugMode) {
+        if (debugMode) {
             Log.e(tag, message);
         }
     }
 
-    public static void w(String tag, String message) {
-        if(debugMode) {
-            Log.w(tag, message);
+    public static void e(String tag, String message, Throwable throwable) {
+        if (debugMode) {
+            Log.e(tag, message, throwable);
         }
     }
 
-
-
+    public static void w(String tag, String message) {
+        if (debugMode) {
+            Log.w(tag, message);
+        }
+    }
 
 
 }

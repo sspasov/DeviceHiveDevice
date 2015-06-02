@@ -67,51 +67,45 @@ public class DeviceActivity extends SherlockFragmentActivity implements
         L.d(TAG, "onCreate()");
         setContentView(R.layout.activity_device);
 
-        if (DeviceConfig.FIRST_STARTUP) {
-            Intent startupActivity = new Intent(this, StartupConfigurationActivity.class);
-            startActivity(startupActivity);
-            finish();
-        }
-
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
         this.registerReceiver(receiver, filter);
 
-        device = new TestDevice(getApplicationContext());
-        device.setDebugLoggingEnabled(BuildConfig.DEBUG);
-        device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
+        if (DeviceConfig.FIRST_STARTUP && (DeviceConfig.API_ENDPOINT == null)) {
+            Intent startupActivity = new Intent(this, StartupConfigurationActivity.class);
+            startActivity(startupActivity);
+            finish();
+        } else {
+            device = new TestDevice(getApplicationContext());
+            device.setDebugLoggingEnabled(BuildConfig.DEBUG);
+            device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
+            ActionBar ab = getSupportActionBar();
+            ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            ab.setTitle(getString(R.string.test_device));
 
-        ActionBar ab = getSupportActionBar();
-        ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ab.setTitle(getString(R.string.test_device));
+            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            TabsAdapter tabsAdapter = new TabsAdapter(this, viewPager);
 
-        TabsAdapter tabsAdapter = new TabsAdapter(this, viewPager);
+            deviceInfoFragment = new DeviceInformationFragment();
+            deviceInfoFragment.setDeviceData(device.getDeviceData());
 
-        deviceInfoFragment = new DeviceInformationFragment();
-        deviceInfoFragment.setDeviceData(device.getDeviceData());
+            equipmentListFragment = new EquipmentListFragment();
+            equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
 
-        equipmentListFragment = new EquipmentListFragment();
-        equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
+            deviceCommandsFragment = new DeviceCommandsFragment();
 
-        deviceCommandsFragment = new DeviceCommandsFragment();
+            deviceSendNotificationFragment = new DeviceSendNotificationFragment();
+            deviceSendNotificationFragment.setParameterProvider(this);
+            deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
 
-        deviceSendNotificationFragment = new DeviceSendNotificationFragment();
-        deviceSendNotificationFragment.setParameterProvider(this);
-        deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
+            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_info)), deviceInfoFragment);
+            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_equipment)), equipmentListFragment);
+            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_commands)), deviceCommandsFragment);
+            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_send_notification)), deviceSendNotificationFragment);
+        }
 
-        tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_info)), deviceInfoFragment);
-        tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_equipment)), equipmentListFragment);
-        tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_commands)), deviceCommandsFragment);
-        tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_send_notification)), deviceSendNotificationFragment);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        L.d(TAG, "onStart()");
     }
 
     private void createNetErrorDialog() {
@@ -139,7 +133,8 @@ public class DeviceActivity extends SherlockFragmentActivity implements
     protected void onResume() {
         super.onResume();
         L.d(TAG, "onResume()");
-        if (registerDevice) {
+        if (registerDevice && device != null && DeviceConfig.API_ENDPOINT != null) {
+            deviceUnregister();
             deviceRegister();
         }
     }
@@ -225,8 +220,8 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
     @Override
     public void onDeviceStartSendingNotification(Notification notification) {
-        L.d(TAG, "onDeviceStartSendingNotification("+notification.getName()+")");
-        L.d(TAG, "onDeviceStartSendingNotification("+notification.getId()+")");
+        L.d(TAG, "onDeviceStartSendingNotification(" + notification.getName() + ")");
+        L.d(TAG, "onDeviceStartSendingNotification(" + notification.getId() + ")");
         if (notification.getName().contains("DeviceStatus")) {
             Toast.makeText(this, notification.getName() + " has been sent.", Toast.LENGTH_SHORT).show();
             //showDialog("Success!", notification.getName() + " has been sent.");
@@ -238,14 +233,14 @@ public class DeviceActivity extends SherlockFragmentActivity implements
 
     @Override
     public void onDeviceSentNotification(Notification notification) {
-        L.d(TAG, "onDeviceSentNotification("+notification.getId()+")");
+        L.d(TAG, "onDeviceSentNotification(" + notification.getId() + ")");
         //showDialog("Success!", "Notification sent with ID " + notification.getId());
         Toast.makeText(this, "Notification registered with ID " + notification.getId(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onDeviceFailedToSendNotification(Notification notification) {
-        L.d(TAG, "onDeviceFailedToSendNotification("+notification.getName()+")");
+        L.d(TAG, "onDeviceFailedToSendNotification(" + notification.getName() + ")");
         showErrorDialog("Failed to send notification: " + notification.getName());
     }
 

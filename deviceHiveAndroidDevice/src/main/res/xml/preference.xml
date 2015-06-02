@@ -1,13 +1,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="General">
-
+    <PreferenceCategory android:title="General">
         <EditTextPreference
             android:key="KEY_SERVER_URL"
             android:summary="Restart is required for the changes to take effect."
-            android:title="API Endpoint"/>
-
+            android:title="API Endpoint" />
     </PreferenceCategory>
 
     <!--<PreferenceCategory
@@ -24,18 +21,17 @@
 
     </PreferenceCategory>-->
 
-    <PreferenceCategory
-        android:title="Optional">
-
+    <PreferenceCategory android:title="Optional">
         <CheckBoxPreference
             android:key="KEY_ASYNC_COMMAND_EXECUTION"
             android:summary="Check for asynchronously commands execution."
-            android:title="Async Commands"/>
+            android:title="Async Commands" />
+
         <com.devicehive.sspasov.device.dialogs.NumberPickerPreference
+            android:defaultValue="0"
             android:key="KEY_DEVICE_TIMEOUT"
-            android:summary="Device timeout. Set after how many seconds the device goes in offline mode. Default value is 0 - never goes offline."
-            android:title="Device Timeout"
-            android:defaultValue="0"/>
+            android:summary="Device timeout default value is 0 - never goes offline."
+            android:title="Device Timeout" />
     </PreferenceCategory>
 
 </PreferenceScreen>

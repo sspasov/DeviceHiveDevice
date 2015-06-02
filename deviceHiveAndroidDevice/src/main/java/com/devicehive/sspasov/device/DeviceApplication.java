@@ -26,6 +26,7 @@ public class DeviceApplication extends Application {
 
         prefs = new DevicePreferences(this);
 
+
         L.d(TAG, "DevicePref device is first time startup: " + prefs.isFirstStartup());
         DeviceConfig.FIRST_STARTUP = prefs.isFirstStartup();
 

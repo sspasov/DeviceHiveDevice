@@ -34,5 +34,6 @@
     <string name="et_equipment_name">Equipment name</string>
     <string name="tv_equipment_type">Type</string>
     <string name="tv_equipment_type_empty">Equipment type</string>
+    <string name="title_activity_network_configuration">NetworkConfigurationActivity</string>
 
 </resources>

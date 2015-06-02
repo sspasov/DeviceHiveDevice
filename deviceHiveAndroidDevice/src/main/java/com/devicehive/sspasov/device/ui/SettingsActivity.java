@@ -14,12 +14,12 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
-	private DevicePreferences prefs;
+    private DevicePreferences prefs;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-        L.d(TAG, "onCreate()");
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        L.d(TAG, "onCreate()");
         addPreferencesFromResource(R.xml.preference);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -29,7 +29,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             updatePreferences();
             setResult(Activity.RESULT_OK);
             finish();
