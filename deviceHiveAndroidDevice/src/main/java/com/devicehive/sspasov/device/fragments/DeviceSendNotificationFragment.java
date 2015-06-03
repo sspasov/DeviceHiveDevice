@@ -27,240 +27,249 @@ import java.util.List;
 
 public class DeviceSendNotificationFragment extends Fragment {
 
-	private static final String TAG = "DeviceSendNotificationFragment";
+    private static final String TAG = "DeviceSendNotificationFragment";
+    private static DeviceSendNotificationFragment instance;
 
-	private Button sendNotificationButton;
+    private Button sendNotificationButton;
 
-	private TextView notificationNameEdit;
-	private LinearLayout parametersContainer;
+    private TextView notificationNameEdit;
+    private LinearLayout parametersContainer;
 
-	private Spinner equipmentSpinner;
+    private Spinner equipmentSpinner;
 
-	private NotificationSender notificationSender;
-	private ParameterProvider parameterProvider;
-	private ParametersAdapter parametersAdapter;
+    private NotificationSender notificationSender;
+    private ParameterProvider parameterProvider;
+    private ParametersAdapter parametersAdapter;
 
-	private List<EquipmentData> equipment;
-	private List<Parameter> parameters = new LinkedList<Parameter>();
+    private List<EquipmentData> equipment;
+    private List<Parameter> parameters = new LinkedList<Parameter>();
 
-	public static class Parameter {
-		public final String name;
-		public final String value;
+    public static class Parameter {
+        public final String name;
+        public final String value;
 
-		public Parameter(String name, String value) {
-			this.name = name;
-			this.value = value;
-		}
-	}
+        public Parameter(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
 
-	public interface NotificationSender {
-		void sendNotification(Notification notification);
-	}
+    public interface NotificationSender {
+        void sendNotification(Notification notification);
+    }
 
-	public interface ParameterProvider {
-		void queryParameter();
-	}
+    public interface ParameterProvider {
+        void queryParameter();
+    }
 
-	public void setNotificationSender(NotificationSender notificationSender) {
-		this.notificationSender = notificationSender;
-	}
+    public static DeviceSendNotificationFragment getInstance() {
+        if (instance == null) {
+            instance = new DeviceSendNotificationFragment();
+        }
+        return instance;
 
-	public void setParameterProvider(ParameterProvider parameterProvider) {
-		this.parameterProvider = parameterProvider;
-	}
+    }
 
-	public void setEquipment(List<EquipmentData> equipment) {
-		this.equipment = equipment;
-		setupEquipmentSpinner(equipment);
-	}
+    public void setNotificationSender(NotificationSender notificationSender) {
+        this.notificationSender = notificationSender;
+    }
 
-	public void addParameter(String name, String value) {
-		this.parameters.add(new Parameter(name, value));
-		setupParameters(this.parameters);
-	}
+    public void setParameterProvider(ParameterProvider parameterProvider) {
+        this.parameterProvider = parameterProvider;
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		notificationSender = (NotificationSender) activity;
-	}
+    public void setEquipment(List<EquipmentData> equipment) {
+        this.equipment = equipment;
+        setupEquipmentSpinner(equipment);
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		setupEquipmentSpinner(equipment);
-	}
+    public void addParameter(String name, String value) {
+        this.parameters.add(new Parameter(name, value));
+        setupParameters(this.parameters);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_send_notification, container, false);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        notificationSender = (NotificationSender) activity;
+    }
 
-		sendNotificationButton = (Button) view.findViewById(R.id.send_notification_button);
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupEquipmentSpinner(equipment);
+    }
 
-		notificationNameEdit = (EditText) view.findViewById(R.id.notification_name_edit);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_send_notification, container, false);
 
-		parametersContainer = (LinearLayout) view.findViewById(R.id.parameters_container);
+        sendNotificationButton = (Button) view.findViewById(R.id.send_notification_button);
 
-		sendNotificationButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				sendNotification();
-			}
-		});
+        notificationNameEdit = (EditText) view.findViewById(R.id.notification_name_edit);
 
-		final Button addParameterButton = (Button) view.findViewById(R.id.add_parameter_button);
-		addParameterButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (parameterProvider != null) {
-					parameterProvider.queryParameter();
-				}
-			}
-		});
+        parametersContainer = (LinearLayout) view.findViewById(R.id.parameters_container);
 
-		equipmentSpinner = (Spinner) view.findViewById(R.id.equipment_spinner);
-		equipmentSpinner.setPrompt("Select equipment");
-		setupEquipmentSpinner(equipment);
-		setupParameters(parameters);
-		return view;
-	}
+        sendNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendNotification();
+            }
+        });
 
-	private void setupEquipmentSpinner(List<EquipmentData> equipment) {
-		if (equipment != null && equipmentSpinner != null) {
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-					this.getActivity(),
-					android.R.layout.simple_spinner_item,
-					getEquipmentItems(equipment));
-			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			equipmentSpinner.setAdapter(adapter);
-		}
-	}
+        final Button addParameterButton = (Button) view.findViewById(R.id.add_parameter_button);
+        addParameterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (parameterProvider != null) {
+                    parameterProvider.queryParameter();
+                }
+            }
+        });
 
-	private List<String> getEquipmentItems(List<EquipmentData> equipment) {
-		final List<String> equipmentNames = new LinkedList<String>();
-		equipmentNames.add("None");
-		for (EquipmentData eq : equipment) {
-			equipmentNames.add(eq.getName());
-		}
-		return equipmentNames;
-	}
+        equipmentSpinner = (Spinner) view.findViewById(R.id.equipment_spinner);
+        equipmentSpinner.setPrompt("Select equipment");
+        setupEquipmentSpinner(equipment);
+        setupParameters(parameters);
+        return view;
+    }
 
-	private void setupParameters(List<Parameter> parameters) {
-		parametersContainer.removeAllViews();
-		parametersAdapter = new ParametersAdapter(getActivity(), parameters);
-		parametersAdapter.registerDataSetObserver(new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				super.onChanged();
-				setupParameters(DeviceSendNotificationFragment.this.parameters);
-			}
-		});
+    private void setupEquipmentSpinner(List<EquipmentData> equipment) {
+        if (equipment != null && equipmentSpinner != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    this.getActivity(),
+                    android.R.layout.simple_spinner_item,
+                    getEquipmentItems(equipment));
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            equipmentSpinner.setAdapter(adapter);
+        }
+    }
 
-		final int count = parametersAdapter.getCount();
-		for (int i = 0; i < count; i++) {
-			parametersContainer.addView(parametersAdapter.getView(i, null, parametersContainer));
-		}
-	}
+    private List<String> getEquipmentItems(List<EquipmentData> equipment) {
+        final List<String> equipmentNames = new LinkedList<String>();
+        equipmentNames.add("None");
+        for (EquipmentData eq : equipment) {
+            equipmentNames.add(eq.getName());
+        }
+        return equipmentNames;
+    }
 
-	@Override
-	public void onDestroyView() {
-		sendNotificationButton = null;
-		notificationNameEdit = null;
-		equipmentSpinner = null;
-		super.onDestroyView();
-	}
+    private void setupParameters(List<Parameter> parameters) {
+        parametersContainer.removeAllViews();
+        parametersAdapter = new ParametersAdapter(getActivity(), parameters);
+        parametersAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                setupParameters(DeviceSendNotificationFragment.this.parameters);
+            }
+        });
 
-	private void sendNotification() {
-		String notification = notificationNameEdit.getText().toString();
-		//Log.d(TAG, notification);
-		if (TextUtils.isEmpty(notification)) {
-			notification = "TestNotificationAndroidFramework";
-		}
+        final int count = parametersAdapter.getCount();
+        for (int i = 0; i < count; i++) {
+            parametersContainer.addView(parametersAdapter.getView(i, null, parametersContainer));
+        }
+    }
 
-		HashMap<String, Object> parameters = paramsAsMap(this.parameters);
-		int selectedItemPosition = equipmentSpinner.getSelectedItemPosition();
-		if (selectedItemPosition != 0) {
-			final EquipmentData selectedEquipment = equipment.get(selectedItemPosition - 1);
-			parameters.put("equipment", selectedEquipment.getCode());
-		}
-		if (notificationSender != null) {
-			notificationSender.sendNotification(new Notification(notification, parameters));
-		}
-	}
+    @Override
+    public void onDestroyView() {
+        sendNotificationButton = null;
+        notificationNameEdit = null;
+        equipmentSpinner = null;
+        super.onDestroyView();
+    }
 
-	private static HashMap<String, Object> paramsAsMap(List<Parameter> params) {
-		HashMap<String, Object> paramsMap = new HashMap<String, Object>();
-		for (Parameter param : params) {
-			paramsMap.put(param.name, param.value);
-		}
-		return paramsMap;
-	}
+    private void sendNotification() {
+        String notification = notificationNameEdit.getText().toString();
+        //Log.d(TAG, notification);
+        if (TextUtils.isEmpty(notification)) {
+            notification = "TestNotificationAndroidFramework";
+        }
 
-	private static class ParametersAdapter extends BaseAdapter {
+        HashMap<String, Object> parameters = paramsAsMap(this.parameters);
+        int selectedItemPosition = equipmentSpinner.getSelectedItemPosition();
+        if (selectedItemPosition != 0) {
+            final EquipmentData selectedEquipment = equipment.get(selectedItemPosition - 1);
+            parameters.put("equipment", selectedEquipment.getCode());
+        }
+        if (notificationSender != null) {
+            notificationSender.sendNotification(new Notification(notification, parameters));
+        }
+    }
 
-		private final LayoutInflater inflater;
-		private final List<Parameter> parameters;
+    private static HashMap<String, Object> paramsAsMap(List<Parameter> params) {
+        HashMap<String, Object> paramsMap = new HashMap<String, Object>();
+        for (Parameter param : params) {
+            paramsMap.put(param.name, param.value);
+        }
+        return paramsMap;
+    }
 
-		public ParametersAdapter(Context context, List<Parameter> parameters) {
-			this.parameters = parameters;
-			this.inflater = LayoutInflater.from(context);
-		}
+    private static class ParametersAdapter extends BaseAdapter {
 
-		@Override
-		public int getCount() {
-			return parameters.size();
-		}
+        private final LayoutInflater inflater;
+        private final List<Parameter> parameters;
 
-		@Override
-		public Object getItem(int position) {
-			return parameters.get(position);
-		}
+        public ParametersAdapter(Context context, List<Parameter> parameters) {
+            this.parameters = parameters;
+            this.inflater = LayoutInflater.from(context);
+        }
 
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-		
-		public void removeParameter(Parameter parameter) {
-			parameters.remove(parameter);
-			notifyDataSetChanged();
-		}
-		
-		private View.OnClickListener clickListener = new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				removeParameter((Parameter)v.getTag());
-			}
-		};
+        @Override
+        public int getCount() {
+            return parameters.size();
+        }
 
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder;
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.parameters_list_item, null);
-				holder = new ViewHolder();
-				holder.name = (TextView) convertView.findViewById(R.id.parameter_name_text_view);
-				holder.value = (TextView) convertView.findViewById(R.id.parameter_value_text_view);
-				holder.deleteButton = convertView.findViewById(R.id.parameter_delete_image_view);
-				holder.deleteButton.setOnClickListener(clickListener);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHolder) convertView.getTag();
-			}
+        @Override
+        public Object getItem(int position) {
+            return parameters.get(position);
+        }
 
-			final Parameter parameter = parameters.get(position);
-			holder.name.setText(parameter.name);
-			holder.value.setText(parameter.value);
-			holder.deleteButton.setTag(parameter);
-			return convertView;
-		}
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
 
-		private class ViewHolder {
-			TextView name;
-			TextView value;
-			View deleteButton;
-		}
+        public void removeParameter(Parameter parameter) {
+            parameters.remove(parameter);
+            notifyDataSetChanged();
+        }
 
-	}
+        private View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeParameter((Parameter) v.getTag());
+            }
+        };
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.parameters_list_item, null);
+                holder = new ViewHolder();
+                holder.name = (TextView) convertView.findViewById(R.id.parameter_name_text_view);
+                holder.value = (TextView) convertView.findViewById(R.id.parameter_value_text_view);
+                holder.deleteButton = convertView.findViewById(R.id.parameter_delete_image_view);
+                holder.deleteButton.setOnClickListener(clickListener);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final Parameter parameter = parameters.get(position);
+            holder.name.setText(parameter.name);
+            holder.value.setText(parameter.value);
+            holder.deleteButton.setTag(parameter);
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView name;
+            TextView value;
+            View deleteButton;
+        }
+
+    }
 
 }

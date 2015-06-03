@@ -23,8 +23,6 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preference);
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         prefs = new DevicePreferences(SettingsActivity.this);
     }
 

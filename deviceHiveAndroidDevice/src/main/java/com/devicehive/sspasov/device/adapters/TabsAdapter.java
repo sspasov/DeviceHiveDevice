@@ -14,14 +14,14 @@ public class TabsAdapter extends FragmentPagerAdapter implements
         ActionBar.TabListener, ViewPager.OnPageChangeListener {
 
     private final Context mContext;
-    private final ActionBar mActionBar;
+    private final android.app.ActionBar mActionBar;
     private final ArrayList<ActionBar.Tab> mTabs = new ArrayList<ActionBar.Tab>();
     private final ViewPager mViewPager;
 
     public TabsAdapter(FragmentActivity activity, ViewPager viewPager) {
         super(activity.getSupportFragmentManager());
         mContext = activity;
-        mActionBar = activity.getSupportActionBar();
+        mActionBar = activity.getActionBar();
         mViewPager = viewPager;
         mViewPager.setAdapter(this);
         mViewPager.setOnPageChangeListener(this);
@@ -31,7 +31,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements
         tab.setTag(fragment);
         tab.setTabListener(this);
         mTabs.add(tab);
-        mActionBar.addTab(tab);
+        //mActionBar.addTab();
         notifyDataSetChanged();
     }
 
@@ -46,7 +46,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements
         return (Fragment) tab.getTag();
     }
 
-    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         for (int i = 0; i < mTabs.size(); i++) {
             if (mTabs.get(i) == tab) {
                 mViewPager.setCurrentItem(i);
@@ -54,10 +54,10 @@ public class TabsAdapter extends FragmentPagerAdapter implements
         }
     }
 
-    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
 
-    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
 
     @Override

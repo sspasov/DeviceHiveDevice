@@ -24,6 +24,8 @@ public class DeviceInformationFragment extends Fragment {
 
     private static final String TAG = DeviceInformationFragment.class.getSimpleName();
 
+    private static DeviceInformationFragment instance;
+
     private DeviceData deviceData;
 
     private TextView tvDeviceName;
@@ -39,6 +41,13 @@ public class DeviceInformationFragment extends Fragment {
 
     private TextView tvDeviceNetworkName;
     private TextView tvDeviceNetworkDescription;
+
+    public static DeviceInformationFragment getInstance() {
+        if (instance == null) {
+            instance = new DeviceInformationFragment();
+        }
+        return instance;
+    }
 
 
     public void setDeviceData(DeviceData deviceData) {

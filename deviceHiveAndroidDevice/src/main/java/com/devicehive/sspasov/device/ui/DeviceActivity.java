@@ -1,6 +1,5 @@
 package com.devicehive.sspasov.device.ui;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,9 +10,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -24,7 +23,7 @@ import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.Notification;
 import com.devicehive.sspasov.device.BuildConfig;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.adapters.TabsAdapter;
+import com.devicehive.sspasov.device.adapters.SimplePagerAdapter;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog.ParameterDialogListener;
@@ -39,11 +38,12 @@ import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
 import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
 import com.devicehive.sspasov.device.utils.L;
+import com.devicehive.sspasov.device.utils.SlidingTabLayout;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class DeviceActivity extends FragmentActivity implements
+public class DeviceActivity extends ActionBarActivity implements
         RegistrationListener, ParameterProvider, CommandListener,
         NotificationListener, NotificationSender, ParameterDialogListener {
 
@@ -82,34 +82,31 @@ public class DeviceActivity extends FragmentActivity implements
             device.setDebugLoggingEnabled(BuildConfig.DEBUG);
             device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            ActionBar ab = getActionBar();
-            ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            ab.setTitle(getString(R.string.test_device));
-
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
-            TabsAdapter tabsAdapter = new TabsAdapter(this, viewPager);
-
-            deviceInfoFragment = new DeviceInformationFragment();
+            deviceInfoFragment = DeviceInformationFragment.getInstance();
             deviceInfoFragment.setDeviceData(device.getDeviceData());
 
-            equipmentListFragment = new EquipmentListFragment();
+            equipmentListFragment = EquipmentListFragment.getInstance();
             equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
 
-            deviceCommandsFragment = new DeviceCommandsFragment();
+            deviceCommandsFragment = DeviceCommandsFragment.getInstance();
 
-            deviceSendNotificationFragment = new DeviceSendNotificationFragment();
+            deviceSendNotificationFragment = DeviceSendNotificationFragment.getInstance();
             deviceSendNotificationFragment.setParameterProvider(this);
             deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
 
-            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_info)), deviceInfoFragment);
-            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_equipment)), equipmentListFragment);
-            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_commands)), deviceCommandsFragment);
-            tabsAdapter.addTab(ab.newTab().setText(getString(R.string.tab_device_send_notification)), deviceSendNotificationFragment);
-        }
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("TEST");
+            getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
 
+            SimplePagerAdapter adapter = new SimplePagerAdapter(this, getSupportFragmentManager());
+
+            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager.setAdapter(adapter);
+
+            SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout.setViewPager(viewPager);
+        }
     }
 
     private void createNetErrorDialog() {
@@ -289,11 +286,8 @@ public class DeviceActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, MENU_ID_SETTINGS, Menu.NONE, "Settings")
-                .setIcon(R.drawable.ic_menu_settings)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
     }
 
     private static final int SETTINGS_REQUEST_CODE = 0x01;

@@ -21,12 +21,17 @@ public class DeviceCommandsFragment extends ListFragment {
 
     private final String TAG = DeviceCommandsFragment.class.getSimpleName();
 
+    private static DeviceCommandsFragment instance;
+
     private List<Command> commands;
     private CommandsAdapter commandsAdapter;
 
 
-    public static DeviceCommandsFragment newInstance() {
-        return new DeviceCommandsFragment();
+    public static DeviceCommandsFragment getInstance() {
+        if (instance == null) {
+            instance = new DeviceCommandsFragment();
+        }
+        return instance;
     }
 
     public void setCommands(List<Command> commands) {

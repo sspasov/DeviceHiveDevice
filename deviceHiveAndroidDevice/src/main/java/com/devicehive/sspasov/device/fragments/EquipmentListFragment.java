@@ -21,6 +21,7 @@ import java.util.List;
 public class EquipmentListFragment extends ListFragment {
 
     private static String TAG = EquipmentListFragment.class.getSimpleName();
+    private static EquipmentListFragment instance;
 
     private List<EquipmentData> equipment;
     private EquipmentAdapter equipmentAdapter;
@@ -36,9 +37,12 @@ public class EquipmentListFragment extends ListFragment {
         deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
     }
 
-    public static EquipmentListFragment newInstance() {
-        L.d(TAG, "newInstance()");
-        return new EquipmentListFragment();
+    public static EquipmentListFragment getInstance() {
+        if (instance == null) {
+            instance = new EquipmentListFragment();
+            L.d(TAG, "getInstance()");
+        }
+        return instance;
     }
 
     public void setEquipment(List<EquipmentData> equipment) {
