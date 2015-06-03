@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -43,7 +43,7 @@ import com.devicehive.sspasov.device.utils.SlidingTabLayout;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DeviceActivity extends ActionBarActivity implements
+public class DeviceActivity extends AppCompatActivity implements
         RegistrationListener, ParameterProvider, CommandListener,
         NotificationListener, NotificationSender, ParameterDialogListener {
 
@@ -55,10 +55,10 @@ public class DeviceActivity extends ActionBarActivity implements
 
     private TestDevice device;
 
-    private DeviceInformationFragment deviceInfoFragment;
-    private EquipmentListFragment equipmentListFragment;
-    private DeviceCommandsFragment deviceCommandsFragment;
-    private DeviceSendNotificationFragment deviceSendNotificationFragment;
+    //private DeviceInformationFragment deviceInfoFragment;
+    //private EquipmentListFragment equipmentListFragment;
+    //private DeviceCommandsFragment deviceCommandsFragment;
+    //private DeviceSendNotificationFragment deviceSendNotificationFragment;
 
     private List<Command> receivedCommands = new LinkedList<>();
 
@@ -82,32 +82,62 @@ public class DeviceActivity extends ActionBarActivity implements
             device.setDebugLoggingEnabled(BuildConfig.DEBUG);
             device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
-            deviceInfoFragment = DeviceInformationFragment.getInstance();
-            deviceInfoFragment.setDeviceData(device.getDeviceData());
+            //deviceInfoFragment = DeviceInformationFragment.getInstance();
+            DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
 
-            equipmentListFragment = EquipmentListFragment.getInstance();
-            equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
+            //equipmentListFragment = EquipmentListFragment.getInstance();
+            EquipmentListFragment.getInstance().setEquipment(device.getDeviceData().getEquipment());
 
-            deviceCommandsFragment = DeviceCommandsFragment.getInstance();
+            DeviceCommandsFragment.getInstance();
 
-            deviceSendNotificationFragment = DeviceSendNotificationFragment.getInstance();
-            deviceSendNotificationFragment.setParameterProvider(this);
-            deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
+            //deviceSendNotificationFragment = DeviceSendNotificationFragment.getInstance();
+            DeviceSendNotificationFragment.getInstance().setParameterProvider(this);
+            DeviceSendNotificationFragment.getInstance().setEquipment(device.getDeviceData().getEquipment());
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("TEST");
+            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
 
-            SimplePagerAdapter adapter = new SimplePagerAdapter(this, getSupportFragmentManager());
-
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(adapter);
+            viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
 
             SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+
+            /*mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                @Override
+                public int getIndicatorColor(int position) {
+                    return getColorBasedForPosition(position);
+                }
+
+            });*/
+
             mSlidingTabLayout.setViewPager(viewPager);
+            mSlidingTabLayout.setDistributeEvenly(true);
+
+
         }
     }
+
+    /*private int getColorBasedForPosition(int pos) {
+        int color;
+        switch (pos) {
+            case 0:
+                color = getResources().getColor();
+                break;
+            case 1:
+                color = getResources().getColor(R.color.eventsmate_tab_indicator_two);
+                break;
+            case 2:
+                color = getResources().getColor(R.color.eventsmate_tab_indicator_three);
+                break;
+            default:
+                color = getResources().getColor(R.color.eventsmate_accent);
+                break;
+        }
+
+        return color;
+    }*/
 
     private void createNetErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -152,7 +182,7 @@ public class DeviceActivity extends ActionBarActivity implements
         device.addDeviceListener(this);
         device.addCommandListener(this);
         device.addNotificationListener(this);
-        deviceInfoFragment.setDeviceData(device.getDeviceData());
+        DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
         if (!device.isRegistered()) {
             device.registerDevice();
         } else {
@@ -182,7 +212,7 @@ public class DeviceActivity extends ActionBarActivity implements
     @Override
     public void onDeviceRegistered() {
         L.d(TAG, "onDeviceRegistered()");
-        deviceInfoFragment.setDeviceData(device.getDeviceData());
+        DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
         device.startProcessingCommands();
     }
 
@@ -216,7 +246,7 @@ public class DeviceActivity extends ActionBarActivity implements
     public void onDeviceReceivedCommand(Command command) {
         L.d(TAG, "onDeviceReceivedCommand()");
         receivedCommands.add(command);
-        deviceCommandsFragment.setCommands(receivedCommands);
+        DeviceCommandsFragment.getInstance().setCommands(receivedCommands);
     }
 
     @Override
@@ -277,7 +307,7 @@ public class DeviceActivity extends ActionBarActivity implements
     @Override
     public void onFinishEditingParameter(String name, String value) {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(value)) {
-            deviceSendNotificationFragment.addParameter(name, value);
+            DeviceSendNotificationFragment.getInstance().addParameter(name, value);
         }
     }
 
@@ -305,7 +335,7 @@ public class DeviceActivity extends ActionBarActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_ID_SETTINGS:
+            case R.id.menu_settings:
                 startActivityForResult(new Intent(this, SettingsActivity.class), SETTINGS_REQUEST_CODE);
                 return true;
             default:

@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar"/>
 
     <style name="ListItem">
         <item name="android:layout_width">match_parent</item>

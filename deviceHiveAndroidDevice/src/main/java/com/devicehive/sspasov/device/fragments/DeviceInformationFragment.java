@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.DeviceData;
 import com.devicehive.sspasov.device.R;
+import com.devicehive.sspasov.device.utils.L;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,6 +47,7 @@ public class DeviceInformationFragment extends Fragment {
         if (instance == null) {
             instance = new DeviceInformationFragment();
         }
+        L.d(TAG, "instance: " + instance.toString());
         return instance;
     }
 

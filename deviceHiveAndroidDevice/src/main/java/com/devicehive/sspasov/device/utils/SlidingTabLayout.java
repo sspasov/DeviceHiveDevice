@@ -6,11 +6,13 @@ import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -57,8 +59,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     private int mTabViewLayoutId;
     private int mTabViewTextViewId;
+    private boolean mDistributeEvenly;
 
     private ViewPager mViewPager;
+    private SparseArray<String> mContentDescriptions = new SparseArray<String>();
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
 
     private final SlidingTabStrip mTabStrip;
@@ -94,6 +98,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     public void setCustomTabColorizer(TabColorizer tabColorizer) {
         mTabStrip.setCustomTabColorizer(tabColorizer);
+    }
+
+    public void setDistributeEvenly(boolean distributeEvenly) {
+        mDistributeEvenly = distributeEvenly;
     }
 
     /**
@@ -201,11 +209,29 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 tabTitleView = (TextView) tabView;
             }
 
+            if (mDistributeEvenly) {
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                lp.width = 0;
+                lp.weight = 1;
+            }
+
             tabTitleView.setText(adapter.getPageTitle(i));
+            tabTitleView.setTextColor(getResources().getColor(android.R.color.white));
             tabView.setOnClickListener(tabClickListener);
+            String desc = mContentDescriptions.get(i, null);
+            if (desc != null) {
+                tabView.setContentDescription(desc);
+            }
 
             mTabStrip.addView(tabView);
+            if (i == mViewPager.getCurrentItem()) {
+                tabView.setSelected(true);
+            }
         }
+    }
+
+    public void setContentDescription(int i, String desc) {
+        mContentDescriptions.put(i, desc);
     }
 
     @Override
