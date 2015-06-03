@@ -7,12 +7,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dataart.android.devicehive.DeviceData;
 import com.devicehive.sspasov.device.R;
 
@@ -20,7 +20,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class DeviceInformationFragment extends SherlockFragment {
+public class DeviceInformationFragment extends Fragment {
 
     private static final String TAG = DeviceInformationFragment.class.getSimpleName();
 

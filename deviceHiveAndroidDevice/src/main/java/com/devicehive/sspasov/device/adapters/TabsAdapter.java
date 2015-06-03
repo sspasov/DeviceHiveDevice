@@ -2,13 +2,11 @@ package com.devicehive.sspasov.device.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import android.support.v7.app.ActionBar;
 
 import java.util.ArrayList;
 
@@ -20,7 +18,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements
     private final ArrayList<ActionBar.Tab> mTabs = new ArrayList<ActionBar.Tab>();
     private final ViewPager mViewPager;
 
-    public TabsAdapter(SherlockFragmentActivity activity, ViewPager viewPager) {
+    public TabsAdapter(FragmentActivity activity, ViewPager viewPager) {
         super(activity.getSupportFragmentManager());
         mContext = activity;
         mActionBar = activity.getSupportActionBar();

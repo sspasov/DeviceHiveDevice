@@ -2,15 +2,15 @@ package com.devicehive.sspasov.device.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
 
-public class SettingsActivity extends SherlockPreferenceActivity {
+public class SettingsActivity extends PreferenceActivity {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
@@ -22,7 +22,8 @@ public class SettingsActivity extends SherlockPreferenceActivity {
         L.d(TAG, "onCreate()");
         addPreferencesFromResource(R.xml.preference);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         prefs = new DevicePreferences(SettingsActivity.this);
     }

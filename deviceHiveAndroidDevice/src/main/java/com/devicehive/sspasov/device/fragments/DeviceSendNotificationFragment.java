@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.dataart.android.devicehive.EquipmentData;
 import com.dataart.android.devicehive.Notification;
 import com.devicehive.sspasov.device.R;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DeviceSendNotificationFragment extends SherlockFragment {
+public class DeviceSendNotificationFragment extends Fragment {
 
 	private static final String TAG = "DeviceSendNotificationFragment";
 

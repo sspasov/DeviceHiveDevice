@@ -1,5 +1,6 @@
 package com.devicehive.sspasov.device.ui;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,14 +11,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.dataart.android.devicehive.Command;
 import com.dataart.android.devicehive.Notification;
 import com.devicehive.sspasov.device.BuildConfig;
@@ -41,7 +43,7 @@ import com.devicehive.sspasov.device.utils.L;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DeviceActivity extends SherlockFragmentActivity implements
+public class DeviceActivity extends FragmentActivity implements
         RegistrationListener, ParameterProvider, CommandListener,
         NotificationListener, NotificationSender, ParameterDialogListener {
 
@@ -80,7 +82,9 @@ public class DeviceActivity extends SherlockFragmentActivity implements
             device.setDebugLoggingEnabled(BuildConfig.DEBUG);
             device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
-            ActionBar ab = getSupportActionBar();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            ActionBar ab = getActionBar();
             ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             ab.setTitle(getString(R.string.test_device));
 
@@ -280,15 +284,12 @@ public class DeviceActivity extends SherlockFragmentActivity implements
         }
     }
 
-    private com.actionbarsherlock.view.Menu optionsMenu;
 
     private static final int MENU_ID_SETTINGS = 0x01;
 
     @Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
-        optionsMenu = menu;
-        menu.add(com.actionbarsherlock.view.Menu.NONE, MENU_ID_SETTINGS,
-                com.actionbarsherlock.view.Menu.NONE, "Settings")
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.NONE, MENU_ID_SETTINGS, Menu.NONE, "Settings")
                 .setIcon(R.drawable.ic_menu_settings)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
@@ -308,7 +309,7 @@ public class DeviceActivity extends SherlockFragmentActivity implements
     }
 
     @Override
-    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_ID_SETTINGS:
                 startActivityForResult(new Intent(this, SettingsActivity.class), SETTINGS_REQUEST_CODE);
