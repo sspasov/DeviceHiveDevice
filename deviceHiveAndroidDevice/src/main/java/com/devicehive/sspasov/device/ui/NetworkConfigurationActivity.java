@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,6 +20,7 @@ import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +44,7 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
     private ArrayAdapter<String> adapter;
     private List<Network> networks;
     private ArrayList<String> simpleNetworkList;
-    private Button btnContinue;
+    private FloatingActionButton btnContinue;
 
     private DevicePreferences prefs;
 
@@ -72,7 +72,7 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         etNetworkDescription = (EditText) findViewById(R.id.et_startup_network_description);
         etNetworkDescription.setHint("(Optional)");
 
-        btnContinue = (Button) findViewById(R.id.btn_network_continue);
+        btnContinue = (FloatingActionButton) findViewById(R.id.btn_network_continue);
         btnContinue.setOnClickListener(this);
 
         spinner = (Spinner) findViewById(R.id.sp_existing_networks);

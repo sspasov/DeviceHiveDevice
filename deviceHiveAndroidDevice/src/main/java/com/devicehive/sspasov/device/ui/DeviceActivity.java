@@ -99,45 +99,49 @@ public class DeviceActivity extends AppCompatActivity implements
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
 
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
 
             SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-            /*mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
                 @Override
                 public int getIndicatorColor(int position) {
                     return getColorBasedForPosition(position);
                 }
 
-            });*/
+                @Override
+                public int getDividerColor(int position) {
+                    return 0;
+                }
+
+            });
 
             mSlidingTabLayout.setViewPager(viewPager);
             mSlidingTabLayout.setDistributeEvenly(true);
 
-
         }
     }
 
-    /*private int getColorBasedForPosition(int pos) {
+    private int getColorBasedForPosition(int pos) {
         int color;
         switch (pos) {
             case 0:
-                color = getResources().getColor();
+                color = getResources().getColor(R.color.info_strip);
                 break;
             case 1:
-                color = getResources().getColor(R.color.eventsmate_tab_indicator_two);
+                color = getResources().getColor(R.color.equipment_strip);
                 break;
             case 2:
-                color = getResources().getColor(R.color.eventsmate_tab_indicator_three);
+                color = getResources().getColor(R.color.commands_strip);
                 break;
             default:
-                color = getResources().getColor(R.color.eventsmate_accent);
+                color = getResources().getColor(R.color.notifications_strip);
                 break;
         }
 
         return color;
-    }*/
+    }
 
     private void createNetErrorDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

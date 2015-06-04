@@ -3,25 +3,27 @@ package com.devicehive.sspasov.device.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
+import com.github.clans.fab.FloatingActionButton;
 
 public class StartupConfigurationActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = StartupConfigurationActivity.class.getSimpleName();
 
     private EditText etApiEndpoint;
-    private Button btnContinue;
+    private FloatingActionButton btnContinue;
 
     private DevicePreferences prefs;
 
     private boolean isEmpty;
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,9 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         etApiEndpoint = (EditText) findViewById(R.id.et_startup_api_endpoint);
 
-        btnContinue = (Button) findViewById(R.id.btn_startup_continue);
+        btnContinue = (FloatingActionButton) findViewById(R.id.btn_startup_continue);
         btnContinue.setOnClickListener(this);
+        mHandler = new Handler();
 
         prefs = new DevicePreferences(this);
 
@@ -55,9 +58,6 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
 
         if (!isEmpty) {
-            /*prefs.setIsFirstStartup(false);
-            DeviceConfig.FIRST_STARTUP = prefs.isFirstStartup();
-*/
             prefs.setServerUrlSync(etApiEndpoint.getText().toString());
             DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
 
@@ -65,6 +65,6 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
             startActivity(deviceActivity);
             finish();
         }
-
     }
+
 }

@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/AppTheme"
     tools:context="com.devicehive.sspasov.device.ui.StartupConfigurationActivity">
 
     <LinearLayout
@@ -21,7 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="20dp"
             android:text="Welcome to DeviceHive"
+            android:textColor="@color/primary_text"
             android:textSize="@dimen/tv_main_title_size"
             android:textStyle="bold"/>
 
@@ -31,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Device"
+            android:textColor="@color/primary_text"
             android:textSize="@dimen/tv_main_title_size"
             android:textStyle="bold"/>
 
@@ -55,7 +59,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="API Endpoint"/>
+            android:text="API Endpoint"
+            android:textColor="@color/secondary_text"/>
 
         <EditText
             android:id="@+id/et_startup_api_endpoint"
@@ -72,14 +77,20 @@
         android:layout_above="@+id/btn_startup_continue"/>
 
 
-    <Button
+    <com.github.clans.fab.FloatingActionButton
         android:id="@+id/btn_startup_continue"
-        android:layout_width="match_parent"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Continue"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_navigate_next_white_36dp"
+        fab:fab_colorNormal="@color/accent"
+        fab:fab_colorPressed="@color/accent_dark"
+        fab:fab_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:fab_showAnimation="@anim/fab_slide_in_from_right"/>
 
 
 </RelativeLayout>
