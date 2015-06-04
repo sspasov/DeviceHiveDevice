@@ -27,12 +27,8 @@ import com.devicehive.sspasov.device.adapters.SimplePagerAdapter;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog;
 import com.devicehive.sspasov.device.dialogs.ParameterDialog.ParameterDialogListener;
-import com.devicehive.sspasov.device.fragments.DeviceCommandsFragment;
-import com.devicehive.sspasov.device.fragments.DeviceInformationFragment;
-import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment;
 import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment.NotificationSender;
 import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment.ParameterProvider;
-import com.devicehive.sspasov.device.fragments.EquipmentListFragment;
 import com.devicehive.sspasov.device.objects.TestDevice;
 import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
@@ -53,14 +49,13 @@ public class DeviceActivity extends AppCompatActivity implements
     public static boolean registerDevice = true;
     private NetworkReceiver receiver = new NetworkReceiver();
 
-    private TestDevice device;
+    public TestDevice device;
 
-    //private DeviceInformationFragment deviceInfoFragment;
-    //private EquipmentListFragment equipmentListFragment;
-    //private DeviceCommandsFragment deviceCommandsFragment;
     //private DeviceSendNotificationFragment deviceSendNotificationFragment;
 
     private List<Command> receivedCommands = new LinkedList<>();
+
+    private ViewPager viewPager;
 
 
     @Override
@@ -82,28 +77,20 @@ public class DeviceActivity extends AppCompatActivity implements
             device.setDebugLoggingEnabled(BuildConfig.DEBUG);
             device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
-            //deviceInfoFragment = DeviceInformationFragment.getInstance();
-            DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
-
-            //equipmentListFragment = EquipmentListFragment.getInstance();
-            EquipmentListFragment.getInstance().setEquipment(device.getDeviceData().getEquipment());
-
-            DeviceCommandsFragment.getInstance();
-
-            //deviceSendNotificationFragment = DeviceSendNotificationFragment.getInstance();
-            DeviceSendNotificationFragment.getInstance().setParameterProvider(this);
-            DeviceSendNotificationFragment.getInstance().setEquipment(device.getDeviceData().getEquipment());
+            //deviceSendNotificationFragment = DeviceSendNotificationFragment.newInstance();
+            //deviceSendNotificationFragment.setParameterProvider(this);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
             getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
 
-            final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
+            viewPager = (ViewPager) findViewById(R.id.pager);
+            setViewPagerAdapter();
 
             SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-
+            mSlidingTabLayout.setViewPager(viewPager);
+            mSlidingTabLayout.setDistributeEvenly(true);
             mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
                 @Override
                 public int getIndicatorColor(int position) {
@@ -116,11 +103,18 @@ public class DeviceActivity extends AppCompatActivity implements
                 }
 
             });
-
-            mSlidingTabLayout.setViewPager(viewPager);
-            mSlidingTabLayout.setDistributeEvenly(true);
-
         }
+    }
+
+    private void setViewPagerAdapter(String name, String value) {
+        SimplePagerAdapter adapter = new SimplePagerAdapter(this, getSupportFragmentManager(), device, receivedCommands, this);
+        adapter.addParameter(name, value);
+        viewPager.setAdapter(adapter);
+    }
+
+
+    private void setViewPagerAdapter() {
+        viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager(), device, receivedCommands, this));
     }
 
     private int getColorBasedForPosition(int pos) {
@@ -186,7 +180,7 @@ public class DeviceActivity extends AppCompatActivity implements
         device.addDeviceListener(this);
         device.addCommandListener(this);
         device.addNotificationListener(this);
-        DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
+        setViewPagerAdapter();
         if (!device.isRegistered()) {
             device.registerDevice();
         } else {
@@ -196,12 +190,15 @@ public class DeviceActivity extends AppCompatActivity implements
 
     public void deviceUnregister() {
         L.d(TAG, "deviceUnregister()");
-        device.removeDeviceListener(this);
-        device.removeCommandListener(this);
-        device.removeNotificationListener(this);
-        device.stopProcessingCommands();
+        if (device != null) {
+            device.removeDeviceListener(this);
+            device.removeCommandListener(this);
+            device.removeNotificationListener(this);
+            device.stopProcessingCommands();
 
-        device.unregisterDevice();
+            device.unregisterDevice();
+        }
+
     }
 
     @Override
@@ -216,7 +213,7 @@ public class DeviceActivity extends AppCompatActivity implements
     @Override
     public void onDeviceRegistered() {
         L.d(TAG, "onDeviceRegistered()");
-        DeviceInformationFragment.getInstance().setDeviceData(device.getDeviceData());
+        setViewPagerAdapter();
         device.startProcessingCommands();
     }
 
@@ -250,7 +247,7 @@ public class DeviceActivity extends AppCompatActivity implements
     public void onDeviceReceivedCommand(Command command) {
         L.d(TAG, "onDeviceReceivedCommand()");
         receivedCommands.add(command);
-        DeviceCommandsFragment.getInstance().setCommands(receivedCommands);
+        setViewPagerAdapter();
     }
 
     @Override
@@ -311,7 +308,8 @@ public class DeviceActivity extends AppCompatActivity implements
     @Override
     public void onFinishEditingParameter(String name, String value) {
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(value)) {
-            DeviceSendNotificationFragment.getInstance().addParameter(name, value);
+            setViewPagerAdapter(name, value);
+            //DeviceSendNotificationFragment.getInstance().addParameter(name, value);
         }
     }
 

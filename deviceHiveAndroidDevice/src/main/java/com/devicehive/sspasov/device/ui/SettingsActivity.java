@@ -22,7 +22,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         L.d(TAG, "onCreate()");
         addPreferencesFromResource(R.xml.preference);

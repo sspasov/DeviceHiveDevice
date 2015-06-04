@@ -14,39 +14,33 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.EquipmentData;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.utils.L;
 
 import java.util.List;
 
 public class EquipmentListFragment extends ListFragment {
 
     private static String TAG = EquipmentListFragment.class.getSimpleName();
-    private static EquipmentListFragment instance;
 
     private List<EquipmentData> equipment;
     private EquipmentAdapter equipmentAdapter;
 
     List<Sensor> deviceSensors;
 
+    public static EquipmentListFragment newInstance() {
+        EquipmentListFragment f = new EquipmentListFragment();
+        return f;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        L.d(TAG, "onActivityCreated()");
         super.onActivityCreated(savedInstanceState);
 
         SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
     }
 
-    public static EquipmentListFragment getInstance() {
-        if (instance == null) {
-            instance = new EquipmentListFragment();
-            L.d(TAG, "getInstance()");
-        }
-        return instance;
-    }
 
     public void setEquipment(List<EquipmentData> equipment) {
-        L.d(TAG, "setEquipment()");
         this.equipment = equipment;
         if (getActivity() != null) {
             equipmentAdapter = new EquipmentAdapter(getActivity(), this.equipment);
@@ -57,12 +51,12 @@ public class EquipmentListFragment extends ListFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        L.d(TAG, "onAttach()");
         if (equipment != null) {
             equipmentAdapter = new EquipmentAdapter(activity, equipment);
             setListAdapter(equipmentAdapter);
         }
     }
+
 
     private static class EquipmentAdapter extends BaseAdapter {
 

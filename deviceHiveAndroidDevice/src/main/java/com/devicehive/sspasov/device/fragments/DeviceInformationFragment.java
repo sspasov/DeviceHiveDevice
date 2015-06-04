@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.DeviceData;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.utils.L;
+import com.devicehive.sspasov.device.ui.DeviceActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,8 +24,6 @@ import java.util.concurrent.TimeUnit;
 public class DeviceInformationFragment extends Fragment {
 
     private static final String TAG = DeviceInformationFragment.class.getSimpleName();
-
-    private static DeviceInformationFragment instance;
 
     private DeviceData deviceData;
 
@@ -43,12 +41,9 @@ public class DeviceInformationFragment extends Fragment {
     private TextView tvDeviceNetworkName;
     private TextView tvDeviceNetworkDescription;
 
-    public static DeviceInformationFragment getInstance() {
-        if (instance == null) {
-            instance = new DeviceInformationFragment();
-        }
-        L.d(TAG, "instance: " + instance.toString());
-        return instance;
+    public static DeviceInformationFragment newInstance() {
+        DeviceInformationFragment f = new DeviceInformationFragment();
+        return f;
     }
 
 
@@ -93,7 +88,7 @@ public class DeviceInformationFragment extends Fragment {
             tvDeviceId.setText(deviceData.getId());
             tvDeviceStatus.setText(deviceData.getStatus());
             timeThread();
-            batteryThread();
+            //batteryThread(); //TODO: bug
 
             tvDeviceClassName.setText(deviceData.getDeviceClass().getName());
             tvDeviceClassVersion.setText(deviceData.getDeviceClass().getVersion());
@@ -101,9 +96,6 @@ public class DeviceInformationFragment extends Fragment {
 
             tvDeviceNetworkName.setText(deviceData.getNetwork().getName());
             tvDeviceNetworkDescription.setText(deviceData.getNetwork().getDescription().isEmpty() ? "--" : deviceData.getNetwork().getDescription());
-            //"Hi my name is . Hi my name is .
-            // Hi my name is . Hi my name is .
-            // Hi my name is ."
         }
     }
 
@@ -134,7 +126,7 @@ public class DeviceInformationFragment extends Fragment {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = getActivity().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+                Intent intent = ((DeviceActivity) getActivity()).registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
                 int level = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) : 0;
                 int scale = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100) : 0;
                 final int percent = (level * 100) / scale;

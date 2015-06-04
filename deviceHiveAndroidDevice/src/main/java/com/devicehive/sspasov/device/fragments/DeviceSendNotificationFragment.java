@@ -28,7 +28,6 @@ import java.util.List;
 public class DeviceSendNotificationFragment extends Fragment {
 
     private static final String TAG = "DeviceSendNotificationFragment";
-    private static DeviceSendNotificationFragment instance;
 
     private Button sendNotificationButton;
 
@@ -43,6 +42,11 @@ public class DeviceSendNotificationFragment extends Fragment {
 
     private List<EquipmentData> equipment;
     private List<Parameter> parameters = new LinkedList<Parameter>();
+
+    public static DeviceSendNotificationFragment newInstance() {
+        DeviceSendNotificationFragment f = new DeviceSendNotificationFragment();
+        return f;
+    }
 
     public static class Parameter {
         public final String name;
@@ -62,13 +66,6 @@ public class DeviceSendNotificationFragment extends Fragment {
         void queryParameter();
     }
 
-    public static DeviceSendNotificationFragment getInstance() {
-        if (instance == null) {
-            instance = new DeviceSendNotificationFragment();
-        }
-        return instance;
-
-    }
 
     public void setNotificationSender(NotificationSender notificationSender) {
         this.notificationSender = notificationSender;

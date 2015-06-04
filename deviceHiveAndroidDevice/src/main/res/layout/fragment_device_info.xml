@@ -1,418 +1,425 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:gravity="start"
-                android:padding="@dimen/tv_title_padding"
-                android:text="@string/tv_title_device"
-                android:textSize="@dimen/tv_title_size"
-                android:textStyle="bold"/>
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:gravity="start"
+                    android:padding="@dimen/tv_title_padding"
+                    android:text="@string/tv_title_device"
+                    android:textSize="@dimen/tv_title_size"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_name"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_board"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_board"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_id"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_status"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_time_on"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_time_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_battery"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_battery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/tv_calculatin"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_name"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:padding="@dimen/tv_title_padding"
+                    android:text="@string/tv_title_device_class"
+                    android:textSize="@dimen/tv_title_size"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_device_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_class_type"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_class_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_class_version"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_class_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_class_is_permanent"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_class_is_permanent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_board"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:padding="@dimen/tv_title_padding"
+                    android:text="@string/tv_title_device_network"
+                    android:textSize="@dimen/tv_title_size"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_device_board"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_network_name"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/tv_device_network_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tv_content_side_padding"
+                    android:paddingRight="@dimen/tv_content_side_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/tv_content_device_network_description"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+
+                    <TextView
+                        android:id="@+id/tv_device_network_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?android:attr/listPreferredItemHeight"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/empty"
+                        android:textAppearance="@android:style/TextAppearance.Small" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/bottom_divider_height"
+                    android:background="@android:drawable/divider_horizontal_bright"
+                    android:paddingLeft="@dimen/divider_padding"
+                    android:paddingRight="@dimen/divider_padding" />
+
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_id"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_status"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_time_on"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_time_on"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_battery"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_battery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/tv_calculatin"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bottom_divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    </ScrollView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:padding="@dimen/tv_title_padding"
-                android:text="@string/tv_title_device_class"
-                android:textSize="@dimen/tv_title_size"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_class_type"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_class_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_class_version"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_class_version"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_class_is_permanent"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_class_is_permanent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bottom_divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:padding="@dimen/tv_title_padding"
-                android:text="@string/tv_title_device_network"
-                android:textSize="@dimen/tv_title_size"
-                android:textStyle="bold"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_network_name"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-                <TextView
-                    android:id="@+id/tv_device_network_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/tv_content_side_padding"
-                android:paddingRight="@dimen/tv_content_side_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/tv_content_device_network_description"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
+</FrameLayout>
 
 
-                <TextView
-                    android:id="@+id/tv_device_network_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?android:attr/listPreferredItemHeight"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|end"
-                    android:text="@string/empty"
-                    android:textAppearance="@android:style/TextAppearance.Small"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bottom_divider_height"
-                android:background="@android:drawable/divider_horizontal_bright"
-                android:paddingLeft="@dimen/divider_padding"
-                android:paddingRight="@dimen/divider_padding"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>

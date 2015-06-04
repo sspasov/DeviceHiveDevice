@@ -30,7 +30,7 @@
         <Spinner
             android:id="@+id/equipment_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
@@ -46,8 +46,7 @@
             android:id="@+id/parameters_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
         <Button
             android:id="@+id/add_parameter_button"
@@ -55,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Add Parameter"
-            tools:mContext=".MainActivity"/>
+            tools:mContext=".MainActivity" />
 
         <Button
             android:id="@+id/send_notification_button"
@@ -63,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Send Notification"
-            tools:mContext=".MainActivity"/>
+            tools:mContext=".MainActivity" />
     </LinearLayout>
 
 </ScrollView>
