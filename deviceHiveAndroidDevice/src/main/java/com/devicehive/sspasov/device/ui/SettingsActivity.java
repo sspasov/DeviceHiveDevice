@@ -28,7 +28,10 @@ public class SettingsActivity extends PreferenceActivity {
 
         LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
-        root.addView(toolbar, 0); // insert at top
+        toolbar.setTitle(getString(R.string.action_settings));
+        int attr[] = new int[]{android.R.attr.textSize};
+
+        //toolbar.setNavigationIcon(obtainStyledAttributes(attr));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,6 +40,7 @@ public class SettingsActivity extends PreferenceActivity {
                 finish();
             }
         });
+        root.addView(toolbar, 0); // insert at top
 
 
         prefs = new DevicePreferences(SettingsActivity.this);

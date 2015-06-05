@@ -35,5 +35,14 @@
     <string name="tv_equipment_type">Type</string>
     <string name="tv_equipment_type_empty">Equipment type</string>
     <string name="title_activity_network_configuration">NetworkConfigurationActivity</string>
+    <string name="welcome">Welcome to DeviceHive</string>
+    <string name="device">Device</string>
+    <string name="api_endpoint">API Endpoint</string>
+    <string name="logo_content_description">logo</string>
+    <string name="network_configuration">Network Configuration</string>
+    <string name="create_new_network">Create new network</string>
+    <string name="network_name">Network name</string>
+    <string name="network_description">Network description</string>
+    <string name="existing_one">or choose from existing one</string>
 
 </resources>

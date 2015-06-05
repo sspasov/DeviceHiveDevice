@@ -26,9 +26,13 @@ public class EquipmentListFragment extends ListFragment {
 
     List<Sensor> deviceSensors;
 
+    private static EquipmentListFragment instance;
+
     public static EquipmentListFragment newInstance() {
-        EquipmentListFragment f = new EquipmentListFragment();
-        return f;
+        if (instance == null) {
+            instance = new EquipmentListFragment();
+        }
+        return instance;
     }
 
     @Override

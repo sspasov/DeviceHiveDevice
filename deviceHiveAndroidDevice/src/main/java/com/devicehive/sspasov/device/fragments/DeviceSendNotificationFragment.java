@@ -43,9 +43,13 @@ public class DeviceSendNotificationFragment extends Fragment {
     private List<EquipmentData> equipment;
     private List<Parameter> parameters = new LinkedList<Parameter>();
 
+    private static DeviceSendNotificationFragment instance;
+
     public static DeviceSendNotificationFragment newInstance() {
-        DeviceSendNotificationFragment f = new DeviceSendNotificationFragment();
-        return f;
+        if (instance == null) {
+            instance = new DeviceSendNotificationFragment();
+        }
+        return instance;
     }
 
     public static class Parameter {
@@ -111,6 +115,7 @@ public class DeviceSendNotificationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sendNotification();
+                clearView();
             }
         });
 
@@ -192,6 +197,13 @@ public class DeviceSendNotificationFragment extends Fragment {
         if (notificationSender != null) {
             notificationSender.sendNotification(new Notification(notification, parameters));
         }
+    }
+
+    private void clearView() {
+        //TODO: clear after sending
+        notificationNameEdit.setText("");
+        //equipmentSpinner.refreshDrawableState();
+        parametersContainer.removeAllViews();
     }
 
     private static HashMap<String, Object> paramsAsMap(List<Parameter> params) {

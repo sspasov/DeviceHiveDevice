@@ -48,9 +48,8 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
 
     private DevicePreferences prefs;
 
-    private boolean isEmptyNetworkName;
-    private boolean isEmptyNetworkDescription;
-    private boolean isCreatingNewNetwork;
+    private boolean isEmptyNetworkFields;
+    private boolean isCreatingNewNetwork = true;
 
     private DeviceHiveResultReceiver resultReceiver = null;
 
@@ -100,22 +99,20 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         etNetworkName.setError(null);
         etNetworkDescription.setError(null);
 
+        isEmptyNetworkFields = false;
+
         if (isCreatingNewNetwork) {
             if (etNetworkName.getText().toString().isEmpty()) {
                 etNetworkName.setError("You must enter Network name.");
-                isEmptyNetworkName = true;
-            } else {
-                isEmptyNetworkName = false;
+                isEmptyNetworkFields = true;
             }
 
             if (etNetworkDescription.getText().toString().isEmpty()) {
                 etNetworkDescription.setError("You must enter Network description.");
-                isEmptyNetworkDescription = true;
-            } else {
-                isEmptyNetworkDescription = false;
+                isEmptyNetworkFields = true;
             }
 
-            if (!isEmptyNetworkName && !isEmptyNetworkDescription) {
+            if (!isEmptyNetworkFields) {
                 prefs.setIsFirstStartup(false);
                 DeviceConfig.FIRST_STARTUP = prefs.isFirstStartup();
 
@@ -149,11 +146,14 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position == 0) {
             isCreatingNewNetwork = true;
+            etNetworkName.setText("");
+            etNetworkDescription.setText("");
         } else {
-            //TODO: FIX THE CRASH, selectng last one crashes
             isCreatingNewNetwork = false;
-            networkName = networks.get(position).getName();
-            networkDescription = networks.get(position).getDescription();
+            networkName = networks.get(position - 1).getName();
+            etNetworkName.setText(networkName);
+            networkDescription = networks.get(position - 1).getDescription();
+            etNetworkDescription.setText(networkDescription);
             L.d(TAG, networkName);
             L.d(TAG, networkDescription);
         }

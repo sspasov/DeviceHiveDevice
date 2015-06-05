@@ -11,4 +11,5 @@
     <dimen name="tv_command_name">18sp</dimen>
     <dimen name="tv_main_title_size">24sp</dimen>
     <dimen name="tv_secondary_title_size">18sp</dimen>
+    <dimen name="title_top_padding">20dp</dimen>
 </resources>

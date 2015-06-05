@@ -24,10 +24,13 @@ public class DeviceCommandsFragment extends ListFragment {
     private List<Command> commands;
     private CommandsAdapter commandsAdapter;
 
+    private static DeviceCommandsFragment instance;
 
     public static DeviceCommandsFragment newInstance() {
-        DeviceCommandsFragment f = new DeviceCommandsFragment();
-        return f;
+        if (instance == null) {
+            instance = new DeviceCommandsFragment();
+        }
+        return instance;
     }
 
     public DeviceCommandsFragment() {

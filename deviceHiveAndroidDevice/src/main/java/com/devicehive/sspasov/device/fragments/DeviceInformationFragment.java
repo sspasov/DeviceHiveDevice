@@ -1,5 +1,6 @@
 package com.devicehive.sspasov.device.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import com.dataart.android.devicehive.DeviceData;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.ui.DeviceActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,11 +41,20 @@ public class DeviceInformationFragment extends Fragment {
     private TextView tvDeviceNetworkName;
     private TextView tvDeviceNetworkDescription;
 
+    private static DeviceInformationFragment instance;
+
+    private Context mContext;
+
     public static DeviceInformationFragment newInstance() {
-        DeviceInformationFragment f = new DeviceInformationFragment();
-        return f;
+        if (instance == null) {
+            instance = new DeviceInformationFragment();
+        }
+        return instance;
     }
 
+    public void setContext(Context context) {
+        mContext = context;
+    }
 
     public void setDeviceData(DeviceData deviceData) {
         this.deviceData = deviceData;
@@ -88,7 +97,7 @@ public class DeviceInformationFragment extends Fragment {
             tvDeviceId.setText(deviceData.getId());
             tvDeviceStatus.setText(deviceData.getStatus());
             timeThread();
-            //batteryThread(); //TODO: bug
+            batteryThread();
 
             tvDeviceClassName.setText(deviceData.getDeviceClass().getName());
             tvDeviceClassVersion.setText(deviceData.getDeviceClass().getVersion());
@@ -126,7 +135,7 @@ public class DeviceInformationFragment extends Fragment {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = ((DeviceActivity) getActivity()).registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+                Intent intent = mContext.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
                 int level = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0) : 0;
                 int scale = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100) : 0;
                 final int percent = (level * 100) / scale;
