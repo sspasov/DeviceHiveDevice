@@ -20,11 +20,9 @@ import com.dataart.android.devicehive.Notification;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Device;
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.commands.DeviceCommand;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.utils.L;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,14 +64,19 @@ public class TestDevice extends Device {
         super(context, getTestDeviceData(context));
         L.d(TAG, "TestDevice()");
         this.mContext = context;
+        addEquipment();
+    }
 
-        /** Searching for equipment and adds it **/
-        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+    /**
+     * Searching for equipment and adds it *
+     */
+    private void addEquipment() {
+        SensorManager sensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> deviceSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
 
         for (int i = 0; i < deviceSensors.size(); i++) {
             if (deviceSensors.get(i).getType() <= 21) {
-                TestEquipment testEquipment = new TestEquipment(context, deviceSensors.get(i));
+                TestEquipment testEquipment = new TestEquipment(mContext, deviceSensors.get(i));
                 if (sensorManager.registerListener(
                         testEquipment.getSensorListener(),
                         testEquipment.getSensor(),
@@ -88,43 +91,40 @@ public class TestDevice extends Device {
             }
         }
 
-       /* Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        TestEquipment te = new TestEquipment(context, sensor);
-        sensorManager.registerListener(te.getSensorListener(), sensor, SensorManager.SENSOR_DELAY_NORMAL);
-        attachEquipment(te);
-        L.d(TAG, "Attaching equipment: "+sensor.getName());
+        Battery battery = new Battery(mContext);
+        attachEquipment(battery);
 
-        Sensor sensor2 = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        TestEquipment te2 = new TestEquipment(context, sensor2);
-        sensorManager.registerListener(te2.getSensorListener(), sensor2, SensorManager.SENSOR_DELAY_NORMAL);
-        attachEquipment(te2);
-        L.d(TAG, "Attaching equipment: "+sensor2.getName());*/
+        DeviceTimeOn deviceTimeOn = new DeviceTimeOn(mContext);
+        attachEquipment(deviceTimeOn);
+
+        ScreenSize screenSize = new ScreenSize(mContext);
+        attachEquipment(screenSize);
     }
 
 
     private static DeviceData getTestDeviceData(Context context) {
         L.d(TAG, "getTestDeviceData()");
 
-        final Network network = new Network( //TODO: need to rethink this
+        Network network = new Network(
                 DeviceConfig.NETWORK_NAME,
                 DeviceConfig.NETWORK_DESCRIPTION);
 
-        final DeviceClass deviceClass = new DeviceClass(
-                getDeviceClass(context),
-                getDeviceClassVersion(context),
-                DeviceConfig.DEVICE_IS_PERMANENT,
-                DeviceConfig.DEVICE_TIMEOUT); //DeviceConfig.DEVICE_TIMEOUT
+        DeviceClass deviceClass = new DeviceClass(
+                getDeviceClass(context),                           //device class
+                getDeviceClassVersion(context),                    //device class version
+                DeviceConfig.DEVICE_IS_PERMANENT,                  //permanent class
+                DeviceConfig.DEVICE_TIMEOUT);                      //device goes offline timeoutT
 
         deviceID = getDeviceUniqueID(context);
         deviceName = Build.MANUFACTURER + " " + Build.MODEL;
 
-        final DeviceData deviceData = new DeviceData(
-                deviceID,                                        //DEVICE UNIQUE ID
+        DeviceData deviceData = new DeviceData(
+                deviceID,                                          //DEVICE UNIQUE ID
                 context.getString(R.string.key_device_registration),    //DEVICE REGISTER KEY //TODO: get key programmatically ?
-                deviceName,                                    //DEVICE NAME
-                DeviceData.DEVICE_STATUS_OK,                    //DEVICE STATUS
-                network,
-                deviceClass);                                    //DEVICE CLASS TYPE
+                deviceName,                                        //DEVICE NAME
+                DeviceData.DEVICE_STATUS_OK,                       //DEVICE STATUS
+                network,                                           //DEVICE NETWORK
+                deviceClass);                                      //DEVICE CLASS TYPE
 
         return deviceData;
     }
@@ -188,99 +188,14 @@ public class TestDevice extends Device {
     @Override
     public CommandResult runCommand(final Command command) {
         L.d(TAG, "runCommand()");
-
         CommandInfo commandInfo = new CommandInfo(command);
-
         return execute(commandInfo);
     }
 
     private CommandResult execute(CommandInfo commandInfo) {
-        if (!commandInfo.getInputParams().containsKey("device")) {
-            commandInfo.setStatus(CommandResult.STATUS_FAILED);
-            commandInfo.setResult("Failed to execute command " + commandInfo.getName() + " on (" + deviceID + ")" + deviceName);
-            return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
-        } else {
-            commandInfo.setType(commandInfo.getInputParams().get("device").toString());
-        }
-
         L.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
-
-        //TODO: parameters in the command should set witch case to execute
-        switch (commandInfo.getType()) {
-
-            case DeviceCommand.GET_BATTERY_LEVEL: {
-                commandInfo.setOutputParams(getBatteryLevel());
-                commandInfo.setResult("Battery is: " + commandInfo.getOutputParams().get("value"));
-                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
-                break;
-            }
-
-            case DeviceCommand.GET_GPS_COORDINATES: {
-                commandInfo.setOutputParams(getGPSCoordinates());
-                commandInfo.setResult("GPS coordinates are: " + commandInfo.getOutputParams().get("value"));
-                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
-                break;
-            }
-
-            case DeviceCommand.GET_TIME_ON: {
-                commandInfo.setOutputParams(getTimeOn());
-                commandInfo.setResult("System Time On is: " + commandInfo.getOutputParams().get("value"));
-                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
-                break;
-            }
-
-            case DeviceCommand.GET_SCREEN_SIZE: {
-                commandInfo.setOutputParams(getScreenSize());
-                commandInfo.setResult("Screen size is: " + commandInfo.getOutputParams().get("value"));
-                L.d(TAG, "Successfully executed command \"" + commandInfo.getName() + "\" on " + TAG);
-                break;
-            }
-
-            default: {
-                commandInfo.setStatus(CommandResult.STATUS_FAILED);
-                commandInfo.setResult("Failed to execute command " + commandInfo.getName() + " on (" + deviceID + ")" + deviceName);
-                L.d(TAG, "Failed to execute command \"" + commandInfo.getName() + "\" on " + TAG);
-            }
-        }
-
         sendNotification(new Notification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
         return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
-    }
-
-    private HashMap getGPSCoordinates() {
-        L.d(TAG, "getGPSCoordinates()");
-        //TODO: implementation
-        //
-        HashMap param = new HashMap();
-        //
-        return param;
-    }
-
-    private HashMap<String, String> getTimeOn() {
-        L.d(TAG, "getTimeOn()");
-        DeviceTimeOn timeOn = DeviceTimeOn.getInstance();
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.put("device", DeviceCommand.GET_TIME_ON);
-        param.put(timeOn.getName(), timeOn.getValue());
-        return param;
-    }
-
-    private HashMap<String, String> getBatteryLevel() {
-        L.d(TAG, "getBatteryLevel()");
-        Battery battery = Battery.getInstance(mContext);
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.put("device", DeviceCommand.GET_BATTERY_LEVEL);
-        param.put(battery.getName(), battery.getValue());
-        return param;
-    }
-
-    private HashMap<String, String> getScreenSize() {
-        L.d(TAG, "getScreenSize()");
-        ScreenSize screenSize = ScreenSize.getInstance(mContext);
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.put("device", DeviceCommand.GET_SCREEN_SIZE);
-        param.put(screenSize.getName(), screenSize.getValue());
-        return param;
     }
 
     @Override

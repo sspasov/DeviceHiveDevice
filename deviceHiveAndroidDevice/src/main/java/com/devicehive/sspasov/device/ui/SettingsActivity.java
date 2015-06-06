@@ -29,9 +29,8 @@ public class SettingsActivity extends PreferenceActivity {
         LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
         Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
         toolbar.setTitle(getString(R.string.action_settings));
-        int attr[] = new int[]{android.R.attr.textSize};
-
-        //toolbar.setNavigationIcon(obtainStyledAttributes(attr));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,13 +57,28 @@ public class SettingsActivity extends PreferenceActivity {
 
     private void updatePreferences() {
         L.d(TAG, "updatePreferences()");
+
         DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
+        L.d(TAG, "DeviceConfig.API_ENDPOINT: " + DeviceConfig.API_ENDPOINT);
+
         DeviceConfig.NETWORK_NAME = prefs.getNetworkName();
+        L.d(TAG, "DeviceConfig.NETWORK_NAME: " + DeviceConfig.NETWORK_NAME);
+
         DeviceConfig.NETWORK_DESCRIPTION = prefs.getNetworkDescription();
+        L.d(TAG, "DeviceConfig.NETWORK_DESCRIPTION: " + DeviceConfig.NETWORK_DESCRIPTION);
+
         DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION = prefs.getDeviceAsyncCommandExecution();
+        L.d(TAG, "DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION: " + DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION);
+
         DeviceConfig.DEVICE_IS_PERMANENT = prefs.getDeviceIsPermanent();
+        L.d(TAG, "DeviceConfig.DEVICE_IS_PERMANENT: " + DeviceConfig.DEVICE_IS_PERMANENT);
+
         DeviceConfig.DEVICE_TIMEOUT = prefs.getDeviceTimeout();
+        L.d(TAG, "DeviceConfig.DEVICE_TIMEOUT: " + DeviceConfig.DEVICE_TIMEOUT);
+
         DeviceConfig.FIRST_STARTUP = prefs.isFirstStartup();
+        L.d(TAG, "DeviceConfig.FIRST_STARTUP: " + DeviceConfig.FIRST_STARTUP);
+
     }
 
     @Override

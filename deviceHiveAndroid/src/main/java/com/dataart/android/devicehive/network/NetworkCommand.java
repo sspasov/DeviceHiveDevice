@@ -169,7 +169,7 @@ public abstract class NetworkCommand implements Parcelable {
 	 *            Response status code.
 	 */
 	protected boolean isSuccessStatusCode(int statusCode) {
-		return statusCode == 200 || statusCode == 201 || statusCode == 204; //TODO: REPORT IN GIT
+		return statusCode == 200 || statusCode == 201 || statusCode == 204;
 	}
 
 	/**
@@ -207,7 +207,7 @@ public abstract class NetworkCommand implements Parcelable {
 			HttpResponse responce = client.execute(httpRequest);
 			final int statusCode = responce.getStatusLine().getStatusCode();
 			String responceString;// = EntityUtils.toString(responce.getEntity());
-			try { //TODO: REPORT
+			try {
 				responceString = EntityUtils.toString(responce.getEntity());
 			} catch (IllegalArgumentException iae) {
 				responceString = "";

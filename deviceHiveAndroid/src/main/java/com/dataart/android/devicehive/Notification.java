@@ -54,7 +54,6 @@ public class Notification implements Parcelable {
 	 * @return Notification name.
 	 */
 	public String getName() {
-		//Log.d("NOTIFICATION", this.name); //TODO: REMOVE AFTER COMPLETION
 		return this.name;
 	}
 

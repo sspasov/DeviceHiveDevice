@@ -16,7 +16,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.devicehive.sspasov.device.config.DeviceHiveConfig;
-import com.devicehive.sspasov.device.utils.L;
 
 public class NumberPickerPreference extends DialogPreference {
     private NumberPicker mPicker;
@@ -44,9 +43,8 @@ public class NumberPickerPreference extends DialogPreference {
         TextView title = (TextView) view.findViewById(android.R.id.title);
         if (title != null) {
             title.setSingleLine(false);
-            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         }
-        L.d("NUMBER PICKER", "NUMBER PICKER " + view.getPaddingLeft());
     }
 
     @Override

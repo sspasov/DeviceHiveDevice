@@ -38,7 +38,7 @@ import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
 import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
 import com.devicehive.sspasov.device.utils.L;
-import com.devicehive.sspasov.device.utils.SlidingTabLayout;
+import com.devicehive.sspasov.device.views.SlidingTabLayout;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -97,25 +97,20 @@ public class DeviceActivity extends AppCompatActivity implements
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
             getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
 
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
 
             SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-            mSlidingTabLayout.setViewPager(viewPager);
             mSlidingTabLayout.setDistributeEvenly(true);
+            mSlidingTabLayout.setViewPager(viewPager);
             mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
                 @Override
                 public int getIndicatorColor(int position) {
                     return getColorBasedForPosition(position);
                 }
-
-                @Override
-                public int getDividerColor(int position) {
-                    return 0;
-                }
-
             });
         }
     }
@@ -175,11 +170,14 @@ public class DeviceActivity extends AppCompatActivity implements
     protected void onStop() {
         super.onStop();
         L.d(TAG, "onStop()");
-        deviceUnregister();
+
     }
 
     public void deviceRegister() {
         L.d(TAG, "deviceRegister()");
+        device = new TestDevice(getApplicationContext());
+        device.setDebugLoggingEnabled(BuildConfig.DEBUG);
+        device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
         device.addDeviceListener(this);
         device.addCommandListener(this);
         device.addNotificationListener(this);
@@ -207,6 +205,7 @@ public class DeviceActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         L.d(TAG, "onDestroy()");
+        deviceUnregister();
         if (receiver != null) {
             this.unregisterReceiver(receiver);
         }

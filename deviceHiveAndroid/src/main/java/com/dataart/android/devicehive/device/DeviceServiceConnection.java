@@ -61,7 +61,7 @@ import java.util.Queue;
 
 	/* package */void sendNotification(Notification notification) {
 		logD("Sending notification: " + notification.getName());
-		device.onStartSendingNotification(notification); //TODO: NO METHOD FOR GETTING NOTIFICATION INFO BACK
+		device.onStartSendingNotification(notification);
 		final DeviceData deviceData = device.getDeviceData();
 		startNetworkCommand(new SendNotificationCommand(deviceData.getId(),
 				deviceData.getKey(), notification));

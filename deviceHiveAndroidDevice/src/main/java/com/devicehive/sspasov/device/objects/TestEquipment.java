@@ -11,6 +11,7 @@ import com.dataart.android.devicehive.EquipmentData;
 import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Equipment;
 import com.dataart.android.devicehive.device.EquipmentNotification;
+import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.utils.L;
 
 import java.util.HashMap;
@@ -81,10 +82,6 @@ public class TestEquipment extends Equipment {
         };
     }
 
-    public TestEquipment(String name, String code, String type) {
-        super(equipmentData(name, code, type));
-    }
-
     /**
      * @name - simple equipment name
      * @code - unique ID for the equipment. It's used to point and use this equipment.
@@ -114,12 +111,12 @@ public class TestEquipment extends Equipment {
 
     @Override
     public void onBeforeRunCommand(Command command) {
-        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
+
     }
 
     @Override
     public boolean shouldRunCommandAsynchronously(final Command command) {
-        return false;
+        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
     }
 
     @Override
@@ -136,11 +133,13 @@ public class TestEquipment extends Equipment {
         HashMap<String, Object> sensorParam = new HashMap<>();
         sensorParam.put("equipment", commandInfo.getInputParams().get("equipment"));
 
-        Parameter p = new Parameter("x", x + "");
-        sensorParam.put(p.name, p.value);
-        L.d(TAG, mSensor.getName() + " value x: " + x);
+        Parameter p;
 
         if (multipleValueEquipment) {
+            p = new Parameter("x", x + "");
+            sensorParam.put(p.name, p.value);
+            L.d(TAG, mSensor.getName() + " value x: " + x);
+
             p = new Parameter("y", y + "");
             sensorParam.put(p.name, p.value);
             L.d(TAG, mSensor.getName() + " value y: " + y);
@@ -148,6 +147,10 @@ public class TestEquipment extends Equipment {
             p = new Parameter("z", z + "");
             sensorParam.put(p.name, p.value);
             L.d(TAG, mSensor.getName() + " value z: " + z);
+        } else {
+            p = new Parameter("value", x + "");
+            sensorParam.put(p.name, p.value);
+            L.d(TAG, mSensor.getName() + " value: " + x);
         }
 
         commandInfo.setResult("Executed on " + equipmentName + "!");

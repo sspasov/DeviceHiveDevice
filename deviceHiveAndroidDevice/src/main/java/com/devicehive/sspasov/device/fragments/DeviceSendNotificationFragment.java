@@ -2,7 +2,6 @@ package com.devicehive.sspasov.device.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -11,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dataart.android.devicehive.EquipmentData;
 import com.dataart.android.devicehive.Notification;
 import com.devicehive.sspasov.device.R;
+import com.devicehive.sspasov.device.objects.Parameter;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,10 +28,9 @@ public class DeviceSendNotificationFragment extends Fragment {
 
     private static final String TAG = "DeviceSendNotificationFragment";
 
-    private Button sendNotificationButton;
+    private FloatingActionButton sendNotificationButton;
 
     private TextView notificationNameEdit;
-    private LinearLayout parametersContainer;
 
     private Spinner equipmentSpinner;
 
@@ -41,7 +39,7 @@ public class DeviceSendNotificationFragment extends Fragment {
     private ParametersAdapter parametersAdapter;
 
     private List<EquipmentData> equipment;
-    private List<Parameter> parameters = new LinkedList<Parameter>();
+    private List<Parameter> parameters = new LinkedList<>();
 
     private static DeviceSendNotificationFragment instance;
 
@@ -52,15 +50,6 @@ public class DeviceSendNotificationFragment extends Fragment {
         return instance;
     }
 
-    public static class Parameter {
-        public final String name;
-        public final String value;
-
-        public Parameter(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
-    }
 
     public interface NotificationSender {
         void sendNotification(Notification notification);
@@ -69,7 +58,6 @@ public class DeviceSendNotificationFragment extends Fragment {
     public interface ParameterProvider {
         void queryParameter();
     }
-
 
     public void setNotificationSender(NotificationSender notificationSender) {
         this.notificationSender = notificationSender;
@@ -86,7 +74,6 @@ public class DeviceSendNotificationFragment extends Fragment {
 
     public void addParameter(String name, String value) {
         this.parameters.add(new Parameter(name, value));
-        setupParameters(this.parameters);
     }
 
     @Override
@@ -105,11 +92,9 @@ public class DeviceSendNotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_send_notification, container, false);
 
-        sendNotificationButton = (Button) view.findViewById(R.id.send_notification_button);
+        sendNotificationButton = (FloatingActionButton) view.findViewById(R.id.send_notification_button);
 
         notificationNameEdit = (EditText) view.findViewById(R.id.notification_name_edit);
-
-        parametersContainer = (LinearLayout) view.findViewById(R.id.parameters_container);
 
         sendNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,20 +104,9 @@ public class DeviceSendNotificationFragment extends Fragment {
             }
         });
 
-        final Button addParameterButton = (Button) view.findViewById(R.id.add_parameter_button);
-        addParameterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (parameterProvider != null) {
-                    parameterProvider.queryParameter();
-                }
-            }
-        });
-
         equipmentSpinner = (Spinner) view.findViewById(R.id.equipment_spinner);
         equipmentSpinner.setPrompt("Select equipment");
         setupEquipmentSpinner(equipment);
-        setupParameters(parameters);
         return view;
     }
 
@@ -154,23 +128,6 @@ public class DeviceSendNotificationFragment extends Fragment {
             equipmentNames.add(eq.getName());
         }
         return equipmentNames;
-    }
-
-    private void setupParameters(List<Parameter> parameters) {
-        parametersContainer.removeAllViews();
-        parametersAdapter = new ParametersAdapter(getActivity(), parameters);
-        parametersAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                setupParameters(DeviceSendNotificationFragment.this.parameters);
-            }
-        });
-
-        final int count = parametersAdapter.getCount();
-        for (int i = 0; i < count; i++) {
-            parametersContainer.addView(parametersAdapter.getView(i, null, parametersContainer));
-        }
     }
 
     @Override
@@ -200,10 +157,8 @@ public class DeviceSendNotificationFragment extends Fragment {
     }
 
     private void clearView() {
-        //TODO: clear after sending
         notificationNameEdit.setText("");
-        //equipmentSpinner.refreshDrawableState();
-        parametersContainer.removeAllViews();
+        equipmentSpinner.refreshDrawableState();
     }
 
     private static HashMap<String, Object> paramsAsMap(List<Parameter> params) {

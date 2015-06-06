@@ -26,23 +26,27 @@
         <item name="android:textColor">@color/primary_text</item>
     </style>
 
-    <style name="MyTextViewTitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/primary_text</item>
+    <style name="MyTextViewTitle" parent="MyTextView">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/tv_title_size</item>
     </style>
 
-
-    <style name="MyTextViewItem">
-
-
+    <style name="MyTextViewBigTitle" parent="MyTextViewTitle">
+        <item name="android:textSize">@dimen/tv_big_title_size</item>
     </style>
 
-    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="MyToolbar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="FAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_margin">16dp</item>
     </style>
 
 </resources>

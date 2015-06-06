@@ -21,13 +21,13 @@
     <string name="tv_content_device_time_on">Device Time On</string>
     <string name="tv_content_device_battery">Device Battery</string>
     <string name="tv_content_device_class_type">Type</string>
-    <string name="tv_content_device_class_version">Android Version</string>
+    <string name="tv_content_device_class_version">Version</string>
     <string name="tv_content_device_class_is_permanent">Is Permanent</string>
     <string name="tv_content_device_network_name">Name</string>
     <string name="tv_content_device_network_description">Description</string>
     <string name="tv_title_device_network">Device Network</string>
     <string name="tv_title_device_class">Device Class</string>
-    <string name="tv_calculatin">calculating</string>
+    <string name="tv_calculating">calculating</string>
     <string name="empty">--</string>
     <string name="tv_equipment_code">Code</string>
     <string name="tv_equipment_code_empty">Equipment code</string>
@@ -44,5 +44,9 @@
     <string name="network_name">Network name</string>
     <string name="network_description">Network description</string>
     <string name="existing_one">or choose from existing one</string>
+    <string name="command_name">Command name</string>
+    <string name="command_params">Command params</string>
+    <string name="hint_notification_name">notification name</string>
+    <string name="equipment">Equipment</string>
 
 </resources>

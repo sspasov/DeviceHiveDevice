@@ -3,20 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/divider_padding"
-    android:paddingRight="@dimen/divider_padding">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_command_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/tv_command_name"
-        android:textStyle="bold"/>
+        style="@style/MyTextViewTitle"
+        android:layout_width="match_parent"
+        android:background="@color/divider"
+        android:padding="@dimen/tv_title_padding"
+        android:text="@string/command_name"/>
 
     <TextView
         android:id="@+id/tv_command_params"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        style="@style/MyTextView"
+        android:padding="@dimen/tv_content_side_padding"
+        android:text="@string/command_params"/>
 
 </LinearLayout>

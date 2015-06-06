@@ -118,5 +118,4 @@ public class DevicePreferences {
         editor.apply();
     }
 
-
 }
