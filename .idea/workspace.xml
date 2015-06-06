@@ -46,7 +46,53 @@
     <favorites_list name="DeviceHiveDevice" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="StartupConfigurationActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/StartupConfigurationActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceApplication.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/DeviceApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.52609605">
+              <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="207" column="27" selection-start-line="207" selection-start-column="27" selection-end-line="207" selection-end-column="27" />
+              <folding>
+                <element signature="method#createNetErrorDialog#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceRegistered#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceFailedToRegister#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceReceivedCommand#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceStartSendingNotification#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceSentNotification#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onDeviceFailedToSendNotification#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#sendNotification#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#showDialog#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#queryParameter#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onCreateOptionsMenu#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onActivityResult#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="method#onOptionsItemSelected#0;class#DeviceActivity#0" expanded="false" />
+                <element signature="class#NetworkReceiver#0;class#DeviceActivity#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -2002,7 +2048,6 @@
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/config/DeviceConfig.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/config/DevicePreferences.java" />
-        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/DeviceApplication.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/config/DeviceHiveConfig.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/xml/preference.xml" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java" />
@@ -2012,6 +2057,7 @@
         <option value="$PROJECT_DIR$/deviceHiveAndroid/src/main/java/com/dataart/android/devicehive/Notification.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/fragments/DeviceSendNotificationFragment.java" />
         <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/DeviceApplication.java" />
       </list>
     </option>
   </component>
@@ -2279,6 +2325,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DeviceHiveDevice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DeviceHiveDevice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="deviceHiveAndroidDevice" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="device" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -2530,7 +2610,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17792068" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2542,12 +2622,12 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34383637" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5273312" sideWeight="0.49786553" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2636656" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2636656" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946378" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22293676" sideWeight="0.49786553" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.454448" sideWeight="0.49786553" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19071311" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22664456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290461" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2750,6 +2830,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33787465">
           <caret line="29" column="75" selection-start-line="29" selection-start-column="75" selection-end-line="29" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2874,6 +2955,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.68498945">
           <caret line="25" column="68" selection-start-line="25" selection-start-column="68" selection-end-line="25" selection-end-column="68" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2900,13 +2982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/DeviceApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6680761">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/config/DevicePreferences.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6575053">
@@ -2916,31 +2991,6 @@
             <element signature="e#1267#1268#0" expanded="false" />
             <element signature="e#3335#3336#0" expanded="false" />
             <element signature="e#3403#3404#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5031712">
-          <caret line="207" column="27" selection-start-line="207" selection-start-column="27" selection-end-line="207" selection-end-column="27" />
-          <folding>
-            <element signature="e#5179#5398#0" expanded="false" />
-            <element signature="e#5397#5398#0" expanded="false" />
-            <element signature="method#createNetErrorDialog#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceRegistered#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceFailedToRegister#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceReceivedCommand#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceStartSendingNotification#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceSentNotification#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onDeviceFailedToSendNotification#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#sendNotification#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#showDialog#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#queryParameter#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onCreateOptionsMenu#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onActivityResult#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="method#onOptionsItemSelected#0;class#DeviceActivity#0" expanded="false" />
-            <element signature="class#NetworkReceiver#0;class#DeviceActivity#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2972,14 +3022,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5182482">
           <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.91418564">
-          <caret line="29" column="27" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -3016,7 +3058,7 @@
         <state vertical-scroll-proportion="0.30201343">
           <caret line="55" column="29" selection-start-line="55" selection-start-column="29" selection-end-line="55" selection-end-column="29" />
           <folding>
-            <element signature="e#1249#1250#0" expanded="true" />
+            <element signature="e#1249#1250#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3056,14 +3098,6 @@
             <element signature="method#getResultReceiver#0;class#NetworkConfigurationActivity#0" expanded="false" />
             <element signature="method#onReceiveResult#0;class#NetworkConfigurationActivity#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/StartupConfigurationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33221477">
-          <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3112,6 +3146,53 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25486726">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.053731345">
+          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/StartupConfigurationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="10" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/ui/DeviceActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="207" column="27" selection-start-line="207" selection-start-column="27" selection-end-line="207" selection-end-column="27" />
+          <folding>
+            <element signature="method#createNetErrorDialog#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceRegistered#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceFailedToRegister#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceReceivedCommand#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceStartSendingNotification#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceSentNotification#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onDeviceFailedToSendNotification#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#sendNotification#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#showDialog#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#queryParameter#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onCreateOptionsMenu#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onActivityResult#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#DeviceActivity#0" expanded="false" />
+            <element signature="class#NetworkReceiver#0;class#DeviceActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deviceHiveAndroidDevice/src/main/java/com/devicehive/sspasov/device/DeviceApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52609605">
+          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
           <folding />
         </state>
       </provider>
