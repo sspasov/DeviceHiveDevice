@@ -236,5 +236,20 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         return DeviceHiveResultReceiver.getIdForTag(tag);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (getIntent().hasExtra("from")) {
+            String origin = getIntent().getStringExtra("from");
+            if (origin.equals(DeviceActivity.class.getSimpleName())) {
+                Intent deviceActivity = new Intent(this, DeviceActivity.class);
+                startActivity(deviceActivity);
+                finish();
+            } else {
+                Intent startupConfigurationActivity = new Intent(this, StartupConfigurationActivity.class);
+                startupConfigurationActivity.putExtra("api", DeviceConfig.API_ENDPOINT);
+                startActivity(startupConfigurationActivity);
+                finish();
+            }
+        }
+    }
 }

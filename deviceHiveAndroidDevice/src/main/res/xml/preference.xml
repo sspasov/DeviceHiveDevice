@@ -28,11 +28,15 @@
             android:summary="Check for asynchronously commands execution."
             android:title="Async Commands"/>
 
-        <com.devicehive.sspasov.device.dialogs.NumberPickerPreference
-            android:defaultValue="0"
+        <com.devicehive.sspasov.device.views.NumberPickerPreference
             android:key="KEY_DEVICE_TIMEOUT"
             android:summary="Device timeout default value is 0 - never goes offline."
             android:title="Device Timeout"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About">
+        <com.devicehive.sspasov.device.views.VersionPreference
+            android:title="@string/app_name"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

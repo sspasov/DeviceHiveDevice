@@ -36,6 +36,10 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         prefs = new DevicePreferences(this);
 
+        if (getIntent() != null && getIntent().hasExtra("api")) {
+            etApiEndpoint.setText(getIntent().getStringExtra("api"));
+        }
+
         //TODO: DEBUG ONLY
         if (L.isUsingDebugData()) {
             etApiEndpoint.setText("http://nn8170.pg.devicehive.com/api");
@@ -57,8 +61,9 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
             prefs.setServerUrlSync(etApiEndpoint.getText().toString());
             DeviceConfig.API_ENDPOINT = prefs.getServerUrl();
 
-            Intent deviceActivity = new Intent(this, NetworkConfigurationActivity.class);
-            startActivity(deviceActivity);
+            Intent networkConfigurationActivity = new Intent(this, NetworkConfigurationActivity.class);
+            networkConfigurationActivity.putExtra("from", TAG);
+            startActivity(networkConfigurationActivity);
             finish();
         }
     }
