@@ -313,9 +313,6 @@ public class DeviceActivity extends AppCompatActivity implements
         }
     }
 
-
-    private static final int MENU_ID_SETTINGS = 0x01;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -326,12 +323,19 @@ public class DeviceActivity extends AppCompatActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SETTINGS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                if (data != null && data.hasExtra("apiChanged")) {
+                    Toast.makeText(this, "API Endpoint was changed. Please reselect network.", Toast.LENGTH_LONG).show();
+                    Intent networkConfigurationActivity = new Intent(this, NetworkConfigurationActivity.class);
+                    networkConfigurationActivity.putExtra("from", TAG);
+                    startActivity(networkConfigurationActivity);
+                    finish();
+                }
                 L.d(TAG, "Changed settings!");
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

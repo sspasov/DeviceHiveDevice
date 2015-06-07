@@ -47,5 +47,10 @@
     <string name="command_params">Command params</string>
     <string name="hint_notification_name">notification name</string>
     <string name="equipment">Equipment</string>
+    <string name="empty_api_endpoint">You must enter server URL.</string>
+    <string name="hint_optional">(Optional)</string>
+    <string name="empty_network_name">You must enter Network name.</string>
+    <string name="empty_network_description">You must enter Network description.</string>
+    <string name="new_network">New network</string>
 
 </resources>

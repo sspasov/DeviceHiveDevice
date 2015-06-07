@@ -1,11 +1,11 @@
 package com.devicehive.sspasov.device.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -34,25 +34,32 @@ public class SettingsActivity extends PreferenceActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updatePreferences();
-                setResult(Activity.RESULT_OK);
-                finish();
+                onBackPressed();
             }
         });
         root.addView(toolbar, 0); // insert at top
 
 
-        prefs = new DevicePreferences(SettingsActivity.this);
+        prefs = new DevicePreferences(this);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+    public void onBackPressed() {
+        if (isApiChanged()) {
+            updatePreferences();
+            setResult(Activity.RESULT_OK, new Intent().putExtra("apiChanged", true));
+        } else {
             updatePreferences();
             setResult(Activity.RESULT_OK);
-            finish();
         }
-        return super.onOptionsItemSelected(item);
+        finish();
+    }
+
+    private boolean isApiChanged() {
+        if (DeviceConfig.API_ENDPOINT.equals(prefs.getServerUrl())) {
+            return false;
+        }
+        return true;
     }
 
     private void updatePreferences() {
@@ -81,10 +88,5 @@ public class SettingsActivity extends PreferenceActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        updatePreferences();
-        setResult(Activity.RESULT_OK);
-        finish();
-    }
+
 }

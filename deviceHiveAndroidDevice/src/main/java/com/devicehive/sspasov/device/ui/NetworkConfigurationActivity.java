@@ -69,7 +69,7 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
 
         etNetworkName = (EditText) findViewById(R.id.et_startup_network_name);
         etNetworkDescription = (EditText) findViewById(R.id.et_startup_network_description);
-        etNetworkDescription.setHint("(Optional)");
+        etNetworkDescription.setHint(getString(R.string.hint_optional));
 
         btnContinue = (FloatingActionButton) findViewById(R.id.btn_network_continue);
         btnContinue.setOnClickListener(this);
@@ -103,12 +103,12 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
 
         if (isCreatingNewNetwork) {
             if (etNetworkName.getText().toString().isEmpty()) {
-                etNetworkName.setError("You must enter Network name.");
+                etNetworkName.setError(getString(R.string.empty_network_name));
                 isEmptyNetworkFields = true;
             }
 
             if (etNetworkDescription.getText().toString().isEmpty()) {
-                etNetworkDescription.setError("You must enter Network description.");
+                etNetworkDescription.setError(getString(R.string.empty_network_description));
                 isEmptyNetworkFields = true;
             }
 
@@ -215,7 +215,7 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
                             }
                         });
 
-                        simpleNetworkList.add("New network");
+                        simpleNetworkList.add(getString(R.string.new_network));
                         for (int i = 0; i < networks.size(); i++) {
                             simpleNetworkList.add(networks.get(i).getName());
                         }
@@ -236,5 +236,20 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         return DeviceHiveResultReceiver.getIdForTag(tag);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        if (getIntent().hasExtra("from")) {
+            String origin = getIntent().getStringExtra("from");
+            if (origin.equals(DeviceActivity.class.getSimpleName())) {
+                Intent deviceActivity = new Intent(this, DeviceActivity.class);
+                startActivity(deviceActivity);
+                finish();
+            } else {
+                Intent startupConfigurationActivity = new Intent(this, StartupConfigurationActivity.class);
+                startupConfigurationActivity.putExtra("api", DeviceConfig.API_ENDPOINT);
+                startActivity(startupConfigurationActivity);
+                finish();
+            }
+        }
+    }
 }
