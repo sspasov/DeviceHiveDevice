@@ -313,9 +313,6 @@ public class DeviceActivity extends AppCompatActivity implements
         }
     }
 
-
-    private static final int MENU_ID_SETTINGS = 0x01;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);

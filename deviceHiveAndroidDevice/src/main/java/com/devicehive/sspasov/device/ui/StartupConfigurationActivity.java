@@ -3,7 +3,6 @@ package com.devicehive.sspasov.device.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 
@@ -23,7 +22,6 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
     private DevicePreferences prefs;
 
     private boolean isEmpty;
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         btnContinue = (FloatingActionButton) findViewById(R.id.btn_startup_continue);
         btnContinue.setOnClickListener(this);
-        mHandler = new Handler();
 
         prefs = new DevicePreferences(this);
 
@@ -49,13 +46,12 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
     public void onClick(View v) {
         etApiEndpoint.setError(null);
 
-        if (etApiEndpoint.getText().toString().isEmpty()) {
-            etApiEndpoint.setError("You must enter server URL.");
-            isEmpty = true;
-        } else {
-            isEmpty = false;
-        }
+        isEmpty = false;
 
+        if (etApiEndpoint.getText().toString().isEmpty()) {
+            etApiEndpoint.setError(getString(R.string.empty_api_endpoint));
+            isEmpty = true;
+        }
 
         if (!isEmpty) {
             prefs.setServerUrlSync(etApiEndpoint.getText().toString());
@@ -66,5 +62,4 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
             finish();
         }
     }
-
 }

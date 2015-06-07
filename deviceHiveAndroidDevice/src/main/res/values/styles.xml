@@ -18,6 +18,7 @@
         <item name="android:imeOptions">actionDone</item>
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:textColorHint">@color/secondary_text</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
     </style>
 
     <style name="MyTextView">
