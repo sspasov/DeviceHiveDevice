@@ -1,10 +1,6 @@
 #DeviceHiveDevice
 
-DeviceHiveDevice is a simple application that runs on your android device. From the Admin panel on your hive
-you can send various commands to device. For now are implemented only commands directed mainly to device equipment.
-In this case device eqipment are the various sensors in the android device. They report their measurments to the hive.
-You can check device batery level, device screen size, device time on and device gps position. These four are 
-executed on device itself.
+DeviceHiveDevice is a simple application that runs on your android device. It monitors almost every sensor in the device. You can recieve data from the sensors by sending command to the device. You can check device batery level, device screen size, device time on, accelerometer, gyroscope and a lot more. 
 
 ##DeviceHiveDevice Screens
 
@@ -16,7 +12,7 @@ executed on device itself.
 
 ##DeviceHiveDevice Initial Setup
 
-When the application is started for the first time it may show dialog with "Device not registered". You must go to Settings and manualy enter the API Endpoint. Restart the app and everything will go smooth.
+On first startup you need to manualy enter api endpoint and network.
 
 
-Original sample project and DeviceHive Framework can be found on: [DeviceHive](http://devicehive.com)
+Original sample project and DeviceHive Framework can be found on: [DeviceHive](https://github.com/devicehive/devicehive-android)
