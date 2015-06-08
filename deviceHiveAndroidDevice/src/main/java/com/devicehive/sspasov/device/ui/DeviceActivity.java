@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dataart.android.devicehive.Command;
@@ -49,7 +51,6 @@ public class DeviceActivity extends AppCompatActivity implements
 
     private static final String TAG = DeviceActivity.class.getSimpleName();
 
-
     public static boolean registerDevice = true;
     private NetworkReceiver receiver = new NetworkReceiver();
 
@@ -62,11 +63,15 @@ public class DeviceActivity extends AppCompatActivity implements
 
     private List<Command> receivedCommands = new LinkedList<>();
 
+    private TextView tvDeviceNotRegistered;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         L.d(TAG, "onCreate()");
         setContentView(R.layout.activity_device);
+
+        tvDeviceNotRegistered = (TextView) findViewById(R.id.tv_device_not_registered);
 
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
@@ -214,6 +219,7 @@ public class DeviceActivity extends AppCompatActivity implements
     @Override
     public void onDeviceRegistered() {
         L.d(TAG, "onDeviceRegistered()");
+        tvDeviceNotRegistered.setVisibility(View.GONE);
         deviceInformationFragment.setDeviceData(device.getDeviceData());
         device.startProcessingCommands();
     }
@@ -221,6 +227,7 @@ public class DeviceActivity extends AppCompatActivity implements
     @Override
     public void onDeviceFailedToRegister() {
         L.d(TAG, "onDeviceFailedToRegister()");
+        tvDeviceNotRegistered.setVisibility(View.VISIBLE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog dialog = builder
                 .setTitle("Error")

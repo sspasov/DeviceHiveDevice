@@ -52,5 +52,6 @@
     <string name="empty_network_name">You must enter Network name.</string>
     <string name="empty_network_description">You must enter Network description.</string>
     <string name="new_network">New network</string>
+    <string name="device_not_registered">Device not registered !!!</string>
 
 </resources>

@@ -16,11 +16,22 @@
         android:background="@color/primary"
         android:theme="@style/Theme.AppCompat"/>
 
+    <TextView
+        android:id="@+id/tv_device_not_registered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sliding_tabs"
+        android:background="#D50000"
+        android:gravity="center"
+        android:text="@string/device_not_registered"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/sliding_tabs"
+        android:layout_below="@+id/tv_device_not_registered"
         android:theme="@style/Theme.AppCompat"/>
 
 </RelativeLayout>
