@@ -1,8 +1,10 @@
 package com.devicehive.sspasov.device.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class NetworkConfigurationActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class NetworkConfigurationActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     // ---------------------------------------------------------------------------------------------
     // Constants
     // ---------------------------------------------------------------------------------------------
@@ -72,6 +74,8 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_configuration);
 
+        setupToolbar();
+
         simpleNetworkList = new ArrayList<>();
 
         etNetworkName = (EditText) findViewById(R.id.et_startup_network_name);
@@ -111,6 +115,14 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
     // ---------------------------------------------------------------------------------------------
     private void startNetworksRequest() {
         startCommand(new GetNetworksCommand());
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_networks_activity);
+        toolbar.setTitle(getString(R.string.title_activity_network_configuration));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+        setSupportActionBar(toolbar);
     }
 
 
@@ -254,6 +266,17 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         isCreatingNewNetwork = true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

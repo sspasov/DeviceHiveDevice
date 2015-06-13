@@ -1,8 +1,9 @@
 package com.devicehive.sspasov.device.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,7 +13,7 @@ import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
 import com.github.clans.fab.FloatingActionButton;
 
-public class StartupConfigurationActivity extends Activity implements View.OnClickListener {
+public class StartupConfigurationActivity extends AppCompatActivity implements View.OnClickListener {
     // ---------------------------------------------------------------------------------------------
     // Constants
     // ---------------------------------------------------------------------------------------------
@@ -38,6 +39,8 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
         L.d(TAG, "onCreate()");
         setContentView(R.layout.activity_startup_configuration);
 
+        setupToolbar();
+
         etApiEndpoint = (EditText) findViewById(R.id.et_startup_api_endpoint);
 
         btnContinue = (FloatingActionButton) findViewById(R.id.btn_startup_continue);
@@ -58,7 +61,12 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
     // ---------------------------------------------------------------------------------------------
     // Private methods
     // ---------------------------------------------------------------------------------------------
-
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_startup_activity);
+        toolbar.setTitle(getString(R.string.title_activity_configuration));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        setSupportActionBar(toolbar);
+    }
 
     // ---------------------------------------------------------------------------------------------
     // Override methods
