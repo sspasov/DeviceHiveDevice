@@ -13,9 +13,15 @@ import com.devicehive.sspasov.device.utils.L;
 import com.github.clans.fab.FloatingActionButton;
 
 public class StartupConfigurationActivity extends Activity implements View.OnClickListener {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = StartupConfigurationActivity.class.getSimpleName();
+    public static final String API = "api";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private EditText etApiEndpoint;
     private FloatingActionButton btnContinue;
 
@@ -23,6 +29,9 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
     private boolean isEmpty;
 
+    // ---------------------------------------------------------------------------------------------
+    // Activity life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +45,8 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
 
         prefs = new DevicePreferences(this);
 
-        if (getIntent() != null && getIntent().hasExtra("api")) {
-            etApiEndpoint.setText(getIntent().getStringExtra("api"));
+        if (getIntent() != null && getIntent().hasExtra(API)) {
+            etApiEndpoint.setText(getIntent().getStringExtra(API));
         }
 
         //TODO: DEBUG ONLY
@@ -46,6 +55,14 @@ public class StartupConfigurationActivity extends Activity implements View.OnCli
         }
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
+
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onClick(View v) {
         etApiEndpoint.setError(null);

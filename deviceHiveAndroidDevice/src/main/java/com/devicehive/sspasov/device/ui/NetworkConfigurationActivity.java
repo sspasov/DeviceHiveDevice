@@ -28,12 +28,17 @@ import java.util.Comparator;
 import java.util.List;
 
 public class NetworkConfigurationActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private final static String TAG = NetworkConfigurationActivity.class.getSimpleName();
-
     private final String USERNAME = "getAvailableNetworks";
     private final String PASSWORD = "getAvailableNetworks";
+    private static final int TAG_GET_NETWORKS = getTagId(GetNetworksCommand.class);
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private EditText etNetworkName;
     private String networkName;
 
@@ -52,7 +57,6 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
     private boolean isCreatingNewNetwork = true;
 
     private DeviceHiveResultReceiver resultReceiver = null;
-
     private final DeviceHiveResultReceiver.ResultListener resultListener = new DeviceHiveResultReceiver.ResultListener() {
         @Override
         public void onReceiveResult(int code, int tag, Bundle data) {
@@ -60,6 +64,9 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         }
     };
 
+    // ---------------------------------------------------------------------------------------------
+    // Activity life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +101,91 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         }
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
+
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
+    private void startNetworksRequest() {
+        startCommand(new GetNetworksCommand());
+    }
+
+
+    // ---------------------------------------------------------------------------------------------
+    // Protected methods
+    // ---------------------------------------------------------------------------------------------
+    protected final <T extends NetworkCommand> void startCommand(final T command) {
+        command.start(getApplicationContext(), getNetworkCommandConfig());
+    }
+
+    protected NetworkCommandConfig getNetworkCommandConfig() {
+        final NetworkCommandConfig config = new NetworkCommandConfig(DeviceConfig.API_ENDPOINT,
+                getResultReceiver(), BuildConfig.DEBUG);
+
+        config.setBasicAuthorisation(USERNAME, PASSWORD);
+        return config;
+    }
+
+    protected DeviceHiveResultReceiver getResultReceiver() {
+        if (null == resultReceiver) {
+            resultReceiver = new DeviceHiveResultReceiver();
+            resultReceiver.setResultListener(resultListener, true);
+        }
+        return resultReceiver;
+    }
+
+    protected void onReceiveResult(final int resultCode, final int tagId, final Bundle resultData) {
+        switch (resultCode) {
+            case DeviceHiveResultReceiver.MSG_COMPLETE_REQUEST:
+                break;
+            case DeviceHiveResultReceiver.MSG_EXCEPTION:
+                final Throwable exception = DeviceClientCommand.getThrowable(resultData);
+                L.e(TAG, "Failed to execute network command", exception);
+                break;
+            case DeviceHiveResultReceiver.MSG_STATUS_FAILURE:
+                int statusCode = DeviceClientCommand.getStatusCode(resultData);
+                L.e(TAG, "Failed to execute network command. Status code: " + statusCode);
+                break;
+            case DeviceHiveResultReceiver.MSG_HANDLED_RESPONSE:
+                if (tagId == TAG_GET_NETWORKS) {
+                    networks = GetNetworksCommand.getNetworks(resultData);
+                    L.d(TAG, "Fetched networks: " + networks);
+                    if (networks != null) {
+                        Collections.sort(networks, new Comparator<Network>() {
+                            @Override
+                            public int compare(Network lhs, Network rhs) {
+                                return lhs.getName().compareToIgnoreCase(
+                                        rhs.getName());
+                            }
+                        });
+
+                        simpleNetworkList.add(getString(R.string.new_network));
+                        for (int i = 0; i < networks.size(); i++) {
+                            simpleNetworkList.add(networks.get(i).getName());
+                        }
+                        adapter.notifyDataSetChanged();
+                        spinner.setAdapter(adapter);
+                    }
+                }
+
+                break;
+        }
+    }
+
+    protected static int getTagId(final Class<?> tag) {
+        return getTagId(tag.getName());
+    }
+
+    protected static int getTagId(final String tag) {
+        return DeviceHiveResultReceiver.getIdForTag(tag);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onClick(View v) {
         etNetworkName.setError(null);
@@ -164,78 +256,6 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
         isCreatingNewNetwork = true;
     }
 
-    private void startNetworksRequest() {
-        startCommand(new GetNetworksCommand());
-    }
-
-    protected final <T extends NetworkCommand> void startCommand(final T command) {
-        command.start(getApplicationContext(), getNetworkCommandConfig());
-    }
-
-    protected NetworkCommandConfig getNetworkCommandConfig() {
-        final NetworkCommandConfig config = new NetworkCommandConfig(DeviceConfig.API_ENDPOINT,
-                getResultReceiver(), BuildConfig.DEBUG);
-
-        config.setBasicAuthorisation(USERNAME, PASSWORD);
-        return config;
-    }
-
-    protected DeviceHiveResultReceiver getResultReceiver() {
-        if (null == resultReceiver) {
-            resultReceiver = new DeviceHiveResultReceiver();
-            resultReceiver.setResultListener(resultListener, true);
-        }
-        return resultReceiver;
-    }
-
-    private static final int TAG_GET_NETWORKS = getTagId(GetNetworksCommand.class);
-
-    protected void onReceiveResult(final int resultCode, final int tagId, final Bundle resultData) {
-        switch (resultCode) {
-            case DeviceHiveResultReceiver.MSG_COMPLETE_REQUEST:
-                break;
-            case DeviceHiveResultReceiver.MSG_EXCEPTION:
-                final Throwable exception = DeviceClientCommand.getThrowable(resultData);
-                L.e(TAG, "Failed to execute network command", exception);
-                break;
-            case DeviceHiveResultReceiver.MSG_STATUS_FAILURE:
-                int statusCode = DeviceClientCommand.getStatusCode(resultData);
-                L.e(TAG, "Failed to execute network command. Status code: " + statusCode);
-                break;
-            case DeviceHiveResultReceiver.MSG_HANDLED_RESPONSE:
-                if (tagId == TAG_GET_NETWORKS) {
-                    networks = GetNetworksCommand.getNetworks(resultData);
-                    L.d(TAG, "Fetched networks: " + networks);
-                    if (networks != null) {
-                        Collections.sort(networks, new Comparator<Network>() {
-                            @Override
-                            public int compare(Network lhs, Network rhs) {
-                                return lhs.getName().compareToIgnoreCase(
-                                        rhs.getName());
-                            }
-                        });
-
-                        simpleNetworkList.add(getString(R.string.new_network));
-                        for (int i = 0; i < networks.size(); i++) {
-                            simpleNetworkList.add(networks.get(i).getName());
-                        }
-                        adapter.notifyDataSetChanged();
-                        spinner.setAdapter(adapter);
-                    }
-                }
-
-                break;
-        }
-    }
-
-    protected static int getTagId(final Class<?> tag) {
-        return getTagId(tag.getName());
-    }
-
-    protected static int getTagId(final String tag) {
-        return DeviceHiveResultReceiver.getIdForTag(tag);
-    }
-
     @Override
     public void onBackPressed() {
         if (getIntent().hasExtra("from")) {
@@ -246,7 +266,7 @@ public class NetworkConfigurationActivity extends Activity implements View.OnCli
                 finish();
             } else {
                 Intent startupConfigurationActivity = new Intent(this, StartupConfigurationActivity.class);
-                startupConfigurationActivity.putExtra("api", DeviceConfig.API_ENDPOINT);
+                startupConfigurationActivity.putExtra(StartupConfigurationActivity.API, DeviceConfig.API_ENDPOINT);
                 startActivity(startupConfigurationActivity);
                 finish();
             }

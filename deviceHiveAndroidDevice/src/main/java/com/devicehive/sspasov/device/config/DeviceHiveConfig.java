@@ -19,10 +19,10 @@ public final class DeviceHiveConfig {
     /**
      * Optional
      */
-    public static final int DEFAULT_DEVICE_TIMEOUT = 0;
+    public static final int DEFAULT_DEVICE_TIMEOUT = 3600;
     public static final int DEFAULT_DEVICE_MIN_TIMEOUT = 0;
-    public static final int DEFAULT_DEVICE_MAX_TIMEOUT = 180;
+    public static final int DEFAULT_DEVICE_MAX_TIMEOUT = 3600;
     public static final boolean DEFAULT_DEVICE_ASYNC_COMMAND_EXECUTION = false;
-    public static final boolean DEFAULT_DEVICE_IS_PERMANENT = false;
+    public static final boolean DEFAULT_DEVICE_IS_PERMANENT = true;
 
 }

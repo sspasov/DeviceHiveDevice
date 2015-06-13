@@ -8,19 +8,30 @@ import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
 
 public class DeviceApplication extends Application {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = DeviceApplication.class.getSimpleName();
 
-    DevicePreferences prefs;
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
+    private DevicePreferences prefs;
 
+    // ---------------------------------------------------------------------------------------------
+    // Activity life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onCreate() {
         super.onCreate();
-        L.useDebugMode(false);
-        L.useDebugData(false);
+        L.useDebugMode(true);
+        L.useDebugData(true);
         loadPreferences();
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private void loadPreferences() {
         L.d(TAG, "loadPreferences()");
 
@@ -67,4 +78,8 @@ public class DeviceApplication extends Application {
         DeviceConfig.NETWORK_DESCRIPTION = prefs.getNetworkDescription();
 
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
 }

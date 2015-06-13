@@ -48,9 +48,16 @@ import java.util.List;
 public class DeviceActivity extends AppCompatActivity implements
         RegistrationListener, ParameterProvider, CommandListener,
         NotificationListener, NotificationSender, ParameterDialogListener {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = DeviceActivity.class.getSimpleName();
+    private static final int SETTINGS_REQUEST_CODE = 0x01;
+    public static final String API_CHANGED = "apiChanged";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     public static boolean registerDevice = true;
     private NetworkReceiver receiver = new NetworkReceiver();
 
@@ -65,6 +72,9 @@ public class DeviceActivity extends AppCompatActivity implements
 
     private TextView tvDeviceNotRegistered;
 
+    // ---------------------------------------------------------------------------------------------
+    // Activity life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,38 +96,117 @@ public class DeviceActivity extends AppCompatActivity implements
             device.setDebugLoggingEnabled(BuildConfig.DEBUG);
             device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
 
-            deviceInformationFragment = DeviceInformationFragment.newInstance();
-            deviceInformationFragment.setDeviceData(device.getDeviceData());
-            deviceInformationFragment.setContext(this);
+            setupFragments();
 
-            equipmentListFragment = EquipmentListFragment.newInstance();
-            equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
+            setupToolbar();
 
-            deviceCommandsFragment = DeviceCommandsFragment.newInstance();
+            ViewPager viewPager = setupViewPager();
 
-            deviceSendNotificationFragment = DeviceSendNotificationFragment.newInstance();
-            deviceSendNotificationFragment.setParameterProvider(this);
-            deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
-
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-            getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
-
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
-
-            SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-            mSlidingTabLayout.setDistributeEvenly(true);
-            mSlidingTabLayout.setViewPager(viewPager);
-            mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-                @Override
-                public int getIndicatorColor(int position) {
-                    return getColorBasedForPosition(position);
-                }
-            });
+            setupSlidingTabLayout(viewPager);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.d(TAG, "onResume()");
+        if (registerDevice && device != null && DeviceConfig.API_ENDPOINT != null) {
+            deviceUnregister();
+            deviceRegister();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        L.d(TAG, "onStop()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        L.d(TAG, "onDestroy()");
+        deviceUnregister();
+        if (receiver != null) {
+            this.unregisterReceiver(receiver);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
+    public void deviceRegister() {
+        L.d(TAG, "deviceRegister()");
+        device = null;
+        device = new TestDevice(getApplicationContext());
+        device.setDebugLoggingEnabled(BuildConfig.DEBUG);
+        device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
+        device.addDeviceListener(this);
+        device.addCommandListener(this);
+        device.addNotificationListener(this);
+        deviceInformationFragment.setDeviceData(device.getDeviceData());
+        if (!device.isRegistered()) {
+            device.registerDevice();
+        } else {
+            device.startProcessingCommands();
+        }
+    }
+
+    public void deviceUnregister() {
+        L.d(TAG, "deviceUnregister()");
+        if (device != null) {
+            device.removeDeviceListener(this);
+            device.removeCommandListener(this);
+            device.removeNotificationListener(this);
+            device.stopProcessingCommands();
+
+            device.unregisterDevice();
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
+    private void setupFragments() {
+        deviceInformationFragment = DeviceInformationFragment.newInstance();
+        deviceInformationFragment.setDeviceData(device.getDeviceData());
+        deviceInformationFragment.setContext(this);
+
+        equipmentListFragment = EquipmentListFragment.newInstance();
+        equipmentListFragment.setEquipment(device.getDeviceData().getEquipment());
+
+        deviceCommandsFragment = DeviceCommandsFragment.newInstance();
+
+        deviceSendNotificationFragment = DeviceSendNotificationFragment.newInstance();
+        deviceSendNotificationFragment.setParameterProvider(this);
+        deviceSendNotificationFragment.setEquipment(device.getDeviceData().getEquipment());
+        deviceSendNotificationFragment.setDeviceStatus(device.getDeviceData().getStatus());
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
+    }
+
+    private ViewPager setupViewPager() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new SimplePagerAdapter(this, getSupportFragmentManager()));
+        return viewPager;
+    }
+
+    private void setupSlidingTabLayout(ViewPager viewPager) {
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(viewPager);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getColorBasedForPosition(position);
+            }
+        });
     }
 
     private int getColorBasedForPosition(int pos) {
@@ -161,61 +250,9 @@ public class DeviceActivity extends AppCompatActivity implements
         alert.show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        L.d(TAG, "onResume()");
-        if (registerDevice && device != null && DeviceConfig.API_ENDPOINT != null) {
-            deviceUnregister();
-            deviceRegister();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        L.d(TAG, "onStop()");
-
-    }
-
-    public void deviceRegister() {
-        L.d(TAG, "deviceRegister()");
-        device = new TestDevice(getApplicationContext());
-        device.setDebugLoggingEnabled(BuildConfig.DEBUG);
-        device.setApiEnpointUrl(DeviceConfig.API_ENDPOINT);
-        device.addDeviceListener(this);
-        device.addCommandListener(this);
-        device.addNotificationListener(this);
-        deviceInformationFragment.setDeviceData(device.getDeviceData());
-        if (!device.isRegistered()) {
-            device.registerDevice();
-        } else {
-            device.startProcessingCommands();
-        }
-    }
-
-    public void deviceUnregister() {
-        L.d(TAG, "deviceUnregister()");
-        if (device != null) {
-            device.removeDeviceListener(this);
-            device.removeCommandListener(this);
-            device.removeNotificationListener(this);
-            device.stopProcessingCommands();
-
-            device.unregisterDevice();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        L.d(TAG, "onDestroy()");
-        deviceUnregister();
-        if (receiver != null) {
-            this.unregisterReceiver(receiver);
-        }
-    }
-
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onDeviceRegistered() {
         L.d(TAG, "onDeviceRegistered()");
@@ -264,17 +301,14 @@ public class DeviceActivity extends AppCompatActivity implements
         L.d(TAG, "onDeviceStartSendingNotification(" + notification.getId() + ")");
         if (notification.getName().contains("DeviceStatus")) {
             Toast.makeText(this, notification.getName() + " has been sent.", Toast.LENGTH_SHORT).show();
-            //showDialog("Success!", notification.getName() + " has been sent.");
         } else {
             Toast.makeText(this, notification.getName(), Toast.LENGTH_SHORT).show();
-            //showDialog("Success!", notification.getName());
         }
     }
 
     @Override
     public void onDeviceSentNotification(Notification notification) {
         L.d(TAG, "onDeviceSentNotification(" + notification.getId() + ")");
-        //showDialog("Success!", "Notification sent with ID " + notification.getId());
         Toast.makeText(this, "Notification registered with ID " + notification.getId(), Toast.LENGTH_LONG).show();
     }
 
@@ -326,13 +360,22 @@ public class DeviceActivity extends AppCompatActivity implements
         return true;
     }
 
-    private static final int SETTINGS_REQUEST_CODE = 0x01;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                startActivityForResult(new Intent(this, SettingsActivity.class), SETTINGS_REQUEST_CODE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SETTINGS_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                if (data != null && data.hasExtra("apiChanged")) {
+                if (data != null && data.hasExtra(API_CHANGED)) {
                     Toast.makeText(this, "API Endpoint was changed. Please reselect network.", Toast.LENGTH_LONG).show();
                     Intent networkConfigurationActivity = new Intent(this, NetworkConfigurationActivity.class);
                     networkConfigurationActivity.putExtra("from", TAG);
@@ -345,19 +388,10 @@ public class DeviceActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_settings:
-                startActivityForResult(new Intent(this, SettingsActivity.class), SETTINGS_REQUEST_CODE);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
+    // ---------------------------------------------------------------------------------------------
+    // Inner classes
+    // ---------------------------------------------------------------------------------------------
     public class NetworkReceiver extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -381,5 +415,4 @@ public class DeviceActivity extends AppCompatActivity implements
             }
         }
     }
-
 }

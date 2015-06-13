@@ -13,7 +13,9 @@ public class DevicePreferences {
 
     public DevicePreferences(final Context context) {
         this.context = context;
-        this.preferences = context.getSharedPreferences(context.getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences(
+                context.getPackageName() + "_preferences",
+                Context.MODE_PRIVATE);
     }
 
     /**

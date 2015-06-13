@@ -15,11 +15,19 @@ import com.devicehive.sspasov.device.config.DevicePreferences;
 import com.devicehive.sspasov.device.utils.L;
 
 public class SettingsActivity extends PreferenceActivity {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private DevicePreferences prefs;
 
+    // ---------------------------------------------------------------------------------------------
+    // Activity life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +35,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.preference);
 
         LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
-        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
+        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.view_toolbar, root, false);
         toolbar.setTitle(getString(R.string.action_settings));
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
@@ -39,22 +47,12 @@ public class SettingsActivity extends PreferenceActivity {
         });
         root.addView(toolbar, 0); // insert at top
 
-
         prefs = new DevicePreferences(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isApiChanged()) {
-            updatePreferences();
-            setResult(Activity.RESULT_OK, new Intent().putExtra("apiChanged", true));
-        } else {
-            updatePreferences();
-            setResult(Activity.RESULT_OK);
-        }
-        finish();
-    }
-
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private boolean isApiChanged() {
         if (DeviceConfig.API_ENDPOINT.equals(prefs.getServerUrl())) {
             return false;
@@ -88,5 +86,18 @@ public class SettingsActivity extends PreferenceActivity {
 
     }
 
-
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onBackPressed() {
+        if (isApiChanged()) {
+            updatePreferences();
+            setResult(Activity.RESULT_OK, new Intent().putExtra(DeviceActivity.API_CHANGED, true));
+        } else {
+            updatePreferences();
+            setResult(Activity.RESULT_OK);
+        }
+        finish();
+    }
 }

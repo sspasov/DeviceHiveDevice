@@ -22,9 +22,14 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class DeviceInformationFragment extends Fragment {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = DeviceInformationFragment.class.getSimpleName();
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private DeviceData deviceData;
 
     private TextView tvDeviceName;
@@ -45,24 +50,9 @@ public class DeviceInformationFragment extends Fragment {
 
     private Context mContext;
 
-    public static DeviceInformationFragment newInstance() {
-        if (instance == null) {
-            instance = new DeviceInformationFragment();
-        }
-        return instance;
-    }
-
-    public void setContext(Context context) {
-        mContext = context;
-    }
-
-    public void setDeviceData(DeviceData deviceData) {
-        this.deviceData = deviceData;
-        if (isAdded()) {
-            setupDeviceData(deviceData);
-        }
-    }
-
+    // ---------------------------------------------------------------------------------------------
+    // Fragment life cycle
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onResume() {
         super.onResume();
@@ -90,6 +80,35 @@ public class DeviceInformationFragment extends Fragment {
         return rootView;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
+    public static DeviceInformationFragment getInstance() {
+        if (instance == null) {
+            instance = new DeviceInformationFragment();
+        }
+        return instance;
+    }
+
+    public static DeviceInformationFragment newInstance() {
+        instance = new DeviceInformationFragment();
+        return instance;
+    }
+
+    public void setContext(Context context) {
+        mContext = context;
+    }
+
+    public void setDeviceData(DeviceData deviceData) {
+        this.deviceData = deviceData;
+        if (isAdded()) {
+            setupDeviceData(deviceData);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private void setupDeviceData(DeviceData deviceData) {
         if (deviceData != null) {
             tvDeviceName.setText(deviceData.getName());
@@ -147,4 +166,10 @@ public class DeviceInformationFragment extends Fragment {
             }
         }, 0, 60_000);
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+
+
 }

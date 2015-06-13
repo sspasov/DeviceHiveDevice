@@ -405,9 +405,12 @@ public abstract class Device implements CommandRunner {
 	}
 
 	private void updateDeviceData(DeviceData newDeviceData) {
-		this.deviceData = new DeviceData(deviceData.getId(),
-				deviceData.getKey(), newDeviceData.getName(),
-				newDeviceData.getStatus(), newDeviceData.getNetwork(),
+		this.deviceData = new DeviceData(
+                deviceData.getId(),
+				deviceData.getKey(),
+                newDeviceData.getName(),
+				newDeviceData.getStatus(),
+                newDeviceData.getNetwork(),
 				newDeviceData.getDeviceClass());
 		this.deviceData.setData((Serializable) newDeviceData.getData());
 		for (Equipment equipment : equipmentList) {

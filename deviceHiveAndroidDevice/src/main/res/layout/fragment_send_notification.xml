@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/notification_name_edit"
+            android:id="@+id/et_notification_name"
             style="@style/SingleLineEditText"
             android:layout_marginTop="10dp"
             android:hint="@string/hint_notification_name"/>
@@ -29,11 +29,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:popupBackground="@color/divider"/>
+
+        <ListView
+            android:id="@+id/lv_parameters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 
     <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/send_notification_button"
+        android:id="@+id/btn_send_notification"
         style="@style/FAB"
         xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:src="@drawable/ic_send_white_36dp"
