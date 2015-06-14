@@ -24,8 +24,8 @@ public class DeviceApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        L.useDebugMode(true);
-        L.useDebugData(true);
+        L.useDebugMode(false);
+        L.useDebugData(false);
         loadPreferences();
     }
 

@@ -4,6 +4,9 @@ package com.devicehive.sspasov.device.config;
  * Created by toni on 28.05.15.
  */
 public class DeviceConfig {
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     public static String API_ENDPOINT;
 
     public static int DEVICE_TIMEOUT;

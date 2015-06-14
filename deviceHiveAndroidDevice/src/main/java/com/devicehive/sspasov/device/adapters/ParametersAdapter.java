@@ -17,10 +17,15 @@ import java.util.List;
  * Created by toni on 13.06.15.
  */
 public class ParametersAdapter extends BaseAdapter {
-
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private final LayoutInflater inflater;
     private final List<Parameter> parameters;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public ParametersAdapter(Context context, List<Parameter> parameters) {
         this.parameters = parameters;
         this.inflater = LayoutInflater.from(context);
@@ -31,6 +36,9 @@ public class ParametersAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public int getCount() {
         return parameters.size();
@@ -71,6 +79,9 @@ public class ParametersAdapter extends BaseAdapter {
         return convertView;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Inner classes
+    // ---------------------------------------------------------------------------------------------
     private class ViewHolder {
         ImageView image;
         TextView name;

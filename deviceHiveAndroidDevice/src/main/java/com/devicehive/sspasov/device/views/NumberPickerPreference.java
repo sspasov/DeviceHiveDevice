@@ -17,13 +17,21 @@ import com.devicehive.sspasov.device.config.DeviceHiveConfig;
  */
 
 public class NumberPickerPreference extends DialogPreference {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     public static final int MAX_VALUE = DeviceHiveConfig.DEFAULT_DEVICE_MAX_TIMEOUT;
     public static final int MIN_VALUE = DeviceHiveConfig.DEFAULT_DEVICE_MIN_TIMEOUT;
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private NumberPicker picker;
     private int value;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -32,6 +40,18 @@ public class NumberPickerPreference extends DialogPreference {
         super(context, attrs, defStyleAttr);
     }
 
+    public void setValue(int value) {
+        this.value = value;
+        persistInt(this.value);
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     protected View onCreateDialogView() {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
@@ -70,14 +90,5 @@ public class NumberPickerPreference extends DialogPreference {
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
         setValue(restorePersistedValue ? getPersistedInt(MIN_VALUE) : (Integer) defaultValue);
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-        persistInt(this.value);
-    }
-
-    public int getValue() {
-        return this.value;
     }
 }

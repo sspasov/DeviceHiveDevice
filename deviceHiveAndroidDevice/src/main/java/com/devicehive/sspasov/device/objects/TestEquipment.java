@@ -17,9 +17,14 @@ import com.devicehive.sspasov.device.utils.L;
 import java.util.HashMap;
 
 public class TestEquipment extends Equipment {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = TestEquipment.class.getSimpleName();
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private Context mContext;
     private Sensor mSensor;
 
@@ -31,7 +36,9 @@ public class TestEquipment extends Equipment {
     private boolean multipleValueEquipment;
     private float x, y, z;
 
-
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public TestEquipment(Context context, Sensor sensor) {
         super(equipmentData(
                         sensor.getName(),
@@ -51,6 +58,24 @@ public class TestEquipment extends Equipment {
         createSensorListener();
     }
 
+    public SensorEventListener getSensorListener() {
+        L.d(TAG, "getSensorListener()");
+        return sensorListener;
+    }
+
+    public Sensor getSensor() {
+        L.d(TAG, "getSensor()");
+        return mSensor;
+    }
+
+    public String getEquipmentName() {
+        L.d(TAG, "getEquipmentName()");
+        return equipmentName;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private boolean isMultipleValueEquipment() {
         L.d(TAG, "isMultipleValueEquipment()");
         return equipmentType != 2 && equipmentType != 14 && equipmentType != 5
@@ -94,39 +119,6 @@ public class TestEquipment extends Equipment {
         return equipmentData;
     }
 
-    public SensorEventListener getSensorListener() {
-        L.d(TAG, "getSensorListener()");
-        return sensorListener;
-    }
-
-    public Sensor getSensor() {
-        L.d(TAG, "getSensor()");
-        return mSensor;
-    }
-
-    public String getEquipmentName() {
-        L.d(TAG, "getEquipmentName()");
-        return equipmentName;
-    }
-
-    @Override
-    public void onBeforeRunCommand(Command command) {
-
-    }
-
-    @Override
-    public boolean shouldRunCommandAsynchronously(final Command command) {
-        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
-    }
-
-    @Override
-    public CommandResult runCommand(final Command command) {
-
-        CommandInfo commandInfo = new CommandInfo(command);
-
-        return execute(commandInfo);
-    }
-
     private CommandResult execute(CommandInfo commandInfo) {
         L.d(TAG, "runCommand(" + commandInfo.getName() + ")");
 
@@ -164,6 +156,26 @@ public class TestEquipment extends Equipment {
         return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onBeforeRunCommand(Command command) {
+
+    }
+
+    @Override
+    public boolean shouldRunCommandAsynchronously(final Command command) {
+        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
+    }
+
+    @Override
+    public CommandResult runCommand(final Command command) {
+
+        CommandInfo commandInfo = new CommandInfo(command);
+
+        return execute(commandInfo);
+    }
 
     @Override
     protected boolean onRegisterEquipment() {

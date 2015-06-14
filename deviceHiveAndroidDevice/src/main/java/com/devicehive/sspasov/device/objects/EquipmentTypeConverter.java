@@ -4,18 +4,22 @@ package com.devicehive.sspasov.device.objects;
  * Created by toni on 30.05.15.
  */
 public class EquipmentTypeConverter {
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private static EquipmentTypeConverter instance;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public static EquipmentTypeConverter getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new EquipmentTypeConverter();
         }
         return instance;
     }
 
-    private EquipmentTypeConverter() {}
-
-    public static String toString(String type){
+    public static String toString(String type) {
         int mType = Integer.decode(type);
 
         switch (mType) {
@@ -74,7 +78,7 @@ public class EquipmentTypeConverter {
         }
     }
 
-    public static String toString(int type){
+    public static String toString(int type) {
 
         switch (type) {
             case TYPE_ACCELEROMETER:
@@ -132,6 +136,9 @@ public class EquipmentTypeConverter {
         }
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private static final int TYPE_ACCELEROMETER = 1;
     private static final String STRING_TYPE_ACCELEROMETER = "accelerometer";
 

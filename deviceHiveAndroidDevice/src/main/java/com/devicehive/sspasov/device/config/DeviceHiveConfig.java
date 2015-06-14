@@ -1,13 +1,14 @@
 package com.devicehive.sspasov.device.config;
 
 public final class DeviceHiveConfig {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     public static final boolean DEFAULT_FIRST_STARTUP = true;
 
     /**
      * General
      */
-    //public static final String DEFAULT_API_ENDPOINT = "http://nn8170.pg.devicehive.com/api";
     public static final String DEFAULT_API_ENDPOINT = null;
 
     /**
@@ -23,6 +24,6 @@ public final class DeviceHiveConfig {
     public static final int DEFAULT_DEVICE_MIN_TIMEOUT = 0;
     public static final int DEFAULT_DEVICE_MAX_TIMEOUT = 3600;
     public static final boolean DEFAULT_DEVICE_ASYNC_COMMAND_EXECUTION = false;
-    public static final boolean DEFAULT_DEVICE_IS_PERMANENT = true;
+    public static final boolean DEFAULT_DEVICE_IS_PERMANENT = false;
 
 }

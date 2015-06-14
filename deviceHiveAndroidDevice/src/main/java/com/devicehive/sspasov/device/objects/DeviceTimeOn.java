@@ -19,14 +19,22 @@ import java.util.concurrent.TimeUnit;
  * Created by toni on 29.05.15.
  */
 public class DeviceTimeOn extends Equipment {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = DeviceTimeOn.class.getSimpleName();
     private static final String NAME = "Time On";
-    private static String CODE;
     private static final String TYPE = "time_on";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private Context mContext;
+    private static String CODE;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public DeviceTimeOn(Context context) {
         super(equipmentData(
                 NAME,
@@ -37,15 +45,18 @@ public class DeviceTimeOn extends Equipment {
         CODE = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_to";
     }
 
+    public String getValue() {
+        return getTimeOn();
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private static EquipmentData equipmentData(String name, String code, String type) {
         L.d(TAG, "equipmentData()");
         EquipmentData equipmentData = new EquipmentData(name, code, type);
         //ed.setData((Serializable) new TestEquipmentData(4236));
         return equipmentData;
-    }
-
-    public String getValue() {
-        return getTimeOn();
     }
 
     private String getTimeOn() {
@@ -55,23 +66,6 @@ public class DeviceTimeOn extends Equipment {
                 TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
                 TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
         return String.valueOf(hms);
-    }
-
-    @Override
-    public void onBeforeRunCommand(Command command) {
-        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
-    }
-
-    @Override
-    public boolean shouldRunCommandAsynchronously(Command command) {
-        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
-    }
-
-    @Override
-    public CommandResult runCommand(Command command) {
-        CommandInfo commandInfo = new CommandInfo(command);
-
-        return execute(commandInfo);
     }
 
     private CommandResult execute(CommandInfo commandInfo) {
@@ -95,6 +89,25 @@ public class DeviceTimeOn extends Equipment {
         sendNotification(new EquipmentNotification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
 
         return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onBeforeRunCommand(Command command) {
+        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
+    }
+
+    @Override
+    public boolean shouldRunCommandAsynchronously(Command command) {
+        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
+    }
+
+    @Override
+    public CommandResult runCommand(Command command) {
+        CommandInfo commandInfo = new CommandInfo(command);
+        return execute(commandInfo);
     }
 }
 

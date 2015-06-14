@@ -16,10 +16,15 @@ import java.util.List;
  * Created by toni on 13.06.15.
  */
 public class EquipmentAdapter extends BaseAdapter {
-
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private final LayoutInflater inflater;
     private List<EquipmentData> equipment;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public EquipmentAdapter(Context context, List<EquipmentData> equipment) {
         this.equipment = equipment;
         this.inflater = LayoutInflater.from(context);
@@ -30,6 +35,9 @@ public class EquipmentAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public int getCount() {
         return equipment.size();
@@ -69,6 +77,9 @@ public class EquipmentAdapter extends BaseAdapter {
         return convertView;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Inner classes
+    // ---------------------------------------------------------------------------------------------
     private class ViewHolder {
         TextView name;
         TextView code;

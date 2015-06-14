@@ -9,7 +9,9 @@ import java.util.HashMap;
  * Created by toni on 29.05.15.
  */
 public class CommandInfo {
-
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     /**
      * Whole command package
      */
@@ -45,17 +47,12 @@ public class CommandInfo {
      */
     private HashMap outputParams;
 
-
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public CommandInfo(Command command) {
         this.command = command;
         fillFields();
-    }
-
-    private void fillFields() {
-        name = command.getCommand();
-        inputParams = (HashMap) command.getParameters();
-        status = CommandResult.STATUS_COMLETED;
-        outputParams = new HashMap();
     }
 
     public HashMap getInputParams() {
@@ -104,5 +101,15 @@ public class CommandInfo {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
+    private void fillFields() {
+        name = command.getCommand();
+        inputParams = (HashMap) command.getParameters();
+        status = CommandResult.STATUS_COMLETED;
+        outputParams = new HashMap();
     }
 }

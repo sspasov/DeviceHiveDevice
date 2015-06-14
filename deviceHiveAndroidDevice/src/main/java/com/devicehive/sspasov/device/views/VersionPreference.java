@@ -10,7 +10,9 @@ import android.util.AttributeSet;
  * Created by toni on 07.06.15.
  */
 public class VersionPreference extends Preference {
-
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public VersionPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         String versionName;

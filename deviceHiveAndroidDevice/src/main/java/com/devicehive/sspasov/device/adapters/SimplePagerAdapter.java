@@ -16,16 +16,28 @@ import com.devicehive.sspasov.device.utils.L;
  * Created by stanimir on 03.06.15.
  */
 public class SimplePagerAdapter extends FragmentStatePagerAdapter {
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = SimplePagerAdapter.class.getSimpleName();
-
     private static int NUM_ITEMS = 4;
+
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private Context mContext;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public SimplePagerAdapter(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
         mContext = context;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public int getCount() {
         return NUM_ITEMS;

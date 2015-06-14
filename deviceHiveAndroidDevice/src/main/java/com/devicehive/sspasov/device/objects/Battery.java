@@ -20,13 +20,22 @@ import java.util.HashMap;
  * Created by toni on 23.05.15.
  */
 public class Battery extends Equipment {
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = Battery.class.getSimpleName();
     private static final String NAME = "Battery";
-    private static String CODE;
     private static final String TYPE = "battery";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private Context mContext;
+    private static String CODE;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public Battery(Context context) {
         super(equipmentData(
                 NAME,
@@ -37,15 +46,18 @@ public class Battery extends Equipment {
         CODE = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_b";
     }
 
+    public String getValue() {
+        return batteryLevel(mContext);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private static EquipmentData equipmentData(String name, String code, String type) {
         L.d(TAG, "equipmentData()");
         EquipmentData equipmentData = new EquipmentData(name, code, type);
         //ed.setData((Serializable) new TestEquipmentData(4236));
         return equipmentData;
-    }
-
-    public String getValue() {
-        return batteryLevel(mContext);
     }
 
     private String batteryLevel(Context context) {
@@ -54,23 +66,6 @@ public class Battery extends Equipment {
         int scale = intent != null ? intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100) : 0;
         int percent = (level * 100) / scale;
         return String.valueOf(percent) + "%";
-    }
-
-    @Override
-    public void onBeforeRunCommand(Command command) {
-        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
-    }
-
-    @Override
-    public boolean shouldRunCommandAsynchronously(Command command) {
-        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
-    }
-
-    @Override
-    public CommandResult runCommand(Command command) {
-        CommandInfo commandInfo = new CommandInfo(command);
-
-        return execute(commandInfo);
     }
 
     private CommandResult execute(CommandInfo commandInfo) {
@@ -94,5 +89,24 @@ public class Battery extends Equipment {
         sendNotification(new EquipmentNotification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
 
         return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onBeforeRunCommand(Command command) {
+        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
+    }
+
+    @Override
+    public boolean shouldRunCommandAsynchronously(Command command) {
+        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
+    }
+
+    @Override
+    public CommandResult runCommand(Command command) {
+        CommandInfo commandInfo = new CommandInfo(command);
+        return execute(commandInfo);
     }
 }

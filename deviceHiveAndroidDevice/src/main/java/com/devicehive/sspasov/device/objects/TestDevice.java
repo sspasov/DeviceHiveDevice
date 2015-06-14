@@ -27,20 +27,28 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TestDevice extends Device {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = TestDevice.class.getSimpleName();
 
     private static final String DEVICE_PHONE = "Android Phone";
     private static final String DEVICE_TABLET = "Android Tablet";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private Context mContext;
     private static String deviceID;
     private static String deviceName;
 
-    private List<RegistrationListener> registrationListeners = new LinkedList<RegistrationListener>();
-    private List<CommandListener> commandListeners = new LinkedList<CommandListener>();
-    private List<NotificationListener> notificationListeners = new LinkedList<NotificationListener>();
+    private List<RegistrationListener> registrationListeners = new LinkedList<>();
+    private List<CommandListener> commandListeners = new LinkedList<>();
+    private List<NotificationListener> notificationListeners = new LinkedList<>();
 
+    // ---------------------------------------------------------------------------------------------
+    // Interfaces
+    // ---------------------------------------------------------------------------------------------
     public interface RegistrationListener {
         void onDeviceRegistered();
 
@@ -59,13 +67,56 @@ public class TestDevice extends Device {
         void onDeviceFailedToSendNotification(Notification notification);
     }
 
-
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public TestDevice(Context context) {
         super(context, getTestDeviceData(context));
         L.d(TAG, "TestDevice()");
         this.mContext = context;
         addEquipment();
     }
+
+    public void addDeviceListener(RegistrationListener listener) {
+        L.d(TAG, "addDeviceListener()");
+        registrationListeners.add(listener);
+    }
+
+    public void removeDeviceListener(RegistrationListener listener) {
+        L.d(TAG, "removeDeviceListener()");
+        registrationListeners.remove(listener);
+    }
+
+    public void addCommandListener(CommandListener listener) {
+        L.d(TAG, "addCommandListener()");
+        commandListeners.add(listener);
+    }
+
+    public void removeCommandListener(CommandListener listener) {
+        L.d(TAG, "removeCommandListener()");
+        commandListeners.remove(listener);
+    }
+
+    public void addNotificationListener(NotificationListener listener) {
+        L.d(TAG, "addNotificationListener()");
+        notificationListeners.add(listener);
+    }
+
+    public void removeNotificationListener(NotificationListener listener) {
+        L.d(TAG, "removeNotificationListener()");
+        notificationListeners.remove(listener);
+    }
+
+    public void removeListener(Object listener) {
+        L.d(TAG, "removeListener()");
+        registrationListeners.remove(listener);
+        commandListeners.remove(listener);
+        notificationListeners.remove(listener);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
 
     /**
      * Searching for equipment and adds it *
@@ -120,7 +171,7 @@ public class TestDevice extends Device {
 
         DeviceData deviceData = new DeviceData(
                 deviceID,                                          //DEVICE UNIQUE ID
-                context.getString(R.string.key_device_registration),    //DEVICE REGISTER KEY //TODO: get key programmatically ?
+                context.getString(R.string.key_device_registration),    //DEVICE REGISTER KEY
                 deviceName,                                        //DEVICE NAME
                 DeviceData.DEVICE_STATUS_OK,                       //DEVICE STATUS
                 network,                                           //DEVICE NETWORK
@@ -129,7 +180,7 @@ public class TestDevice extends Device {
         return deviceData;
     }
 
-    public static String getDeviceUniqueID(Context context) {
+    private static String getDeviceUniqueID(Context context) {
         L.d(TAG, "getDeviceUniqueID()");
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
@@ -137,9 +188,9 @@ public class TestDevice extends Device {
     private static String getDeviceClass(Context context) {
         L.d(TAG, "getDeviceClass()");
         if (isDeviceTablet(context)) {
-            return DEVICE_TABLET;
+            return DEVICE_TABLET + " " + deviceID;
         }
-        return DEVICE_PHONE;
+        return DEVICE_PHONE + " " + deviceID;
     }
 
     private static boolean isDeviceTablet(Context activityContext) {
@@ -179,6 +230,57 @@ public class TestDevice extends Device {
         return info != null ? info.versionName : BuildConfig.VERSION_NAME;
     }
 
+    private CommandResult execute(CommandInfo commandInfo) {
+        L.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
+        sendNotification(new Notification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
+        return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
+
+    private void notifyListenersCommandReceived(Command command) {
+        L.d(TAG, "notifyListenersCommandReceived(" + command.toString() + ")");
+        for (CommandListener listener : commandListeners) {
+            listener.onDeviceReceivedCommand(command);
+        }
+    }
+
+    private void notifyListenersDeviceRegistered() {
+        L.d(TAG, "notifyListenersDeviceRegistered()");
+        for (RegistrationListener listener : registrationListeners) {
+            listener.onDeviceRegistered();
+        }
+    }
+
+    private void notifyListenersDeviceFailedToRegister() {
+        L.d(TAG, "notifyListenersDeviceFailedToRegister()");
+        for (RegistrationListener listener : registrationListeners) {
+            listener.onDeviceFailedToRegister();
+        }
+    }
+
+    private void notifyListenersDeviceStartSendingNotification(Notification notification) {
+        L.d(TAG, "notifyListenersDeviceStartSendingNotification(" + notification.getName() + ")");
+        for (NotificationListener listener : notificationListeners) {
+            listener.onDeviceStartSendingNotification(notification);
+        }
+    }
+
+    private void notifyListenersDeviceSentNotification(Notification notification) {
+        L.d(TAG, "notifyListenersDeviceSentNotification(" + notification.getName() + ")");
+        for (NotificationListener listener : notificationListeners) {
+            listener.onDeviceSentNotification(notification);
+        }
+    }
+
+    private void notifyListenersDeviceFailedToSendNotification(Notification notification) {
+        L.d(TAG, "notifyListenersDeviceFailedToSendNotification(" + notification.getName() + ")");
+        for (NotificationListener listener : notificationListeners) {
+            listener.onDeviceFailedToSendNotification(notification);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public void onBeforeRunCommand(Command command) {
         L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
@@ -192,53 +294,10 @@ public class TestDevice extends Device {
         return execute(commandInfo);
     }
 
-    private CommandResult execute(CommandInfo commandInfo) {
-        L.d(TAG, "Executing command \"" + commandInfo.getName() + "\" on " + TAG);
-        sendNotification(new Notification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
-        return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
-    }
-
     @Override
     public boolean shouldRunCommandAsynchronously(final Command command) {
         L.d(TAG, "shouldRunCommandAsynchronously()");
         return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
-    }
-
-    public void addDeviceListener(RegistrationListener listener) {
-        L.d(TAG, "addDeviceListener()");
-        registrationListeners.add(listener);
-    }
-
-    public void removeDeviceListener(RegistrationListener listener) {
-        L.d(TAG, "removeDeviceListener()");
-        registrationListeners.remove(listener);
-    }
-
-    public void addCommandListener(CommandListener listener) {
-        L.d(TAG, "addCommandListener()");
-        commandListeners.add(listener);
-    }
-
-    public void removeCommandListener(CommandListener listener) {
-        L.d(TAG, "removeCommandListener()");
-        commandListeners.remove(listener);
-    }
-
-    public void addNotificationListener(NotificationListener listener) {
-        L.d(TAG, "addNotificationListener()");
-        notificationListeners.add(listener);
-    }
-
-    public void removeNotificationListener(NotificationListener listener) {
-        L.d(TAG, "removeNotificationListener()");
-        notificationListeners.remove(listener);
-    }
-
-    public void removeListener(Object listener) {
-        L.d(TAG, "removeListener()");
-        registrationListeners.remove(listener);
-        commandListeners.remove(listener);
-        notificationListeners.remove(listener);
     }
 
     @Override
@@ -285,47 +344,4 @@ public class TestDevice extends Device {
         L.d(TAG, "onFailSendingNotification(" + notification.getName() + ")");
         notifyListenersDeviceFailedToSendNotification(notification);
     }
-
-    private void notifyListenersCommandReceived(Command command) {
-        L.d(TAG, "notifyListenersCommandReceived(" + command.toString() + ")");
-        for (CommandListener listener : commandListeners) {
-            listener.onDeviceReceivedCommand(command);
-        }
-    }
-
-    private void notifyListenersDeviceRegistered() {
-        L.d(TAG, "notifyListenersDeviceRegistered()");
-        for (RegistrationListener listener : registrationListeners) {
-            listener.onDeviceRegistered();
-        }
-    }
-
-    private void notifyListenersDeviceFailedToRegister() {
-        L.d(TAG, "notifyListenersDeviceFailedToRegister()");
-        for (RegistrationListener listener : registrationListeners) {
-            listener.onDeviceFailedToRegister();
-        }
-    }
-
-    private void notifyListenersDeviceStartSendingNotification(Notification notification) {
-        L.d(TAG, "notifyListenersDeviceStartSendingNotification(" + notification.getName() + ")");
-        for (NotificationListener listener : notificationListeners) {
-            listener.onDeviceStartSendingNotification(notification);
-        }
-    }
-
-    private void notifyListenersDeviceSentNotification(Notification notification) {
-        L.d(TAG, "notifyListenersDeviceSentNotification(" + notification.getName() + ")");
-        for (NotificationListener listener : notificationListeners) {
-            listener.onDeviceSentNotification(notification);
-        }
-    }
-
-    private void notifyListenersDeviceFailedToSendNotification(Notification notification) {
-        L.d(TAG, "notifyListenersDeviceFailedToSendNotification(" + notification.getName() + ")");
-        for (NotificationListener listener : notificationListeners) {
-            listener.onDeviceFailedToSendNotification(notification);
-        }
-    }
-
 }

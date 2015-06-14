@@ -16,10 +16,15 @@ import java.util.List;
  * Created by toni on 13.06.15.
  */
 public class CommandsAdapter extends BaseAdapter {
-
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private final LayoutInflater inflater;
     private List<Command> commands;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public CommandsAdapter(Context context, List<Command> commands) {
         this.commands = commands;
         this.inflater = LayoutInflater.from(context);
@@ -30,6 +35,9 @@ public class CommandsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public int getCount() {
         return commands.size();
@@ -65,6 +73,9 @@ public class CommandsAdapter extends BaseAdapter {
         return convertView;
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Inner Classes
+    // ---------------------------------------------------------------------------------------------
     private class ViewHolder {
         TextView name;
         TextView params;

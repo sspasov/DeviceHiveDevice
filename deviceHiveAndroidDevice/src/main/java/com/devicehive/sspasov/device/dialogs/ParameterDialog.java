@@ -12,16 +12,27 @@ import android.widget.EditText;
 import com.devicehive.sspasov.device.R;
 
 public class ParameterDialog extends DialogFragment {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     public static final String TAG = ParameterDialog.class.getSimpleName();
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
     private EditText etName;
     private EditText etValue;
 
+    // ---------------------------------------------------------------------------------------------
+    // Interfaces
+    // ---------------------------------------------------------------------------------------------
     public interface ParameterDialogListener {
         void onFinishEditingParameter(String name, String value);
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

@@ -19,14 +19,22 @@ import java.util.HashMap;
  * Created by toni on 28.05.15.
  */
 public class ScreenSize extends Equipment {
-
+    // ---------------------------------------------------------------------------------------------
+    // Constants
+    // ---------------------------------------------------------------------------------------------
     private static final String TAG = ScreenSize.class.getSimpleName();
     private static final String NAME = "Screen Size";
-    private static String CODE;
     private static final String TYPE = "screen_size";
 
+    // ---------------------------------------------------------------------------------------------
+    // Fields
+    // ---------------------------------------------------------------------------------------------
+    private static String CODE;
     private Context mContext;
 
+    // ---------------------------------------------------------------------------------------------
+    // Public methods
+    // ---------------------------------------------------------------------------------------------
     public ScreenSize(Context context) {
         super(equipmentData(
                 NAME,
@@ -37,16 +45,18 @@ public class ScreenSize extends Equipment {
         CODE = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID) + "_ss";
     }
 
+    public String getValue() {
+        return getScreenSize();
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Private methods
+    // ---------------------------------------------------------------------------------------------
     private static EquipmentData equipmentData(String name, String code, String type) {
         L.d(TAG, "equipmentData()");
         EquipmentData equipmentData = new EquipmentData(name, code, type);
         //ed.setData((Serializable) new TestEquipmentData(4236));
         return equipmentData;
-    }
-
-
-    public String getValue() {
-        return getScreenSize();
     }
 
     private String getScreenSize() {
@@ -63,23 +73,6 @@ public class ScreenSize extends Equipment {
         double y = Math.pow(hi, 2);
         double screenInches = Math.sqrt(x + y);
         return String.valueOf(screenInches);
-    }
-
-    @Override
-    public void onBeforeRunCommand(Command command) {
-        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
-    }
-
-    @Override
-    public boolean shouldRunCommandAsynchronously(Command command) {
-        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
-    }
-
-    @Override
-    public CommandResult runCommand(Command command) {
-        CommandInfo commandInfo = new CommandInfo(command);
-
-        return execute(commandInfo);
     }
 
     private CommandResult execute(CommandInfo commandInfo) {
@@ -103,5 +96,24 @@ public class ScreenSize extends Equipment {
         sendNotification(new EquipmentNotification("Executed command \"" + commandInfo.getName() + "\"", commandInfo.getOutputParams()));
 
         return new CommandResult(commandInfo.getStatus(), commandInfo.getResult());
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // Override methods
+    // ---------------------------------------------------------------------------------------------
+    @Override
+    public void onBeforeRunCommand(Command command) {
+        L.d(TAG, "onBeforeRunCommand(" + command.getCommand() + ")");
+    }
+
+    @Override
+    public boolean shouldRunCommandAsynchronously(Command command) {
+        return DeviceConfig.DEVICE_ASYNC_COMMAND_EXECUTION;
+    }
+
+    @Override
+    public CommandResult runCommand(Command command) {
+        CommandInfo commandInfo = new CommandInfo(command);
+        return execute(commandInfo);
     }
 }
