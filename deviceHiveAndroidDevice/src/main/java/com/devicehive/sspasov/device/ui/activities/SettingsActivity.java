@@ -1,4 +1,4 @@
-package com.devicehive.sspasov.device.ui;
+package com.devicehive.sspasov.device.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -1,4 +1,4 @@
-package com.devicehive.sspasov.device.ui;
+package com.devicehive.sspasov.device.ui.activities;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -27,14 +27,14 @@ import com.devicehive.sspasov.device.BuildConfig;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.adapters.SimplePagerAdapter;
 import com.devicehive.sspasov.device.config.DeviceConfig;
-import com.devicehive.sspasov.device.dialogs.ParameterDialog;
-import com.devicehive.sspasov.device.dialogs.ParameterDialog.ParameterDialogListener;
-import com.devicehive.sspasov.device.fragments.DeviceCommandsFragment;
-import com.devicehive.sspasov.device.fragments.DeviceInformationFragment;
-import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment;
-import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment.NotificationSender;
-import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment.ParameterProvider;
-import com.devicehive.sspasov.device.fragments.EquipmentListFragment;
+import com.devicehive.sspasov.device.ui.dialogs.ParameterDialog;
+import com.devicehive.sspasov.device.ui.dialogs.ParameterDialog.ParameterDialogListener;
+import com.devicehive.sspasov.device.ui.fragments.DeviceCommandsFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceInformationFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment.NotificationSender;
+import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment.ParameterProvider;
+import com.devicehive.sspasov.device.ui.fragments.EquipmentListFragment;
 import com.devicehive.sspasov.device.objects.TestDevice;
 import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
 import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;

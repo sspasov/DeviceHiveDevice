@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.devicehive.sspasov.device.R;
-import com.devicehive.sspasov.device.fragments.DeviceCommandsFragment;
-import com.devicehive.sspasov.device.fragments.DeviceInformationFragment;
-import com.devicehive.sspasov.device.fragments.DeviceSendNotificationFragment;
-import com.devicehive.sspasov.device.fragments.EquipmentListFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceCommandsFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceInformationFragment;
+import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment;
+import com.devicehive.sspasov.device.ui.fragments.EquipmentListFragment;
 import com.devicehive.sspasov.device.utils.L;
 
 /**

@@ -1,4 +1,4 @@
-package com.devicehive.sspasov.device.fragments;
+package com.devicehive.sspasov.device.ui.fragments;
 
 import android.app.Activity;
 import android.content.Context;

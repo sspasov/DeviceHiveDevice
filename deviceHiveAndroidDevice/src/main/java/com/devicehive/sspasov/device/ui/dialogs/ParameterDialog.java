@@ -1,4 +1,4 @@
-package com.devicehive.sspasov.device.dialogs;
+package com.devicehive.sspasov.device.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
