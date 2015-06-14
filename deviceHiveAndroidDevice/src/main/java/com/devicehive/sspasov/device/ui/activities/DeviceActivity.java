@@ -75,7 +75,7 @@ public class DeviceActivity extends AppCompatActivity implements
 
         tvDeviceNotRegistered = (TextView) findViewById(R.id.tv_device_not_registered);
 
-        NetworkReceiver.startReceiver(this);
+
         NetworkReceiver.setNetworkReceiverListener(this);
 
         if (DeviceConfig.FIRST_STARTUP && (DeviceConfig.API_ENDPOINT == null)) {
@@ -118,7 +118,6 @@ public class DeviceActivity extends AppCompatActivity implements
         super.onDestroy();
         L.d(TAG, "onDestroy()");
         deviceUnregister();
-        NetworkReceiver.stopReceiver();
     }
 
     // ---------------------------------------------------------------------------------------------

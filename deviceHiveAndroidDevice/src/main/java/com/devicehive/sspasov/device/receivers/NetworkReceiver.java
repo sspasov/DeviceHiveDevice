@@ -73,19 +73,16 @@ public class NetworkReceiver extends BroadcastReceiver {
             Toast.makeText(context, "WIFI connected", Toast.LENGTH_LONG).show();
             L.d(TAG, "WIFI connected");
             mNetworkReceiverListener.onConnection();
-            //onResume();
         } else if (networkInfo != null) {
             isConnected = true;
             Toast.makeText(context, "Mobile Data connected", Toast.LENGTH_LONG).show();
             L.d(TAG, "Mobile Data connected");
             mNetworkReceiverListener.onConnection();
-            //onResume();
         } else {
             isConnected = false;
             Toast.makeText(context, "Connection lost", Toast.LENGTH_LONG).show();
             L.d(TAG, "Connection lost");
             mNetworkReceiverListener.onLostConnection();
-            //deviceUnregister();
         }
     }
 }

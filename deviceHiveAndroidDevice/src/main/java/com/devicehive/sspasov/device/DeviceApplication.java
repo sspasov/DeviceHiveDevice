@@ -5,6 +5,7 @@ import android.app.Application;
 import com.devicehive.sspasov.device.config.DeviceConfig;
 import com.devicehive.sspasov.device.config.DeviceHiveConfig;
 import com.devicehive.sspasov.device.config.DevicePreferences;
+import com.devicehive.sspasov.device.receivers.NetworkReceiver;
 import com.devicehive.sspasov.device.utils.L;
 
 public class DeviceApplication extends Application {
@@ -24,9 +25,16 @@ public class DeviceApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        NetworkReceiver.startReceiver(this);
         L.useDebugMode(false);
         L.useDebugData(false);
         loadPreferences();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        NetworkReceiver.stopReceiver();
     }
 
     // ---------------------------------------------------------------------------------------------
