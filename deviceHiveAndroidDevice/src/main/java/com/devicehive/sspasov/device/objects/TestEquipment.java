@@ -12,6 +12,7 @@ import com.dataart.android.devicehive.device.CommandResult;
 import com.dataart.android.devicehive.device.Equipment;
 import com.dataart.android.devicehive.device.EquipmentNotification;
 import com.devicehive.sspasov.device.config.DeviceConfig;
+import com.devicehive.sspasov.device.utils.EquipmentTypeConverter;
 import com.devicehive.sspasov.device.utils.L;
 
 import java.util.HashMap;

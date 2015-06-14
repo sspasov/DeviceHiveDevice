@@ -40,7 +40,7 @@ public class DeviceSendNotificationFragment extends Fragment {
     private FloatingActionButton btnSendNotification;
 
     private TextView etNotificationName;
-    private Spinner equipmentSpinner;
+    private Spinner spEquipment;
     private ListView lvParameters;
 
     private NotificationSender notificationSender;
@@ -84,8 +84,8 @@ public class DeviceSendNotificationFragment extends Fragment {
 
         etNotificationName = (EditText) rootView.findViewById(R.id.et_notification_name);
 
-        equipmentSpinner = (Spinner) rootView.findViewById(R.id.equipment_spinner);
-        equipmentSpinner.setPrompt("Select equipment");
+        spEquipment = (Spinner) rootView.findViewById(R.id.equipment_spinner);
+        spEquipment.setPrompt("Select equipment");
         setupEquipmentSpinner(equipment);
 
         lvParameters = (ListView) rootView.findViewById(R.id.lv_parameters);
@@ -131,7 +131,7 @@ public class DeviceSendNotificationFragment extends Fragment {
     public void onDestroyView() {
         btnSendNotification = null;
         etNotificationName = null;
-        equipmentSpinner = null;
+        spEquipment = null;
         super.onDestroyView();
     }
 
@@ -177,13 +177,13 @@ public class DeviceSendNotificationFragment extends Fragment {
     // Private methods
     // ---------------------------------------------------------------------------------------------
     private void setupEquipmentSpinner(List<EquipmentData> equipment) {
-        if (equipment != null && equipmentSpinner != null) {
+        if (equipment != null && spEquipment != null) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                     this.getActivity(),
                     android.R.layout.simple_spinner_item,
                     getEquipmentItems(equipment));
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            equipmentSpinner.setAdapter(adapter);
+            spEquipment.setAdapter(adapter);
         }
     }
 
@@ -217,7 +217,7 @@ public class DeviceSendNotificationFragment extends Fragment {
 
         HashMap<String, Object> parameters = paramsAsMap(this.parameters);
 
-        int selectedItemPosition = equipmentSpinner.getSelectedItemPosition();
+        int selectedItemPosition = spEquipment.getSelectedItemPosition();
         if (selectedItemPosition != 0) {
             final EquipmentData selectedEquipment = equipment.get(selectedItemPosition - 1);
             parameters.put("equipment", selectedEquipment.getCode());
@@ -230,10 +230,11 @@ public class DeviceSendNotificationFragment extends Fragment {
 
     private void clearView() {
         etNotificationName.setText("");
-        equipmentSpinner.refreshDrawableState();
+        spEquipment.refreshDrawableState();
         for (int i = 1; i < parametersAdapter.getCount(); i++) {
             parametersAdapter.removeParameter(i);
         }
+        spEquipment.setSelection(0, true);
         lvParameters.setAdapter(parametersAdapter);
     }
 
@@ -244,9 +245,4 @@ public class DeviceSendNotificationFragment extends Fragment {
         }
         return paramsMap;
     }
-
-    // ---------------------------------------------------------------------------------------------
-    // Override methods
-    // ---------------------------------------------------------------------------------------------
-
 }

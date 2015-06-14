@@ -1,15 +1,9 @@
 package com.devicehive.sspasov.device.ui.activities;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +21,11 @@ import com.devicehive.sspasov.device.BuildConfig;
 import com.devicehive.sspasov.device.R;
 import com.devicehive.sspasov.device.adapters.SimplePagerAdapter;
 import com.devicehive.sspasov.device.config.DeviceConfig;
+import com.devicehive.sspasov.device.objects.TestDevice;
+import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
+import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
+import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
+import com.devicehive.sspasov.device.receivers.NetworkReceiver;
 import com.devicehive.sspasov.device.ui.dialogs.ParameterDialog;
 import com.devicehive.sspasov.device.ui.dialogs.ParameterDialog.ParameterDialogListener;
 import com.devicehive.sspasov.device.ui.fragments.DeviceCommandsFragment;
@@ -35,10 +34,6 @@ import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment
 import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment.NotificationSender;
 import com.devicehive.sspasov.device.ui.fragments.DeviceSendNotificationFragment.ParameterProvider;
 import com.devicehive.sspasov.device.ui.fragments.EquipmentListFragment;
-import com.devicehive.sspasov.device.objects.TestDevice;
-import com.devicehive.sspasov.device.objects.TestDevice.CommandListener;
-import com.devicehive.sspasov.device.objects.TestDevice.NotificationListener;
-import com.devicehive.sspasov.device.objects.TestDevice.RegistrationListener;
 import com.devicehive.sspasov.device.utils.L;
 import com.devicehive.sspasov.device.views.SlidingTabLayout;
 
@@ -47,7 +42,7 @@ import java.util.List;
 
 public class DeviceActivity extends AppCompatActivity implements
         RegistrationListener, ParameterProvider, CommandListener,
-        NotificationListener, NotificationSender, ParameterDialogListener {
+        NotificationListener, NotificationSender, ParameterDialogListener, NetworkReceiver.NetworkReceiverListener {
     // ---------------------------------------------------------------------------------------------
     // Constants
     // ---------------------------------------------------------------------------------------------
@@ -58,9 +53,6 @@ public class DeviceActivity extends AppCompatActivity implements
     // ---------------------------------------------------------------------------------------------
     // Fields
     // ---------------------------------------------------------------------------------------------
-    public static boolean registerDevice = true;
-    private NetworkReceiver receiver = new NetworkReceiver();
-
     public TestDevice device;
 
     private DeviceInformationFragment deviceInformationFragment;
@@ -83,9 +75,8 @@ public class DeviceActivity extends AppCompatActivity implements
 
         tvDeviceNotRegistered = (TextView) findViewById(R.id.tv_device_not_registered);
 
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        receiver = new NetworkReceiver();
-        this.registerReceiver(receiver, filter);
+        NetworkReceiver.startReceiver(this);
+        NetworkReceiver.setNetworkReceiverListener(this);
 
         if (DeviceConfig.FIRST_STARTUP && (DeviceConfig.API_ENDPOINT == null)) {
             Intent startupActivity = new Intent(this, StartupConfigurationActivity.class);
@@ -110,7 +101,7 @@ public class DeviceActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         L.d(TAG, "onResume()");
-        if (registerDevice && device != null && DeviceConfig.API_ENDPOINT != null) {
+        if (NetworkReceiver.isConnected() && device != null && DeviceConfig.API_ENDPOINT != null) {
             deviceUnregister();
             deviceRegister();
         }
@@ -127,9 +118,7 @@ public class DeviceActivity extends AppCompatActivity implements
         super.onDestroy();
         L.d(TAG, "onDestroy()");
         deviceUnregister();
-        if (receiver != null) {
-            this.unregisterReceiver(receiver);
-        }
+        NetworkReceiver.stopReceiver();
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -227,27 +216,6 @@ public class DeviceActivity extends AppCompatActivity implements
         }
 
         return color;
-    }
-
-    private void createNetErrorDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(
-                "You need a network connection to use this application. Please turn on mobile network or Wi-Fi in Settings.")
-                .setTitle("Unable to connect")
-                .setCancelable(false)
-                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent i = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                        startActivity(i);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -388,31 +356,13 @@ public class DeviceActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // Inner classes
-    // ---------------------------------------------------------------------------------------------
-    public class NetworkReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+    @Override
+    public void onConnection() {
+        onResume();
+    }
 
-            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                registerDevice = true;
-                Toast.makeText(context, "WIFI connected", Toast.LENGTH_LONG).show();
-                L.d(TAG, "WIFI connected");
-                onResume();
-            } else if (networkInfo != null) {
-                Toast.makeText(context, "Mobile Data connected", Toast.LENGTH_LONG).show();
-                L.d(TAG, "Mobile Data connected");
-                registerDevice = true;
-                onResume();
-            } else {
-                registerDevice = false;
-                Toast.makeText(context, "Connection lost", Toast.LENGTH_LONG).show();
-                L.d(TAG, "Connection lost");
-                deviceUnregister();
-            }
-        }
+    @Override
+    public void onLostConnection() {
+        deviceUnregister();
     }
 }
