@@ -176,7 +176,6 @@ public class DeviceActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        getSupportActionBar().setIcon(getResources().getDrawable(R.drawable.ic_launcher));
     }
 
     private ViewPager setupViewPager() {
